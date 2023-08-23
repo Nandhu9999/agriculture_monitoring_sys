@@ -9,6 +9,11 @@ if test -f "$File"; then
   code_version_latest=$( curl -H "Accept: application/json" -H "Cache-Control: no-cache" https://raw.githubusercontent.com/Nandhu9999/agriculture_monitoring_system/main/device/config.json | jq '.code_version')
   echo $code_version_latest
   echo "###################################"
+
+  if [ $my_code_version = $code_version_latest]; then
+    echo "Using latest version"
+    return 0
+  fi
 fi
 echo "running AMS update.."
 wget https://github.com/Nandhu9999/agriculture_monitoring_system/archive/refs/heads/main.zip -O device.zip
