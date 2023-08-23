@@ -12,7 +12,7 @@ if test -f "$File"; then
 
   if [ "$my_code_version" = "$code_version_latest" ]; then
     echo "Using latest version"
-    return 0
+    exit 0
   fi
 fi
 echo "running AMS update.."
