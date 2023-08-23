@@ -12,6 +12,7 @@ if test -f "$File"; then
 
   if [ "$my_code_version" = "$code_version_latest" ]; then
     echo "Using latest version"
+    python main.py
     exit 0
   fi
 fi
@@ -26,5 +27,4 @@ rm -r agriculture_monitoring_system-main/
 rm device.zip
 
 pip install -r requirements.txt
-
-chmod +x AMSupdate.sh
+python main.py
