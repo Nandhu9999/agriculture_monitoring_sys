@@ -16,7 +16,7 @@ Configuration Details
     "sharpness":50,
     "brightness":70,
     "contrast":20,
-    "send_at": ["8:00"]
+    "send_at": ["08:00"]
   },
   "server_url":"https://agriculture-monitoring-system.glitch.me",
   "apikey":"APIKEY"
