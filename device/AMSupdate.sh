@@ -1,7 +1,8 @@
 #!/bin/bash
 
 File=config.json
-if test -f "$File"; then  
+if test -f "$File"; then
+  sudo apt-get install jq
   key_value=$( curl -H "Accept: application/json" -H "Cache-Control: no-cache" https://raw.githubusercontent.com/Nandhu9999/agriculture_monitoring_system/main/device/config.json | jq -r '.code_version')
 fi
 echo "running AMS update.."
