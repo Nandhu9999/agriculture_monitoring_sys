@@ -21,3 +21,5 @@ rm -r agriculture_monitoring_system-main/
 rm device.zip
 
 pip install -r requirements.txt
+
+chmod +x AMSupdate.sh
