@@ -22,7 +22,6 @@ class Script:
     self.delay = 1
     with open('config.json') as f:
       self.config = json.load(f)
-    print(self.config)
     for time_str in self.config["image"]["send_at"]:
       schedule.every().day.at(""+time_str+"").do(self.main)
 
@@ -41,6 +40,7 @@ class Script:
   def beginloop(self):
     # button connected to GPIO2 and GROUND
     button = Button(2)
+    print("background script is running...")
     while True:
       sleep(self.delay)
       sys.stdout.write(". ")
@@ -88,6 +88,5 @@ class Script:
       print("ERROR")
 
 if __name__ == "__main__":
-  print("SCRIPT IS RUNNING...)
   script = Script()
   script.beginloop()
