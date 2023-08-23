@@ -38,7 +38,6 @@ rm config.json main.py README.md requirements.txt
 
 mv agriculture_monitoring_system-main/device/* ./
 rm -r agriculture_monitoring_system-main/
-rm device.zip
 
 pip install -r requirements.txt
 python main.py
