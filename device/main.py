@@ -24,7 +24,7 @@ class Script:
       self.config = json.load(f)
     print(self.config)
     for time_str in self.config["image"]["send_at"]:
-      schedule.every().day.at(time_str).do(self.main)
+      schedule.every().day.at(""+time_str+"").do(self.main)
 
   # Main function which calls all the subfunctions in
   # order to be executed.
@@ -88,5 +88,6 @@ class Script:
       print("ERROR")
 
 if __name__ == "__main__":
+  print("SCRIPT IS RUNNING...)
   script = Script()
   script.beginloop()
