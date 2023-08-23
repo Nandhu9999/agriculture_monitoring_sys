@@ -3,9 +3,10 @@
 File=config.json
 if test -f "$File"; then
   sudo apt-get install jq
-  my_code_version=$(jq -r ".$code_version" "$FILE")
-  code_version_latest=$( curl -H "Accept: application/json" -H "Cache-Control: no-cache" https://raw.githubusercontent.com/Nandhu9999/agriculture_monitoring_system/main/device/config.json | jq '.code_version')
+  my_code_version=$(jq -r ".code_version" $FILE)
   echo "###################################"
+  echo my_code_version
+  code_version_latest=$( curl -H "Accept: application/json" -H "Cache-Control: no-cache" https://raw.githubusercontent.com/Nandhu9999/agriculture_monitoring_system/main/device/config.json | jq '.code_version')
   echo $my_code_version | $code_version_latest
   echo "###################################"
 fi
