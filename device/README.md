@@ -1,5 +1,10 @@
 # RPI
 ## Client device
+
+# Steps
+  . `wget https://raw.githubusercontent.com/Nandhu9999/agriculture_monitoring_system/main/device/AMSupdate.sh`
+  . `chmod x+ AMSupdate.sh`
+  
 Configuration Details
 ```
 {
