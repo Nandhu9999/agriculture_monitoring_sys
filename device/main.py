@@ -76,7 +76,7 @@ class Script:
   # [!] Errors need to be logged for further study.
   def upload(self):
     files = {"file":open(self.processed_file, "rb")}
-    content = {"serial_no":self.config.serial_no, "api": self.config.apikey}
+    content = {"serial_no":self.config["serial_no"], "api": self.config["apikey"]}
     try:
       x = requests.post(url = self.config.server_url + "/upload",files=files,data=content)
       response = json.load(x.text)
