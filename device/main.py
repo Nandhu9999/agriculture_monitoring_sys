@@ -68,7 +68,7 @@ class Script:
   def preprocess(self):
     img = Image.open(self.output_file)
     width, height = img.size
-    new_img = img.resize((width*self.Xfactor, height*self.Yfactor))
+    new_img = img.resize((int(width*self.Xfactor), int(height*self.Yfactor)))
     new_img.save(self.processed_file)
 
   # Processed image is uploaded the server url with
