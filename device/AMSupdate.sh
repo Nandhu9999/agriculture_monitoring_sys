@@ -9,6 +9,12 @@ else
   sudo apt-get install jq
 fi
 
+if command -v fswebcam > /dev/null; then
+  echo "fswebcam command exists."
+else
+  sudo apt install fswebcam
+fi
+
 if test -f "$File"; then
   sudo apt-get install jq
   my_code_version=$(jq -r ".code_version" "config.json")
