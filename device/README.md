@@ -3,7 +3,7 @@
 
 ### Steps (type these commands)
   - `curl -O https://raw.githubusercontent.com/Nandhu9999/agriculture_monitoring_system/main/device/AMSupdate.sh`
-  - `chmod x+ AMSupdate.sh`
+  - `chmod +x AMSupdate.sh`
   - `./AMSupdate.sh`
   
 Configuration Details
