@@ -14,10 +14,10 @@ wget https://github.com/Nandhu9999/agriculture_monitoring_system/archive/refs/he
 unzip device.zip
 
 rm config.json main.py README.md requirements.txt
+chmod +x agriculture_monitoring_system-main/device/AMSupdate.sh
 
 mv agriculture_monitoring_system-main/device/* ./
 rm -r agriculture_monitoring_system-main/
 rm device.zip
 
-chmod +x AMSupdate.sh
 pip install -r requirements.txt
