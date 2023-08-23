@@ -32,7 +32,7 @@ if test -f "$File"; then
 fi
 echo "running AMS update.."
 curl -H "Cache-Control: no-cache" -LJO https://github.com/Nandhu9999/agriculture_monitoring_system/archive/refs/heads/main.zip
-unzip agriculture_monitoring_system-main.zip -d device
+unzip agriculture_monitoring_system-main.zip
 
 rm config.json main.py README.md requirements.txt
 
