@@ -9,6 +9,7 @@ from time import sleep
 from gpiozero import Button
 
 class Script:
+  
   # Assign necessary variables to be used throughout the 
   # script; such as configuration attributes
   # Schedules are initialized to be called later to check
@@ -22,7 +23,6 @@ class Script:
     with open('config.json') as f:
       self.config = json.load(f)
     print(self.config)
-
     for time_str in self.config.image.send_at:
       schedule.every().day.at(time_str).do(self.main)
 
@@ -44,11 +44,10 @@ class Script:
     while True:
       sleep(self.delay)
       sys.stdout.write(". ")
-
       schedule.run_pending()
       if button.is_pressed:
         self.main()
-        sleep(2)
+        sleep(1)
 
   # Takes an image using the fswebcam library with appropriate 
   # configuration details as mentained.
