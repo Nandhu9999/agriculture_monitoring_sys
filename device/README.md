@@ -2,7 +2,7 @@
 ## Client device
 
 ### Steps (type these commands)
-  - `wget https://raw.githubusercontent.com/Nandhu9999/agriculture_monitoring_system/main/device/AMSupdate.sh`
+  - `curl -O https://raw.githubusercontent.com/Nandhu9999/agriculture_monitoring_system/main/device/AMSupdate.sh`
   - `chmod x+ AMSupdate.sh`
   - `./AMSupdate.sh`
   
