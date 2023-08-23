@@ -1,7 +1,7 @@
 # RPI
 ## Client device
 Configuration Details
-`
+```
 {
   "code_version": 1,
   "serial_no": "",
@@ -15,4 +15,4 @@ Configuration Details
   "server_url":"https://agriculture-monitoring-system.glitch.me",
   "apikey":"APIKEY"
 }
-`
+```
