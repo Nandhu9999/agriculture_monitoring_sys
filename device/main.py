@@ -56,7 +56,7 @@ class Script:
   def capture(self):
     
     try:
-      cmd = f"fswebcam -d /dev/video0 -r {self.config.image.size} --no-banner -p YUYV -S 30 --set sharpness={self.config.image.sharpness} --set brightness={self.config.image.brightness} --set Contrast={self.config.image.contrast} --delay 2 -F 2" + self.output_file
+      cmd = "fswebcam -d /dev/video0 -r 1280x720 --no-banner -p YUYV -S 30 --set sharpness=50 --set brightness=70 --set Contrast=20 --delay 2 -F 2 " + self.output_file
       
       subprocess.check_call(cmd, shell=True)
     except subprocess.CalledProcessError as e:
