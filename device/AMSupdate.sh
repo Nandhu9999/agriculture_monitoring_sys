@@ -10,7 +10,7 @@ if test -f "$File"; then
   echo $code_version_latest
   echo "###################################"
 
-  if [ $my_code_version = $code_version_latest]; then
+  if [ "$my_code_version" = "$code_version_latest" ]; then
     echo "Using latest version"
     return 0
   fi
