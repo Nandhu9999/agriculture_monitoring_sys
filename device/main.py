@@ -87,13 +87,10 @@ class Script:
     files = {"file":open(self.processed_file, "rb")}
     content = {"serial_no":self.config.serial_no, "api": self.config.apikey}
     try:
-      x = requests.post(url = self.config.server_url + "/upload",
-                        files=files,
-                        data=content)
-      
+      x = requests.post(url = self.config.server_url + "/upload",files=files,data=content)
       response = json.load(x.text)
-
       print("status:", response["status"])
+      
       if(response["status"] != "success"):
         print(response["reason"])
     except:
