@@ -23,7 +23,7 @@ class Script:
     with open('config.json') as f:
       self.config = json.load(f)
     print(self.config)
-    for time_str in self.config.image.send_at:
+    for time_str in self.config["image"]["send_at"]:
       schedule.every().day.at(time_str).do(self.main)
 
   # Main function which calls all the subfunctions in
