@@ -49,42 +49,6 @@ sudo mv agriculture_monitoring_system-main/device/* ./
 rm -r agriculture_monitoring_system-main/
 rm agriculture_monitoring_system-main.zip
 
-
-
 update_json_serial
 pip install -r requirements.txt
-
-# create systemd script that runs on startup
-
-# Specify the service name
-service_name="AMS_startup"
-# Specify the command to run
-command_to_run="chmod +x /home/pi/AMSupdate.sh ; /home/pi/AMSupdate.sh"
-# Create a systemd service unit file
-cat > /etc/systemd/system/${service_name}.service <<EOF
-[Unit]
-Description=Service to Update and Run
-After=network.target
-
-[Service]
-ExecStart=${command_to_run}
-Restart=always
-User=root  # Change this to the appropriate user if needed
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-# Reload systemd to read the new service unit file
-systemctl daemon-reload
-
-# Enable and start the service
-systemctl enable ${service_name}
-systemctl start ${service_name}
-
-echo "Service ${service_name} created and started."
-
-
-
 python main.py
-
