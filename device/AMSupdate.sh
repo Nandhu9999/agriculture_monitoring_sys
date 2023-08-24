@@ -45,5 +45,6 @@ sudo mv agriculture_monitoring_system-main/device/* ./
 rm -r agriculture_monitoring_system-main/
 rm agriculture_monitoring_system-main.zip
 
+update_json_serial
 pip install -r requirements.txt
 python main.py
