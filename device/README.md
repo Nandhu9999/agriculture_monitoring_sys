@@ -32,7 +32,7 @@ Systemd Startup steps:
 
  [Service]
  Type=idle
- ExecStart=/usr/bin/bash /home/pi/AMSupdate.sh
+ ExecStart=/home/pi/AMSupdate.sh
 
  [Install]
  WantedBy=multi-user.target
