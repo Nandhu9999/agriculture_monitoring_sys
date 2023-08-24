@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# checking if it updated..
+# checking if it started..
 curl https://agriculture-monitoring-system.glitch.me/ping
 
 if command -v jq > /dev/null; then echo "jq command exists."
