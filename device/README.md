@@ -25,7 +25,7 @@ Configuration Details
 Systemd Startup steps:
   - `sudo nano /lib/systemd/system/AMS_startup.service`
   - paste
-    ```
+```
 [Unit]
  Description=AMS_startup_sequence
  After=multi-user.target
@@ -36,6 +36,6 @@ Systemd Startup steps:
 
  [Install]
  WantedBy=multi-user.target
-    ```
+```
   - `sudo systemctl daemon-reload`
   - `sudo systemctl enable AMS_startup.service; sudo systemctl AMS_startup.service start`
