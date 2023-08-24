@@ -1,21 +1,14 @@
 #!/bin/bash
 
-File=config.json
-
-
-if command -v jq > /dev/null; then
-  echo "jq command exists."
-else
-  sudo apt-get install jq
+if command -v jq > /dev/null; then echo "jq command exists."
+else sudo apt-get install jq
 fi
 
-if command -v fswebcam > /dev/null; then
-  echo "fswebcam command exists."
-else
-  sudo apt install fswebcam
+if command -v fswebcam > /dev/null; then echo "fswebcam command exists."
+else sudo apt install fswebcam
 fi
 
-if test -f "$File"; then
+if test -f "config.json"; then
   sudo apt-get install jq
   my_code_version=$(jq -r ".code_version" "config.json")
   echo "###################################"
