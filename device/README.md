@@ -1,6 +1,8 @@
 # RPI
 ## Client device
 
+Install Buster OS for RaspberryPi
+
 ### Steps (type these commands)
   - `curl -H "Cache-Control: no-cache, no-store, must-revalidate" -O https://raw.githubusercontent.com/Nandhu9999/agriculture_monitoring_system/main/device/AMSupdate.sh`
   - `chmod +x AMSupdate.sh ; ./AMSupdate.sh`
