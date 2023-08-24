@@ -24,7 +24,7 @@ Configuration Details
 
 Systemd Startup steps:
   - `sudo nano /lib/systemd/system/AMS_startup.service`
-  - paste
+  - paste the following code
 ```
 [Unit]
  Description=AMS_startup_sequence
