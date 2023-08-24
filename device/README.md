@@ -34,7 +34,7 @@ Systemd Startup steps:
 
 [Service]
  Type=idle
- ExecStart=/home/pi/AMSupdate.sh
+ ExecStart=/usr/bin/python /home/pi/main.py
 
 [Install]
  WantedBy=multi-user.target
