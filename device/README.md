@@ -32,11 +32,11 @@ Systemd Startup steps:
  Description=AMS_startup_sequence
  After=multi-user.target
 
- [Service]
+[Service]
  Type=idle
  ExecStart=/home/pi/AMSupdate.sh
 
- [Install]
+[Install]
  WantedBy=multi-user.target
 ```
   - `sudo systemctl daemon-reload`
