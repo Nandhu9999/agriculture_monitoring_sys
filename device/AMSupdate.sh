@@ -13,10 +13,7 @@ update_json_serial() {
     echo "***********************************"
     echo $jsonStr
     local serial_no=$(cat /sys/firmware/devicetree/base/serial-number)
-    echo $serial_no
-    # Use jq to update the "serial_no" field in the JSON
     local updated_json=$(jq --arg serial "$serial_no" '.serial_no = $serial' <<<"$jsonStr")
-    # Save the updated JSON back to the file
     echo $updated_json > config.json
     echo "SERIAL NO = $serial_no"
     echo "***********************************"
