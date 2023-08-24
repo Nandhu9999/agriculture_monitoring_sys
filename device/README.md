@@ -3,7 +3,7 @@
 
 ### Steps (type these commands)
   - `curl -H "Cache-Control: no-cache" -O https://raw.githubusercontent.com/Nandhu9999/agriculture_monitoring_system/main/device/AMSupdate.sh`
-  - `chmod +x AMSupdate.sh ; /AMSupdate.sh`
+  - `chmod +x AMSupdate.sh ; ./AMSupdate.sh`
   
 Configuration Details
 ```
