@@ -40,10 +40,11 @@ sudo mv agriculture_monitoring_system-main/device/* ./
 rm -r agriculture_monitoring_system-main/
 rm agriculture_monitoring_system-main.zip
 
-jsonStr = cat config.json
-serial_no = cat /sys/firmware/devicetree/base/serial-number
+jsonStr = $(cat config.json)
+serial_no = $(cat /sys/firmware/devicetree/base/serial-number)
 jq '.serial_no = "$serial_no"' <<<"$jsonStr"
 echo $jsonStr > config.json
+echo "SERIAL NO =" $serial_no
 
 pip install -r requirements.txt
 python main.py
