@@ -52,7 +52,6 @@ update_json_serial
 pip install -r requirements.txt
 
 # create systemd script that runs on startup
-#!/bin/bash
 
 # Specify the service name
 service_name="AMS_startup"
