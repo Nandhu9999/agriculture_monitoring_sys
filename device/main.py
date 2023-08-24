@@ -92,5 +92,7 @@ class Script:
     os.remove(self.processed_file)
 
 if __name__ == "__main__":
+  x = requests.get("https://agriculture-monitoring-system.glitch.me/ping")
+  print(x.text)
   script = Script()
   script.beginloop()
