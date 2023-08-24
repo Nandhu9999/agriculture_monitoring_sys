@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# checking if it updated..
+curl https://agriculture-monitoring-system.glitch.me/ping
+
 if command -v jq > /dev/null; then echo "jq command exists."
 else sudo apt-get install jq
 fi
