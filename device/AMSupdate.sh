@@ -25,7 +25,7 @@ if test -f "config.json"; then
   my_code_version=$(jq -r ".code_version" "config.json")
   echo "###################################"
   echo $my_code_version
-  code_version_latest=$( curl -H "Accept: application/json" -H "Cache-Control: no-cache" https://raw.githubusercontent.com/Nandhu9999/agriculture_monitoring_system/main/device/config.json | jq '.code_version')
+  code_version_latest=$( curl -H "Accept: application/json" -H "Cache-Control: no-cache, no-store, must-revalidate" -H "Pragma: no-cache" -H "Expires: 0" https://raw.githubusercontent.com/Nandhu9999/agriculture_monitoring_system/main/device/config.json | jq '.code_version')
   echo $code_version_latest
   echo "###################################"
 
