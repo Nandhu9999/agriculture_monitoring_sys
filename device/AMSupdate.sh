@@ -9,15 +9,16 @@ else sudo apt install fswebcam
 fi
 
 update_json_serial() {
-    local jsonStr=$(cat config.json)
-    echo "***********************************"
-    echo $jsonStr
-    local serial_no=$(cat /sys/firmware/devicetree/base/serial-number)
-    local updated_json=$(jq --arg serial "$serial_no" '.serial_no = $serial' <<<"$jsonStr")
-    echo $updated_json > config.json
-    echo "SERIAL NO = $serial_no"
-    echo "***********************************"
+  local jsonStr=$(cat config.json)
+  echo "***********************************"
+  echo $jsonStr
+  local serial_no=$(cat /sys/firmware/devicetree/base/serial-number)
+  local updated_json=$(jq --arg serial "$serial_no" '.serial_no = $serial' <<<"$jsonStr")
+  echo $updated_json > config.json
+  echo "SERIAL NO = $serial_no"
+  echo "***********************************"
 }
+update_json_serial
 
 if test -f "config.json"; then
   sudo apt-get install jq
