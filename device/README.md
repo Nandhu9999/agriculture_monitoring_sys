@@ -29,7 +29,7 @@ Systemd Startup steps:
   - paste the following code
 ```
 [Unit]
- Description=AMS_startup_sequence
+ Description=AMS_startup
  After=multi-user.target
 
 [Service]
