@@ -87,6 +87,10 @@ class Script:
     except:
       print(None)
 
+    # Clearing the images after it has been uploaded.
+    os.remove(self.output_file)
+    os.remove(self.processed_file)
+
 if __name__ == "__main__":
   script = Script()
   script.beginloop()
