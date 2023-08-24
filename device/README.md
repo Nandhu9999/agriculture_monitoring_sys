@@ -3,7 +3,7 @@
 
 ### Steps (type these commands)
   - `curl -H "Cache-Control: no-cache, no-store, must-revalidate" -O https://raw.githubusercontent.com/Nandhu9999/agriculture_monitoring_system/main/device/AMSupdate.sh`
-  - `chmod +x AMSupdate.sh ; ./AMSupdate.sh`
+  - `chmod +x AMSupdate.sh ; bash ./AMSupdate.sh`
   
 Configuration Details
 ```
@@ -21,3 +21,21 @@ Configuration Details
   "apikey":"APIKEY"
 }
 ```
+
+Systemd Startup steps:
+  - `sudo nano /lib/systemd/system/AMS_startup.service`
+  - paste
+    ```
+[Unit]
+ Description=AMS_startup_sequence
+ After=multi-user.target
+
+ [Service]
+ Type=idle
+ ExecStart=/usr/bin/bash /home/pi/AMSupdate.sh
+
+ [Install]
+ WantedBy=multi-user.target
+    ```
+  - `sudo systemctl daemon-reload`
+  - `sudo systemctl enable AMS_startup.service; sudo systemctl AMS_startup.service start`
