@@ -18,7 +18,6 @@ update_json_serial() {
     echo "SERIAL NO = $serial_no"
     echo "***********************************"
 }
-update_json_serial
 
 if test -f "config.json"; then
   sudo apt-get install jq
@@ -35,6 +34,7 @@ if test -f "config.json"; then
     exit 0
   fi
 fi
+
 echo "running AMS update.."
 curl -H "Cache-Control: no-cache" -LJO https://github.com/Nandhu9999/agriculture_monitoring_system/archive/refs/heads/main.zip
 unzip agriculture_monitoring_system-main.zip
