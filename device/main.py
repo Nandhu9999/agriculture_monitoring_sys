@@ -78,7 +78,7 @@ class Script:
     server_url = self.config["server_url"] + "/upload"
     files = {"file":open(self.processed_file, "rb")}
     content = {"serial_no":self.config["serial_no"], "api": self.config["apikey"]}
-    print(server)
+    print(server_url)
     print(files)
     print(content)
     try:
