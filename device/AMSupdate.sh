@@ -8,13 +8,20 @@ if command -v fswebcam > /dev/null; then echo "fswebcam command exists."
 else sudo apt install fswebcam
 fi
 
-jsonStr=$(cat config.json)
-serial_no=$(cat /sys/firmware/devicetree/base/serial-number)
-# Use jq to update the "serial_no" field in the JSON
-updated_json=$(jq --arg serial "$serial_no" '.serial_no = $serial' <<<"$jsonStr")
-# Save the updated JSON back to the file
-echo "$updated_json" > config.json
-echo "SERIAL NO =" $serial_no
+update_json_serial() {
+    local jsonStr=$(cat config.json)
+    echo "***********************************"
+    echo $jsonStr
+    local serial_no=$(cat /sys/firmware/devicetree/base/serial-number)
+    echo $serial_no
+    # Use jq to update the "serial_no" field in the JSON
+    local updated_json=$(jq --arg serial "$serial_no" '.serial_no = $serial' <<<"$jsonStr")
+    # Save the updated JSON back to the file
+    echo "$updated_json" > config.json
+    echo "SERIAL NO = $serial_no"
+    echo "***********************************"
+}
+update_json_serial
 
 if test -f "config.json"; then
   sudo apt-get install jq
