@@ -75,10 +75,14 @@ class Script:
   # details of appropriate product to ensure security
   # [!] Errors need to be logged for further study.
   def upload(self):
+    server = self.config["server_url"] + "/upload"
     files = {"file":open(self.processed_file, "rb")}
     content = {"serial_no":self.config["serial_no"], "api": self.config["apikey"]}
+    print(server)
+    print(files)
+    print(content)
     try:
-      x = requests.post(url = self.config["server_url"] + "/upload",files=files,data=content)
+      x = requests.post(url=server,files=files,data=content)
       response = json.load(x.text)
       print("status:", response["status"])
       
