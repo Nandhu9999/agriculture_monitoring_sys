@@ -78,19 +78,14 @@ class Script:
     server_url = self.config["server_url"] + "/upload"
     files = {"file":open(self.processed_file, "rb")}
     content = {"serial_no":self.config["serial_no"], "api": self.config["apikey"]}
-    print(server_url)
-    print(files)
-    print(content)
     try:
       x = requests.post(server_url,files=files,data=content)
       response = json.load(x.text)
-      print("status:", response["status"])
       
-      if(response["status"] != "success"):
-        print(response["reason"])
-        return
+      print("status:", response["status"])
+      if(response["status"] != "success"): print(response["reason"])
     except:
-      print("ERROR")
+      print(None)
 
 if __name__ == "__main__":
   script = Script()
