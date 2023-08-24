@@ -14,7 +14,7 @@ serial_no=$(cat /sys/firmware/devicetree/base/serial-number)
 updated_json=$(jq --arg serial "$serial_no" '.serial_no = $serial' <<<"$jsonStr")
 # Save the updated JSON back to the file
 echo "$updated_json" > config.json
-echo "SERIAL NO = $serial_no"
+echo "SERIAL NO =" $serial_no
 
 if test -f "config.json"; then
   sudo apt-get install jq
