@@ -88,6 +88,7 @@ class Script:
       
       if(response["status"] != "success"):
         print(response["reason"])
+        return
     except:
       print("ERROR")
 
