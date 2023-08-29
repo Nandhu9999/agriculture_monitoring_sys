@@ -31,19 +31,22 @@ Configuration Details
 ```
 
 Systemd Startup steps:
-  - `sudo nano /lib/systemd/system/AMS_startup.service`
+  - `sudo nano /etc/systemd/system/AMSservice.service`
   - paste the following code
 ```
 [Unit]
- Description=AMS_startup
- After=multi-user.target
+Description=AMS service
+After=network.target
 
 [Service]
- Type=idle
- ExecStart=/usr/bin/python /home/pi/main.py
+ExecStart=/usr/bin/python /home/pi/ams-main/device/main.py
+WorkingDirectory=/home/pi/ams-main/device
+Restart=always
+User=pi
 
 [Install]
- WantedBy=multi-user.target
+WantedBy=multi-user.target
 ```
   - `sudo systemctl daemon-reload`
-  - `sudo systemctl enable AMS_startup.service; sudo systemctl AMS_startup.service start`
+  - `sudo systemctl enable AMSservice.service`
+  - `sudo systemctl start myservice.service`
