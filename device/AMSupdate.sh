@@ -11,6 +11,8 @@ if command -v fswebcam > /dev/null; then echo "fswebcam command exists."
 else sudo apt install fswebcam
 fi
 
+prefix_url="https://raw.githubusercontent.com/Nandhu9999/agriculture_monitoring_system/main/device/"
+dfolder="/ams-main/device/"
 
 update_json_serial() {
   local jsonStr=$(cat config.json)
@@ -23,9 +25,6 @@ update_json_serial() {
   echo "***********************************"
 }
 update_json_serial
-
-prefix_url="https://raw.githubusercontent.com/Nandhu9999/agriculture_monitoring_system/main/device/"
-dfolder="/ams-main/device/"
 
 if test -f "config.json"; then
   my_code_version=$(jq -r ".code_version" "config.json")
