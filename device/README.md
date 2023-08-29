@@ -10,7 +10,7 @@ Install Buster OS for RaspberryPi
 Configuration Details
 ```
 {
-  "code_version": 1,
+  "code_version": 0.1,
   "serial_no": "",
   "image":{
     "size":"1280x720",
@@ -20,8 +20,13 @@ Configuration Details
     "send_at": ["08:00"]
   },
   "server_url":"https://agriculture-monitoring-system.glitch.me",
-  "apikey":"APIKEY"
+  "apikey":"APIKEY",
+  "files":[
+    "main.py",
+    "requirements.txt"
+  ]
 }
+
 ```
 
 Systemd Startup steps:
