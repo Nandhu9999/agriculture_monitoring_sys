@@ -8,6 +8,9 @@ from PIL import Image
 from time import sleep
 from gpiozero import Button
 
+HOME_PATH = os.getcwd()
+DFOLDER = "/ams-main/device/
+
 class Script:
   
   # Assign necessary variables to be used throughout the 
@@ -20,7 +23,7 @@ class Script:
     self.Xfactor = 0.5
     self.Yfactor = 0.5
     self.delay = 1
-    with open('config.json') as f:
+    with open(HOME_PATH + DFOLDER + 'config.json') as f:
       self.config = json.load(f)
     for time_str in self.config["image"]["send_at"]:
       schedule.every().day.at(str(time_str)).do(self.main)
