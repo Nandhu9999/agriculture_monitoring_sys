@@ -23,8 +23,8 @@ update_json_serial() {
 }
 update_json_serial
 
+
 if test -f "config.json"; then
-  sudo apt-get install jq
   my_code_version=$(jq -r ".code_version" "config.json")
   echo "###################################"
   echo $my_code_version
@@ -39,16 +39,10 @@ if test -f "config.json"; then
   fi
 fi
 
-echo "running AMS update.."
-curl -H "Cache-Control: no-cache" -LJO https://github.com/Nandhu9999/agriculture_monitoring_system/archive/refs/heads/main.zip
-unzip agriculture_monitoring_system-main.zip
+list_of_files=$(jq -r '.files[]' config.json)
 
-rm config.json main.py README.md requirements.txt
-
-sudo mv agriculture_monitoring_system-main/device/* ./
-rm -r agriculture_monitoring_system-main/
-rm agriculture_monitoring_system-main.zip
-
-update_json_serial
-pip install -r requirements.txt
-python main.py
+prefix_url="https://raw.githubusercontent.com/Nandhu9999/agriculture_monitoring_system/main/device/"
+for file in $list_of_files; do
+    full_url="$prefix_url$file"
+    curl -H "Cache-Control: no-cache, no-store, must-revalidate" "$full_url"
+done
