@@ -28,8 +28,8 @@ update_json_serial() {
 }
 update_json_serial
 
-if test -f "config.json"; then
-  my_code_version=$(jq -r ".code_version" "config.json")
+if test -f "$HOME$dfolder""config.json"; then
+  my_code_version=$(jq -r ".code_version" "$HOME$dfolder""config.json")
   echo "###################################"
   echo $my_code_version
   code_version_latest=$( curl -H "Accept: application/json" -H "Cache-Control: no-cache, no-store, must-revalidate" -H "Pragma: no-cache" -H "Expires: 0" "$prefix_url""config.json" -o "$dfolder""config.json" | jq '.code_version')
