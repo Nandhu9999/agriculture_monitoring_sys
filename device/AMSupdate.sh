@@ -19,7 +19,7 @@ pip install -r "$HOME$dfolder"requirements.txt
 update_json_serial() {
   echo "***********************************"
   serial_number=$(cat /sys/firmware/devicetree/base/serial-number)
-  jq '.serial_no = '"$serial_number" "$HOME$dfolder""config.json" > tmp.json; mv tmp.json "$HOME$dfolder""config.json"
+  jq '.serial_no = "$serial_number"' "$HOME$dfolder"config.json > tmp.json; mv tmp.json "$HOME$dfolder"config.json
   echo "Updated config.json with serial_no: $serial_no"
   echo "***********************************"
 }
