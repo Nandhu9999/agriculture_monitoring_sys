@@ -49,3 +49,5 @@ for file in $list_of_files; do
     full_url="$prefix_url$file"
     curl -H "Cache-Control: no-cache, no-store, must-revalidate" "$full_url" -o "$HOME$dfolder$file"
 done
+
+python "$HOME$dfolder"main.py
