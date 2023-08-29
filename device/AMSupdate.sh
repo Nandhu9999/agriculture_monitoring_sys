@@ -24,6 +24,8 @@ update_json_serial() {
   echo "***********************************"
 }
 update_json_serial
+jq --arg new_serial $(cat /sys/firmware/devicetree/base/serial-number) '.serial_no = $new_serial' "$HOME/ams-main/device/config.json" > tmp.json && mv tmp.json "$HOME/ams-main/device/config.json"
+
 
 if test -f "$HOME$dfolder""config.json"; then
   my_code_version=$(jq -r ".code_version" "$HOME$dfolder""config.json")
