@@ -9,7 +9,7 @@ from time import sleep
 from gpiozero import Button
 
 HOME_PATH = os.getcwd()
-DFOLDER = "/ams-main/device/
+DFOLDER = "/ams-main/device/"
 
 class Script:
   
