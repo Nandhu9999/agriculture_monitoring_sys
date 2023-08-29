@@ -43,7 +43,7 @@ if test -f "$HOME$dfolder""config.json"; then
   fi
 fi
 
-list_of_files=$(jq -r '.files[]' config.json)
+list_of_files=$(jq -r '.files[]' "$HOME$dfolder"config.json)
 
 for file in $list_of_files; do
     full_url="$prefix_url$file"
