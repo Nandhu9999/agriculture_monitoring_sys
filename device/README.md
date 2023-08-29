@@ -5,7 +5,8 @@ Install Buster OS for RaspberryPi
 
 ### Steps (type these commands)
   - ` sudo rm -rf ams-main; sleep 1;wget -N https://github.com/Nandhu9999/agriculture_monitoring_system/archive/refs/heads/main.zip; unzip main.zip; rm -rf main.zip; mv agriculture_monitoring_system-main/ ams-main`
-  - `chmod +x ams-main/device/AMSupdate.sh`
+  - `chmod +x $HOME/ams-main/device/AMSupdate.sh`
+  - `$HOME/ams-main/device/AMSupdate.sh`
   
 Configuration Details
 ```
