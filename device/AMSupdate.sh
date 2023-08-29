@@ -36,7 +36,7 @@ if test -f "config.json"; then
 
   if [ "$my_code_version" = "$code_version_latest" ]; then
     echo "Using latest version"
-    python "$dfolder"main.py
+    python "$HOME$dfolder"main.py
     exit 0
   fi
 fi
