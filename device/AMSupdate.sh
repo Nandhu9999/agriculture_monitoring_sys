@@ -14,6 +14,8 @@ fi
 prefix_url="https://raw.githubusercontent.com/Nandhu9999/agriculture_monitoring_system/main/device/"
 dfolder="/ams-main/device/"
 
+pip install -r "$HOME$dfolder"requirements.txt
+
 update_json_serial() {
   local jsonStr=$(cat config.json)
   echo "***********************************"
