@@ -17,13 +17,16 @@ dfolder="/ams-main/device/"
 pip install -r "$HOME$dfolder"requirements.txt
 
 update_json_serial() {
-  local jsonStr=$(cat "$HOME$dfolder"config.json)
   echo "***********************************"
-  echo $jsonStr
-  local serial_no=$(cat /sys/firmware/devicetree/base/serial-number)
-  local updated_json=$(jq --arg serial "$serial_no" '.serial_no = $serial' <<<"$jsonStr")
-  echo "$updated_json" > "$HOME$dfolder""config.json"
-  echo "SERIAL NO = $serial_no"
+  # Read the JSON data using jq
+  jsonStr=$(cat "$HOME$dfolder"config.json)
+  # Read the serial number from the device
+  serial_no=$(cat /sys/firmware/devicetree/base/serial-number)
+  # Update the JSON using jq
+  updated_json=$(echo "$jsonStr" | jq --arg serial "$serial_no" '.serial_no = $serial')
+  # Save the updated JSON back to the file
+  echo "$updated_json" > "$HOME$dfolder"config.json
+  echo "Updated config.json with serial_no: $serial_no"
   echo "***********************************"
 }
 update_json_serial
