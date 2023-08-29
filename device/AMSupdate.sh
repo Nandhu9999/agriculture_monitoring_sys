@@ -42,7 +42,8 @@ fi
 list_of_files=$(jq -r '.files[]' config.json)
 
 prefix_url="https://raw.githubusercontent.com/Nandhu9999/agriculture_monitoring_system/main/device/"
+dfolder="/ams-main/device/"
 for file in $list_of_files; do
     full_url="$prefix_url$file"
-    curl -H "Cache-Control: no-cache, no-store, must-revalidate" "$full_url"
+    curl -H "Cache-Control: no-cache, no-store, must-revalidate" "$full_url" -o "$dfolder$file"
 done
