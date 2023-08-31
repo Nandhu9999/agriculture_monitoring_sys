@@ -49,4 +49,4 @@ WantedBy=multi-user.target
 ```
   - `sudo systemctl daemon-reload`
   - `sudo systemctl enable AMSservice.service`
-  - `sudo systemctl start myservice.service`
+  - `sudo systemctl start AMSservice.service`
