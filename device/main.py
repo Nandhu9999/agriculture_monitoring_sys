@@ -96,7 +96,10 @@ class Script:
 
 if __name__ == "__main__":
   print("Script is running..")
-  x = requests.get("https://agriculture-monitoring-system.glitch.me/ping")
-  print(x.text)
+  try:
+    x = requests.get("https://agriculture-monitoring-system.glitch.me/ping")
+    print(x.text)
+  catch:
+    print("no internet")
   script = Script()
   script.beginloop()
