@@ -40,7 +40,7 @@ After=network.target
 
 [Service]
 ExecStart=/home/pi/ams-main/device/run.sh
-WorkingDirectory=/home/pi/ams-main/device
+WorkingDirectory=/home/pi
 Restart=always
 User=pi
 
