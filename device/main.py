@@ -99,7 +99,7 @@ if __name__ == "__main__":
   try:
     x = requests.get("https://agriculture-monitoring-system.glitch.me/ping")
     print(x.text)
-  catch:
+  except:
     print("no internet")
   script = Script()
   script.beginloop()
