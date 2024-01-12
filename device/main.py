@@ -97,8 +97,10 @@ class Script:
 if __name__ == "__main__":
   print("Script is running..")
   try:
-    x = requests.get("https://agriculture-monitoring-system.glitch.me/ping")
-    print(x.text)
+    with open(HOME_PATH + DFOLDER + 'config.json') as f:
+      config = json.load(f)
+      x = requests.get(config["server_url"])
+      print(x.text)
   except:
     print("no internet")
   script = Script()
