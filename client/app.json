@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "ams",
-    "slug": "ams",
+    "name": "amsapp",
+    "slug": "amsapp",
+    "scheme": "amsapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -11,9 +12,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -24,7 +23,18 @@
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
-    }
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": ["expo-router"],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "68f2cea0-7ad4-4eb9-ba9c-ef24f7da1475"
+      }
+    },
+    "owner": "nandhakumarvl"
   }
 }
