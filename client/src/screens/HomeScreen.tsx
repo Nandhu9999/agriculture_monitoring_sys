@@ -1,19 +1,11 @@
 import { Link } from "expo-router";
-import { useState } from "react";
-import { TouchableOpacity, StyleSheet, Text, View, Image } from "react-native";
+import { useEffect, useState } from "react";
+import { Pressable, StyleSheet, Text, View, Image } from "react-native";
 
 export default function HomeScreen() {
-  const [viewDimensions, setViewDimensions] = useState({ width: 0, height: 0 });
-
-  const onViewLayout = (event: any) => {
-    const { width, height } = event.nativeEvent.layout;
-    setViewDimensions({ width, height });
-  };
-
   return (
-    <View onLayout={onViewLayout}>
-      {/* <Text>HomeScreen</Text> */}
-      <View style={{ flex: 1 }}>
+    <View>
+      <View style={{ padding: 10 }}>
         <CustomCard title={"Your Services"} />
       </View>
     </View>
@@ -22,32 +14,53 @@ export default function HomeScreen() {
 
 function CustomCard({ title }: any) {
   return (
-    <TouchableOpacity style={styles.customCard}>
-      <View style={{ width: "100%", height: "100%" }}>
-        <Link href="/services" style={{ width: "100%", height: "100%" }}>
-          <View style={styles.cardTitleView}>
-            <Text style={styles.cardText}>{title}</Text>
-          </View>
-          <View style={styles.cardContent}>
-            <View style={{ overflow: "hidden", width: "100%", height: "100%" }}>
-              <Image
-                style={styles.cardImage}
-                blurRadius={0}
-                resizeMode="contain"
-                source={require("../../assets/farm-land.png")}
-              />
-            </View>
-          </View>
-        </Link>
+    <Link
+      href="/services"
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        flexDirection: "column",
+        width: 250,
+        gap: 1,
+        height: 270,
+        maxWidth: "98%",
+        maxHeight: "98%",
+        borderRadius: 8,
+        position: "relative",
+        backgroundColor: "white",
+      }}
+    >
+      <View style={{ height: 20, display: "flex", justifyContent: "flex-end" }}>
+        <Text style={{ fontWeight: "700", paddingLeft: 5 }}>Your Services</Text>
       </View>
-    </TouchableOpacity>
+
+      <View
+        style={{
+          left: 0,
+          width: 250,
+          height: 250,
+        }}
+      >
+        <Image
+          style={{
+            borderRadius: 8,
+            width: 250,
+            height: 250,
+            maxWidth: "100%",
+            maxHeight: "100%",
+          }}
+          resizeMode="cover"
+          source={require("../../assets/farm-land-square.png")}
+        ></Image>
+      </View>
+    </Link>
   );
 }
 
 const styles = StyleSheet.create({
   customCard: {
     maxWidth: 500,
-    aspectRatio: "8/5",
+    aspectRatio: "400/225",
 
     backgroundColor: "grey",
     borderRadius: 15,
@@ -56,41 +69,37 @@ const styles = StyleSheet.create({
     borderColor: "black",
     borderWidth: 6,
     borderBottomWidth: 25,
-    marginTop: 10,
-    marginLeft: 10,
-    marginRight: 10,
   },
 
   cardTitleView: {
     position: "absolute",
-    height: "100%",
+    // height: "100%",
     width: "100%",
+    maxWidth: 500,
+    aspectRatio: "8/5",
+
     justifyContent: "center",
+    textAlign: "center",
     zIndex: 2,
   },
 
   cardText: {
-    fontSize: 32,
+    fontSize: 30,
     top: 0,
     left: 0,
-    fontWeight: "900",
+    fontWeight: "700",
     color: "white",
-    textAlign: "center",
-    textShadowColor: "rgba(255,255,255,0.35)",
-    textShadowOffset: {
-      width: 2,
-      height: 2,
-    },
-    textShadowRadius: 5,
+    width: "100%",
+    // textShadowColor: "rgba(255,255,255,0.35)",
+    // textShadowOffset: {
+    //   width: 2,
+    //   height: 2,
+    // },
+    // textShadowRadius: 5,
   },
 
-  cardContent: {
-    width: "100%",
-    height: "100%",
-  },
+  cardContent: {},
   cardImage: {
-    width: "100%",
-    height: "100%",
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
   },

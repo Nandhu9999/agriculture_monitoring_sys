@@ -7,6 +7,7 @@ import { Redirect } from "expo-router";
 export default function LoginPage() {
   const { user }: any = useContext(UserContext);
   if (Object.keys(user).length !== 0) {
+    console.log("redirect");
     return <Redirect href="/" />;
   }
 

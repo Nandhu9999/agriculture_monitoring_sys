@@ -1,19 +1,13 @@
 import { useNavigation } from "expo-router";
 import { useContext, useEffect, useState } from "react";
-import {
-  StyleSheet,
-  TextInput,
-  View,
-  Text,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, TextInput, View, Text } from "react-native";
 import { FIREBASE_AUTH } from "../../firebaseConfig";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import COLORS from "../themes/COLORS";
+import COLORS from "../themes/colors";
 import UserContext from "../contexts/UserContext";
 import CustomButton from "../components/CustomButton";
 
@@ -36,6 +30,7 @@ export default function LoginScreen() {
     try {
       const response = await createUserWithEmailAndPassword(auth, email, pswd);
       console.log("Registered as", response.user.email);
+      setUser(response.user);
       navigation.navigate({ name: "(drawer)" });
     } catch (err) {
       console.log(err);

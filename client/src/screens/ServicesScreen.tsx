@@ -3,7 +3,7 @@ import {
   Image,
   StyleSheet,
   Text,
-  TouchableOpacity,
+  Pressable,
   View,
   useWindowDimensions,
 } from "react-native";
@@ -45,7 +45,7 @@ export default function ServicesScreen() {
 
 function ServiceItem({ serviceId, url, name }: any) {
   return (
-    <TouchableOpacity style={styles.serviceItemWrapper}>
+    <Pressable style={styles.serviceItemWrapper}>
       <Link href={url} style={styles.serviceItem}>
         <View>
           <Image
@@ -66,18 +66,18 @@ function ServiceItem({ serviceId, url, name }: any) {
               paddingRight: 10,
             }}
           >
-            <TouchableOpacity
+            <Pressable
               onPress={(e) => {
                 e.preventDefault();
                 alert("You have clicked the options");
               }}
             >
               <Text>ooo</Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
         </View>
       </Link>
-    </TouchableOpacity>
+    </Pressable>
   );
 }
 const styles = StyleSheet.create({

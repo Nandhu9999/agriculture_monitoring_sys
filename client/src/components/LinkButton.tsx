@@ -1,33 +1,37 @@
-import { Pressable, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import COLORS from "../themes/colors";
+import { Link } from "expo-router";
 
-export default function CustomButton({
+export default function LinkButton({
   text,
-  handleFn,
+  href,
   outlined = false,
+  replace = false,
   maxWidth,
 }: any) {
   if (outlined == false) {
     return (
-      <TouchableOpacity
-        onPress={handleFn}
+      <Link
+        href={href}
         style={[styles.button, maxWidth != undefined && { maxWidth: maxWidth }]}
+        replace={replace}
       >
         <Text style={styles.buttonText}>{text}</Text>
-      </TouchableOpacity>
+      </Link>
     );
   } else {
     return (
-      <TouchableOpacity
-        onPress={handleFn}
+      <Link
+        href={href}
         style={[
           styles.button,
           styles.buttonOutline,
           maxWidth != undefined && { maxWidth: maxWidth },
         ]}
+        replace={replace}
       >
         <Text style={styles.buttonOutlineText}>{text}</Text>
-      </TouchableOpacity>
+      </Link>
     );
   }
 }
@@ -38,7 +42,10 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 15,
     borderRadius: 10,
+    display: "flex",
     alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
     marginBottom: 5,
   },
   buttonOutline: {

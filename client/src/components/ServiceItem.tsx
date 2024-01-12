@@ -6,11 +6,11 @@ import {
   useWindowDimensions,
   ScrollView,
   Platform,
-  TouchableOpacity,
+  Pressable,
 } from "react-native";
 import React, { useState } from "react";
 
-export default function ServiceItem({ serviceId }:any) {
+export default function ServiceItem({ serviceId }: any) {
   /* Options
     1. Image Feed
     2. Temperature - graph
@@ -112,10 +112,10 @@ export default function ServiceItem({ serviceId }:any) {
 function ToggleCard({ title, height, open, onToggle, children }: any) {
   return (
     <View style={[styles.toggleCard, { height: open ? height : 50 }]}>
-      <TouchableOpacity style={styles.cardHeader} onPress={onToggle}>
+      <Pressable style={styles.cardHeader} onPress={onToggle}>
         <Text style={styles.cardHeaderText}>{title}</Text>
         <Text>{open ? "🅾️" : "❎"}</Text>
-      </TouchableOpacity>
+      </Pressable>
       {open && <View>{children}</View>}
     </View>
   );
@@ -126,6 +126,7 @@ const styles = StyleSheet.create({
     width: 300,
     maxHeight: 300 + 50,
     backgroundColor: "rgb(200,200,200)",
+    marginBottom: 10,
   },
   cardHeader: {
     backgroundColor: "grey",
