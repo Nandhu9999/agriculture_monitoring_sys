@@ -1,10 +1,21 @@
 import { Drawer } from "expo-router/drawer";
 import { Ionicons } from "@expo/vector-icons";
 import { View, useWindowDimensions } from "react-native";
+
+import UserContext from "../../src/contexts/UserContext";
+import { useContext } from "react";
+import { Redirect } from "expo-router";
+
 const drawerItemMargin = -16;
 const drawerWidth = [62, 240]; // minimum and maximum range
 export default function DrawerLayout() {
   const { width } = useWindowDimensions();
+
+  const { user }: any = useContext(UserContext);
+  if (Object.keys(user).length === 0) {
+    return <Redirect href="/login" />;
+  }
+
   return (
     <Drawer
       initialRouteName="home"
@@ -97,23 +108,6 @@ export default function DrawerLayout() {
             <View style={{ marginRight: drawerItemMargin }}>
               <Ionicons
                 name={focused ? "settings" : "settings-outline"}
-                size={size}
-                color={color}
-              />
-            </View>
-          ),
-        }}
-      />
-
-      <Drawer.Screen
-        name="logout"
-        options={{
-          drawerLabel: "Exit",
-          title: "",
-          drawerIcon: ({ color, size, focused }) => (
-            <View style={{ marginRight: drawerItemMargin }}>
-              <Ionicons
-                name={focused ? "exit" : "exit-outline"}
                 size={size}
                 color={color}
               />

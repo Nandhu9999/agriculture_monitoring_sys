@@ -14,7 +14,9 @@ const { createService } = require("./routes/admin.route");
 const { createUser } = require("./routes/user.route");
 
 // DEVICE
-// fastify.get("/api/");
+fastify.get("/api", async (req, reply) => {
+  return reply.send("api service not provided");
+});
 
 // ADMIN
 fastify.get("/api/createService", createService);
