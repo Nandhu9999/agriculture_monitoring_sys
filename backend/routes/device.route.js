@@ -30,4 +30,18 @@ async function logImageUpload(req, reply) {
   return reply.send({ status: "ok" });
 }
 
-module.exports = { imageUploadAccess, logImageUpload };
+async function updateServiceData(req, reply) {
+  const { serviceId, temperature, humidity } = req.body;
+  if (!serviceId) {
+    return reply.send({ status: "error", reason: "serviceId is not provided" });
+  }
+
+  const data = JSON.parse((await db.getServices(serviceId)).data);
+  data.temperature = temperature ? temperature : data.temperature;
+  data.humidity = humidity ? humidity : data.humidity;
+
+  await db.updateServiceData(serviceId, data);
+  return reply.send({ status: "ok" });
+}
+
+module.exports = { imageUploadAccess, logImageUpload, updateServiceData };

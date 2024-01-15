@@ -15,12 +15,12 @@ dbWrapper
       if (!exists) {
         console.log("*creating new db");
 
-        /* -------------------------------------------------------------------------------
-         * | serviceId | serialNo | imageURL | scheduledTimes | uploadCount | isBlocked |
-         * -------------------------------------------------------------------------------
+        /* -------------------------------------------------------------------------------------
+         * | serviceId | serialNo | imageURL | scheduledTimes | uploadCount | isBlocked | data |
+         * -------------------------------------------------------------------------------------
          */
         await db.run(
-          "CREATE TABLE service (serviceId TEXT PRIMARY KEY, serialNo TEXT UNIQUE, imageURL TEXT DEFAULT 'https://cdn.discordapp.com/attachments/1193931945923596368/1195080716854243468/default.png', scheduledTimes TEXT DEFAULT '8:00', uploadCount INTEGER DEFAULT 0, isBlocked INTEGER DEFAULT 0)"
+          "CREATE TABLE services (serviceId TEXT PRIMARY KEY, serialNo TEXT UNIQUE, imageURL TEXT DEFAULT 'https://cdn.discordapp.com/attachments/1193931945923596368/1195080716854243468/default.png', scheduledTimes TEXT DEFAULT '8:00', uploadCount INTEGER DEFAULT 0, isBlocked INTEGER DEFAULT 0, data TEXT DEFAULT '{}')"
         );
 
         /* ---------------------------------------
@@ -28,7 +28,7 @@ dbWrapper
          * ---------------------------------------
          */
         await db.run(
-          "CREATE TABLE user (userId TEXT PRIMARY KEY, userName TEXT, email TEXT, isAdmin INTEGER DEFAULT 0)"
+          "CREATE TABLE users (userId TEXT PRIMARY KEY, userName TEXT, email TEXT UNIQUE, isAdmin INTEGER DEFAULT 0)"
         );
 
         /* ----------------------------------
@@ -36,7 +36,7 @@ dbWrapper
          * ----------------------------------
          */
         await db.run(
-          "CREATE TABLE account (userId TEXT, serviceId TEXT, startDate DATE DEFAULT CURRENT_TIMESTAMP)"
+          "CREATE TABLE accounts (userId TEXT, serviceId TEXT, startDate DATE DEFAULT CURRENT_TIMESTAMP)"
         );
       } else {
         console.log("*db exists");
@@ -49,53 +49,142 @@ dbWrapper
 module.exports = {
   createService: async (serviceId, serialNo) => {
     try {
-      return await db.run(
-        "INSERT INTO service (serviceId, serialNo) VALUES (?, ?)",
-        [serviceId, serialNo]
-      );
+      return {
+        dbStatus: "success",
+        data: await db.run(
+          "INSERT INTO services (serviceId, serialNo) VALUES (?, ?)",
+          [serviceId, serialNo]
+        ),
+      };
     } catch (dbError) {
-      console.error(dbError);
+      //console.error(dbError);
+      return { dbStatus: "error", dbError };
     }
   },
-  allServices: async () => {
+  getServices: async (serviceId = null) => {
     try {
-      return await db.all("SELECT * FROM service");
+      if (serviceId) {
+        return {
+          dbStatus: "success",
+          data: await db.all("SELECT * FROM services"),
+        };
+      } else {
+        return {
+          dbStatus: "success",
+          data: await db.all("SELECT * FROM services WHERE serviceId = ?", [
+            serviceId,
+          ]),
+        };
+      }
     } catch (dbError) {
-      console.error(dbError);
+      //console.error(dbError);
+      return { dbStatus: "error", dbError };
+    }
+  },
+  getUserServices: async (userId) => {
+    try {
+      if (userId) {
+        return {
+          dbStatus: "success",
+          data: await db.all(
+            "SELECT s.* FROM services s JOIN accounts a ON s.serviceId = a.serviceId WHERE a.userId = ?",
+            [userId]
+          ),
+        };
+      } else {
+        return { dbError: "userId not provided" };
+      }
+    } catch (dbError) {
+      //console.error(dbError);
+      return { dbStatus: "error", dbError };
     }
   },
   serviceIsBlocked: async (serviceId) => {
     try {
-      return (
-        (
-          await db.all("SELECT isBlocked FROM service WHERE serviceId = ? ", [
-            serviceId,
-          ])
-        )[0] !== "0"
-      );
+      return {
+        dbStatus: "success",
+        data:
+          (
+            await db.all(
+              "SELECT isBlocked FROM services WHERE serviceId = ? ",
+              [serviceId]
+            )
+          )[0] !== "0",
+      };
     } catch (dbError) {
-      console.error(dbError);
+      //console.error(dbError);
+      return { dbStatus: "error", dbError };
     }
   },
   serviceLogUploadImage: async (serviceId, imageURL) => {
     try {
-      return await db.run(
-        "UPDATE service WHERE serviceId = ? SET imageURL = ? AND uploadCount = uploadCount + 1",
-        [serviceId, imageURL]
-      );
+      return {
+        dbStatus: "success",
+        data: await db.run(
+          "UPDATE services WHERE serviceId = ? SET imageURL = ? AND uploadCount = uploadCount + 1",
+          [serviceId, imageURL]
+        ),
+      };
     } catch (dbError) {
-      console.error(dbError);
+      //console.error(dbError);
+      return { dbStatus: "error", dbError };
     }
   },
-
+  getUsers: async (userId = null) => {
+    try {
+      if (userId) {
+        return {
+          dbStatus: "success",
+          data: await db.all("SELECT * FROM users WHERE userId = ?", [userId]),
+        };
+      } else {
+        return {
+          dbStatus: "success",
+          data: await db.all("SELECT * FROM users"),
+        };
+      }
+    } catch (dbError) {
+      //console.error(dbError);
+      return { dbStatus: "error", dbError };
+    }
+  },
   createUser: async (userId, userName, email, isAdmin = 0) => {
     try {
-      return await db.run(
-        "INSERT INTO user (userId, userName, email, isAdmin) VALUES (?, ?, ?, ?)",
-        [userId, userName, email, isAdmin]
-      );
+      return {
+        dbStatus: "success",
+        data: await db.run(
+          "INSERT INTO users (userId, userName, email, isAdmin) VALUES (?, ?, ?, ?)",
+          [userId, userName, email, isAdmin]
+        ),
+      };
     } catch (dbError) {
-      console.error(dbError);
+      //console.error(dbError);
+      return { dbStatus: "error", dbError };
+    }
+  },
+  getAccounts: async () => {
+    try {
+      return {
+        dbStatus: "success",
+        data: await db.all("SELECT * FROM accounts"),
+      };
+    } catch (dbError) {
+      //console.error(dbError);
+      return { dbStatus: "error", dbError };
+    }
+  },
+  createAccount: async (userId, serviceId) => {
+    try {
+      return {
+        dbStatus: "success",
+        data: await db.run(
+          "INSERT INTO accounts (userId,serviceId) VALUES (?, ?)",
+          [userId, serviceId]
+        ),
+      };
+    } catch (dbError) {
+      //console.error(dbError);
+      return { dbStatus: "error", dbError };
     }
   },
 };

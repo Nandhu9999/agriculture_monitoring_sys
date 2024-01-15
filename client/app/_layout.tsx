@@ -1,5 +1,5 @@
 import { Stack } from "expo-router";
-import { Image, Platform, Text, View, useWindowDimensions } from "react-native";
+import { Image, Text, View, useWindowDimensions } from "react-native";
 import UserContext from "../src/contexts/UserContext";
 import { useState } from "react";
 

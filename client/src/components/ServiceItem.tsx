@@ -19,6 +19,7 @@ export default function ServiceItem({ serviceId }: any) {
     5. Map Location
     6. Trigger Switch
   */
+ 
   const [imgOpen, setImgOpen] = useState(true);
   const [tempOpen, setTempOpen] = useState(false);
   const [humOpen, setHumOpen] = useState(false);

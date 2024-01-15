@@ -9,29 +9,84 @@ import {
 } from "react-native";
 import React from "react";
 import { Link } from "expo-router";
+import { fetchServicesList } from "../fetchers/services";
+import { useQuery } from "@tanstack/react-query";
 export default function ServicesScreen() {
-  const items = [
-    { serviceId: 1, url: "/services/1", name: "asdf1" },
-    { serviceId: 2, url: "/services/2", name: "asdf2" },
-    { serviceId: 3, url: "/services/3", name: "asdf3" },
-    { serviceId: 4, url: "/services/4", name: "asdf4" },
-    { serviceId: 5, url: "/services/5", name: "asdf5" },
-    { serviceId: 6, url: "/services/6", name: "asdf6" },
-    { serviceId: 7, url: "/services/7", name: "asdf7" },
-    { serviceId: 8, url: "/services/8", name: "asdf8" },
-    { serviceId: 9, url: "/services/9", name: "asdf9" },
-  ];
-  function renderItem(props: any) {
+  const { isError, isLoading, data } = useQuery({
+    queryKey: ["services"],
+    queryFn: fetchServicesList,
+  });
+  function renderItem(props) {
     return <ServiceItem {...props.item} />;
   }
 
   const { height } = useWindowDimensions();
 
+  if (isLoading) {
+    return (
+      <View
+        style={{
+          height: "100%",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <Text style={{ textAlign: "center" }}>Loading...</Text>
+      </View>
+    );
+  }
+
+  if (isError || data?.status == "error") {
+    console.log(data?.status);
+    return (
+      <View
+        style={{
+          height: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Text>An error occurred..</Text>
+        <View>
+          {data?.status == "error" && (
+            <Text
+              style={{
+                padding: 4,
+                backgroundColor: "rgba(0,0,0,.9)",
+                color: "white",
+                borderRadius: 5,
+              }}
+            >
+              {data?.reason}
+            </Text>
+          )}
+        </View>
+      </View>
+    );
+  }
+
+  if (data?.status == "ok" && data?.services?.length == 0) {
+    return (
+      <View
+        style={{
+          height: "100%",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <Text style={{ textAlign: "center" }}>
+          You do not have any services.
+        </Text>
+      </View>
+    );
+  }
+
   return (
     <View style={{ height: "100%" }}>
-      {items?.length && (
+      {data?.services?.length && (
         <FlatList
-          data={items}
+          data={data?.services}
           renderItem={renderItem}
           keyExtractor={(item) => item.name}
           ListFooterComponent={<View style={{ height: 100 }} />}
@@ -43,7 +98,7 @@ export default function ServicesScreen() {
   );
 }
 
-function ServiceItem({ serviceId, url, name }: any) {
+function ServiceItem({ serviceId, url, name }) {
   return (
     <Pressable style={styles.serviceItemWrapper}>
       <Link href={url} style={styles.serviceItem}>
