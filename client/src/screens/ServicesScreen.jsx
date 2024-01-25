@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import React from "react";
 import { Link } from "expo-router";
-import { fetchServicesList } from "../fetchers/services";
+import { fetchServicesList } from "../api/services";
 import { useQuery } from "@tanstack/react-query";
 export default function ServicesScreen() {
   const { isError, isLoading, data } = useQuery({

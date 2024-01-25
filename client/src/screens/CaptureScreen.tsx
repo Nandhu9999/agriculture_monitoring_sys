@@ -4,10 +4,11 @@ import * as ImagePicker from "expo-image-picker";
 import axios from "axios";
 import CustomButton from "../components/CustomButton";
 import COLORS from "../themes/colors";
+import { uploadImageToServer } from "../api/device";
 
 const FormData = global.FormData;
 export default function CaptureScreen() {
-  const [image, setImage] = useState<string>();
+  const [image, setImage] = useState<any>();
 
   async function uploadImage(mode: string) {
     try {
@@ -38,10 +39,10 @@ export default function CaptureScreen() {
     }
   }
 
-  async function saveImage(image: string) {
+  async function saveImage(image: any) {
     try {
       setImage(image);
-      sendToBackend();
+      // sendToBackend2();
     } catch (err) {
       throw err;
     }
@@ -51,7 +52,7 @@ export default function CaptureScreen() {
     try {
       const formdata: any = new FormData();
 
-      formdata.append("image", {
+      formdata.append("files", {
         uri: image,
         type: "image/png",
         name: "userImage",
@@ -70,9 +71,15 @@ export default function CaptureScreen() {
     } catch (err) {}
   };
 
-  const [modelResponse, setModelRes] = useState("hey");
+  const sendToBackend2 = async () => {
+    try {
+      const response = await uploadImageToServer(image);
+    } catch (err) {}
+  };
+  const [modelResponse, setModelRes] = useState("...");
   function scanImage() {
     console.log("scan image");
+    sendToBackend2();
   }
   return (
     <View style={styles.container}>

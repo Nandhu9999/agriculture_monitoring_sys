@@ -1,7 +1,7 @@
 import { Stack } from "expo-router";
 import { Image, Text, View, useWindowDimensions } from "react-native";
-import UserContext from "../src/contexts/UserContext";
 import { useState } from "react";
+import { useUserStore } from "../src/store";
 
 function LogoTitle({}: any) {
   return (
@@ -23,30 +23,27 @@ export default function RootLayout() {
   // const { width } = useWindowDimensions();
   // console.log("root layout", width);
 
-  const [user, setUser] = useState({});
-  const contextProviderValues: any = { user: user || {}, setUser: setUser };
+  const user = useUserStore((state) => state.user);
   console.log("ROOT LAYOUT", user);
 
   return (
-    <UserContext.Provider value={contextProviderValues}>
-      <Stack
-        screenOptions={{ headerShown: false }}
-        // initialRouteName={Platform.OS === "web" ? "index" : "login"}
-      >
-        <Stack.Screen
-          name="index"
-          options={{
-            headerShown: true,
-            headerLeft: () => <View />,
-            headerTitle: (props) => <LogoTitle {...props} />,
-          }}
-        />
-        {Object.keys(user || {}).length == 0 ? (
-          <Stack.Screen name="login" />
-        ) : (
-          <Stack.Screen name="(drawer)" />
-        )}
-      </Stack>
-    </UserContext.Provider>
+    <Stack
+      screenOptions={{ headerShown: false }}
+      // initialRouteName={Platform.OS === "web" ? "index" : "login"}
+    >
+      <Stack.Screen
+        name="index"
+        options={{
+          headerShown: true,
+          headerLeft: () => <View />,
+          headerTitle: (props) => <LogoTitle {...props} />,
+        }}
+      />
+      {!user?.uid ? (
+        <Stack.Screen name="login" />
+      ) : (
+        <Stack.Screen name="(drawer)" />
+      )}
+    </Stack>
   );
 }

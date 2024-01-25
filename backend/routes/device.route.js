@@ -6,13 +6,16 @@ const db = require("../src/sqlite.js");
 // const pump = util.promisify(pipeline);
 
 async function imageUploadAccess(req, reply) {
-  const { serviceId } = req.body;
-  if (!serviceId) {
+  const { isSimulator, serviceId } = req.body;
+
+  if (!serviceId && !isSimulator) {
     return reply.send({ status: "error", reason: "serviceId not provided" });
   }
-  const allowed = await db.serviceIsBlocked(body.serviceId);
-  if (!allowed) {
-    return reply.send({ status: "error", reason: "serviceId is blocked" });
+  if (!isSimulator) {
+    const allowed = await db.serviceIsBlocked(body.serviceId);
+    if (!allowed) {
+      return reply.send({ status: "error", reason: "serviceId is blocked" });
+    }
   }
 
   return reply.send({ status: "ok", uploadURL: config.DISCORD_WEBHOOK_API });

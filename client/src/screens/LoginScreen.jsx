@@ -1,5 +1,5 @@
-import { useNavigation } from "expo-router";
-import { useContext, useEffect, useState } from "react";
+import { Redirect, useNavigation } from "expo-router";
+import { useContext, useState, useEffect } from "react";
 import {
   StyleSheet,
   TextInput,
@@ -10,7 +10,7 @@ import {
   Alert,
   Platform,
 } from "react-native";
-import { FIREBASE_AUTH } from "../../firebaseConfig";
+import { FIREBASE_APP, FIREBASE_AUTH } from "../../firebaseConfig";
 import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
@@ -20,33 +20,53 @@ import {
   signInWithPopup,
   signInWithRedirect,
 } from "firebase/auth";
+import { Ionicons } from "@expo/vector-icons";
 import COLORS from "../themes/colors";
-import UserContext from "../contexts/UserContext";
 import CustomButton from "../components/CustomButton";
+import { createUser } from "../api/user";
+import { useUserStore } from "../store";
 
 export default function LoginScreen() {
-  const [email, setEmail] = useState("");
-  const [pswd, setPswd] = useState("");
-  const { setUser } = useContext(UserContext);
+  const [emailInput, setEmail] = useState("");
+  const [pswdInput, setPswd] = useState("");
+  const user = useUserStore((state) => state.user);
+  const setUser = useUserStore((state) => state.setUser);
   const auth = FIREBASE_AUTH;
 
-  // useEffect(() => {
-  //   onAuthStateChanged(FIREBASE_AUTH, (u) => {
-  //     setUser(u);
-  //   });
-  //   setPswd("");
-  //   setEmail("");
-  // }, []);
+  console.log(user);
+  useEffect(() => {
+    onAuthStateChanged(FIREBASE_AUTH, (u) => {
+      if (u) {
+        const { uid, email } = u;
+        console.log("Auth State Changed ♻️");
+        setUser({ uid, email, profileName: email.split("@")[0] });
+        // navigation.navigate({ name: "home" });
+        return <Redirect href="/home" />;
+      }
+    });
+    setPswd("");
+    setEmail("");
+  }, []);
 
   const navigation = useNavigation();
   async function handleRegister() {
     try {
-      const response = await createUserWithEmailAndPassword(auth, email, pswd);
-      console.log("Registered as", response.user.email);
-      setUser(response.user);
+      console.log("trying to register with..", emailInput, pswdInput);
+      const response = await createUserWithEmailAndPassword(
+        auth,
+        emailInput,
+        pswdInput
+      );
+      const { uid, email } = response.user;
+      console.log("Registered Successful ✅", email);
+      try {
+        await createUser(uid, email);
+      } catch (err) {
+        console.log("Backend Server Error 💀");
+      }
       navigation.navigate({ name: "(drawer)" });
     } catch (err) {
-      console.log(err);
+      console.log("Registration Failed ❌", err);
       const errMsg = "Please provide valid email and password";
       if (Platform.OS == "web") {
         alert(errMsg);
@@ -60,11 +80,17 @@ export default function LoginScreen() {
 
   async function handleLogin() {
     try {
-      const response = await signInWithEmailAndPassword(auth, email, pswd);
-      console.log("Logged in as", response.user.email);
+      const response = await signInWithEmailAndPassword(
+        auth,
+        emailInput,
+        pswdInput
+      );
+      const { uid, email } = response.user;
+      console.log("Login Successful ✅", email);
+      setUser({ uid, email });
       navigation.navigate({ name: "(drawer)" });
     } catch (err) {
-      console.log(err);
+      console.log("Login Failed ❌", err);
       const errMsg = "User not found";
       if (Platform.OS == "web") {
         alert(errMsg);
@@ -77,25 +103,34 @@ export default function LoginScreen() {
   }
 
   async function handleGoogleLogin() {
-    const provider = new GoogleAuthProvider();
+    const provider = new GoogleAuthProvider(FIREBASE_APP);
     try {
       const result = await signInWithPopup(auth, provider);
       console.log(result);
     } catch (err) {
       console.log(err);
-      const errMsg = "Error occurred";
+      const errMsg = "an error occurred";
       if (Platform.OS == "web") {
         alert(errMsg);
       } else {
-        Alert.alert("Login Error", errMsg);
+        Alert.alert("Auth Error", errMsg);
       }
     } finally {
       console.log("stop loading");
     }
   }
+
+  function handleGuestLogin() {
+    setUser({
+      guest: true,
+      profileName: "Guest" + Date.now(),
+      email: "",
+    });
+    navigation.navigate({ name: "(drawer)" });
+  }
   return (
     <View id="LOGIN_CONTAINER" style={styles.container} behavior="padding">
-      <View style={{ marginBottom: 15 }}>
+      <View style={{ marginTop: 5, marginBottom: 15 }}>
         <Text style={styles.title}>LOGIN</Text>
       </View>
       <View style={styles.inputContainer}>
@@ -103,7 +138,8 @@ export default function LoginScreen() {
           placeholder="email"
           placeholderTextColor={"#aaa"}
           autoCapitalize="none"
-          value={email}
+          selectionColor={COLORS.primary}
+          value={emailInput}
           onChangeText={(txt) => setEmail(txt)}
           style={styles.input}
         />
@@ -111,8 +147,9 @@ export default function LoginScreen() {
           placeholder="password"
           placeholderTextColor={"#aaa"}
           autoCapitalize="none"
+          selectionColor={COLORS.primary}
           secureTextEntry={true}
-          value={pswd}
+          value={pswdInput}
           onChangeText={(txt) => setPswd(txt)}
           style={styles.input}
         />
@@ -120,49 +157,52 @@ export default function LoginScreen() {
       <View style={styles.buttonContainer}>
         <CustomButton text={"Login"} handleFn={handleLogin} outlined={false} />
         <View
+          id={"horizontalLine"}
           style={{
-            width: "100%",
-            height: 2,
-            backgroundColor: "grey",
+            width: "90%",
+            height: 3,
+            backgroundColor: "rgba(255,255,255,1)",
             borderRadius: 50,
             marginVertical: 15,
           }}
         />
-        <View
-          style={{
-            width: "100%",
-            padding: 10,
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <TouchableOpacity
-            onPress={handleGoogleLogin}
+        {false && (
+          <View
             style={{
-              width: 40,
-              height: 40,
-              borderRadius: 50,
-              backgroundColor: "rgba(222, 82, 69,.8)",
+              width: "100%",
+              padding: 10,
               display: "flex",
               alignItems: "center",
-              justifyContent: "center",
             }}
           >
-            <Image
+            <TouchableOpacity
+              onPress={handleGoogleLogin}
               style={{
-                width: 25,
-                height: 25,
+                width: 40,
+                height: 40,
                 borderRadius: 50,
+                backgroundColor: "rgba(222, 82, 69,.8)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
-              source={{ uri: "https://www.svgrepo.com/show/61540/google.svg" }}
-            />
-          </TouchableOpacity>
-        </View>
+            >
+              <Ionicons name={"logo-google"} size={25} />
+            </TouchableOpacity>
+          </View>
+        )}
         <CustomButton
           text={"Register"}
           handleFn={handleRegister}
           outlined={true}
         />
+        {false && (
+          <CustomButton
+            text={"Guest Login"}
+            handleFn={handleGuestLogin}
+            outlined={true}
+          />
+        )}
       </View>
     </View>
   );
@@ -202,6 +242,6 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 40,
+    marginTop: 30,
   },
 });

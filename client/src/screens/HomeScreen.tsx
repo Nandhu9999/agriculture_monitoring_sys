@@ -1,8 +1,11 @@
 import { Link } from "expo-router";
-import { useEffect, useState } from "react";
-import { Pressable, StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
+import { useUserStore } from "../store";
 
 export default function HomeScreen() {
+  const user = useUserStore((state) => state.user);
+  console.log(user);
+
   return (
     <View>
       <View style={{ padding: 10 }}>

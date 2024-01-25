@@ -1,16 +1,16 @@
 import axios from "axios";
-
-const SERVER_URL = "http://127.0.0.1:9980/api";
+import { useUserStore } from "../store";
+import BACKEND from "./config";
 
 export const fetchServicesList = async () => {
-  const userId = "";
-  const response = await axios.get(`${SERVER_URL}/users/${userId}/services`);
+  const userId = useUserStore.getState().user?.uid;
+  const response = await axios.get(`${BACKEND.url}/users/${userId}/services`);
   return response.data;
 };
 
 export const fetchService = async () => {
   const serviceId = "";
-  const response = await axios.get(`${SERVER_URL}/services/${serviceId}`, {
+  const response = await axios.get(`${BACKEND.url}/services/${serviceId}`, {
     headers: {
       "Cache-Control": "no-cache",
       Pragma: "no-cache",

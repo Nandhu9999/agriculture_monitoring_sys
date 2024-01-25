@@ -11,15 +11,16 @@ async function getUser(req, reply) {
   }
 }
 async function createUser(req, reply) {
-  const { email, profileName } = req.body;
+  const { uid, email, profileName } = req.body;
   if (!email && email.indexOf("@") != -1) {
     return reply.send({ status: "error", reason: "email not provided" });
   }
 
   const userName = profileName || email.split("@")[0];
-  const userId = getUniqueId();
+  const userId = uid;
   const dbResponse = await db.createUser(userId, userName, email);
   if (dbResponse.dbStatus == "success") {
+    console.log("Successfully create user ✅", uid, email);
     return reply.send({ status: "ok", msg: dbResponse.data });
   } else {
     return reply.send({ status: "error", reason: dbResponse.dbError });
@@ -31,11 +32,18 @@ async function userServices(req, reply) {
   if (!userId) {
     return reply.send({ status: "error", reason: "userId not provided" });
   }
-  // const services = [
-  //   { serviceId: 1, url: "/services/1", name: "asdf1" },
-  //   { serviceId: 2, url: "/services/2", name: "asdf2" },
-  // ];
-  const dbResponse = await db.getUserServices(userId);
+
+  let dbResponse = await db.getUserServices(userId);
+  if (userId == "k1xhWQwXSNaVTYrFKpq7ClULaXt2") {
+    dbResponse = {
+      dbStatus: "success",
+      data: [
+        { serviceId: getUniqueId(), url: getUniqueId(), name: "" },
+        { serviceId: getUniqueId(), url: getUniqueId(), name: "" },
+      ],
+    };
+  }
+
   if (dbResponse.dbStatus == "success") {
     dbResponse.data.map((item) => {
       item.url = "/services/" + item.serviceId;

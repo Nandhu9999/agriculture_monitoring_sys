@@ -1,12 +1,12 @@
-import { useContext } from "react";
 import LoginScreen from "../src/screens/LoginScreen";
-import { KeyboardAvoidingView, StyleSheet, View } from "react-native";
-import UserContext from "../src/contexts/UserContext";
+import { KeyboardAvoidingView, StyleSheet } from "react-native";
 import { Redirect } from "expo-router";
+import { useUserStore } from "../src/store";
 
 export default function LoginPage() {
-  const { user }: any = useContext(UserContext);
-  if (Object.keys(user).length !== 0) {
+  const user = useUserStore((state) => state.user);
+
+  if (user?.uid) {
     console.log("redirect");
     return <Redirect href="/" />;
   }

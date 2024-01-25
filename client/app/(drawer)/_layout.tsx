@@ -2,10 +2,9 @@ import { Drawer } from "expo-router/drawer";
 import { Ionicons } from "@expo/vector-icons";
 import { View, useWindowDimensions } from "react-native";
 
-import UserContext from "../../src/contexts/UserContext";
-import { useContext } from "react";
 import { Redirect } from "expo-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useUserStore } from "../../src/store";
 
 const queryClient = new QueryClient();
 
@@ -14,10 +13,12 @@ const drawerWidth = [62, 240]; // minimum and maximum range
 export default function DrawerLayout() {
   const { width } = useWindowDimensions();
 
-  const { user }: any = useContext(UserContext);
-  if (Object.keys(user).length === 0) {
+  const user = useUserStore((state) => state.user);
+  console.log(user);
+  if (!user?.uid) {
     return <Redirect href="/login" />;
   }
+  console.log(user);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -28,7 +29,7 @@ export default function DrawerLayout() {
           drawerPosition: "left",
           drawerActiveTintColor: "#36973d",
           headerLeft: (props) => {
-            return null;
+            return <View></View>;
           },
           drawerStyle: {
             width: width < 600 ? drawerWidth[0] : drawerWidth[1],
@@ -52,6 +53,7 @@ export default function DrawerLayout() {
             ),
           }}
         />
+        {/* {user?.guest === false && ( */}
         <Drawer.Screen
           name="services"
           options={{
@@ -69,6 +71,7 @@ export default function DrawerLayout() {
             ),
           }}
         />
+        {/* )} */}
         <Drawer.Screen
           name="capture"
           options={{
@@ -86,6 +89,7 @@ export default function DrawerLayout() {
           }}
         />
 
+        {/* {user?.guest === false && ( */}
         <Drawer.Screen
           name="simulator"
           options={{
@@ -102,6 +106,7 @@ export default function DrawerLayout() {
             ),
           }}
         />
+        {/* )} */}
 
         <Drawer.Screen
           name="settings"

@@ -1,6 +1,6 @@
 const fastify = require("fastify")({ logger: false });
 const db = require("./src/sqlite.js");
-const config = require("./config");
+const config = require("./config.js");
 
 // ALLOW CORS FROM ALL ORIGINS
 fastify.register(require("@fastify/cors"), {
@@ -27,19 +27,19 @@ const {
   imageUploadAccess,
   logImageUpload,
   updateServiceData,
-} = require("./routes/device.route");
+} = require("./routes/device.route.js");
 const {
   getUsers,
   getServices,
   createService,
   createAdmin,
-} = require("./routes/admin.route");
+} = require("./routes/admin.route.js");
 const {
   getUser,
   createUser,
   userServices,
   serviceItem,
-} = require("./routes/user.route");
+} = require("./routes/user.route.js");
 
 // DEVICE
 fastify.post("/api/image-upload", imageUploadAccess);

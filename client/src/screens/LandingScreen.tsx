@@ -1,19 +1,20 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useContext } from "react";
-import UserContext from "../contexts/UserContext";
+import React from "react";
 import { FIREBASE_AUTH } from "../../firebaseConfig";
 import { signOut } from "firebase/auth";
 import LinkButton from "../components/LinkButton";
 import CustomButton from "../components/CustomButton";
+import { useUserStore } from "../store";
 
 export default function LandingScreen() {
-  const { user, setUser }: any = useContext(UserContext);
+  const user = useUserStore((state) => state.user);
+  const setUser = useUserStore((state) => state.setUser);
   const auth = FIREBASE_AUTH;
   async function handleLogout() {
     try {
+      setUser({ uid: null, email: null, profileName: null });
       await signOut(auth);
-      console.log("logged out");
-      setUser({});
+      console.log("logged out", user);
     } catch (error) {
       console.log("error while logging out");
     }
@@ -37,7 +38,7 @@ export default function LandingScreen() {
           width: "98%",
         }}
       >
-        {Object.keys(user).length == 0 ? (
+        {!user?.uid ? (
           <LinkButton
             text={"Login/Register"}
             href={"/login"}
@@ -51,7 +52,7 @@ export default function LandingScreen() {
             maxWidth={200}
           />
         )}
-        {Object.keys(user).length !== 0 && (
+        {user?.uid && (
           <View style={{ width: 150 }}>
             <LinkButton
               text={"Home"}
