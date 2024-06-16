@@ -11,6 +11,9 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import DashboardPage from "./pages/DashboardPage";
 import Dashboard from "./components/dashboard/Dashboard";
+import Services from "./components/dashboard/Services";
+import Simulation from "./components/dashboard/Simulation";
+import Reports from "./components/dashboard/Reports";
 import Settings from "./components/dashboard/Settings";
 import NotFoundPage from "./pages/NotFoundPage";
 import { AuthProvider } from "./contexts/authContext";
@@ -21,7 +24,7 @@ const router = createBrowserRouter([
     element: (
       <>
         {true && (
-          <div className="fixed top-0 bg-blue-200 flex justify-center flex-wrap gap-2 px-2">
+          <div className="fixed top-0 bg-blue-200 hidden justify-center flex-wrap gap-2 px-2">
             |<Link to="/">Home</Link>|<Link to="/login">Login</Link>|
             <Link to="/register">Register</Link>|
             <Link to="/dashboard">Dashboard</Link>|
@@ -54,6 +57,18 @@ const router = createBrowserRouter([
           {
             path: "/dashboard/",
             element: <Dashboard />,
+          },
+          {
+            path: "/dashboard/services",
+            element: <Services />,
+          },
+          {
+            path: "/dashboard/simulation",
+            element: <Simulation />,
+          },
+          {
+            path: "/dashboard/reports",
+            element: <Reports />,
           },
           {
             path: "/dashboard/settings",
