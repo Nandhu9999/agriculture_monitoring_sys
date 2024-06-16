@@ -6,6 +6,7 @@ import { signOut } from "firebase/auth";
 import CustomButton from "../components/CustomButton";
 import LinkButton from "../components/LinkButton";
 import { useUserStore } from "../store";
+import { sendWebhookFile, sendWebhookMessage } from "../scripts/discordUpload";
 
 export default function SettingsScreen() {
   const navigation = useNavigation();
@@ -17,14 +18,16 @@ export default function SettingsScreen() {
       await signOut(auth);
       setUser({ uid: null, email: null, profileName: null });
       console.log("logged out", user);
-      navigation.navigate({ name: "login" });
+      // navigation.navigate({ name: "login" });
     } catch (error) {
       console.log("error while logging out");
     }
   }
 
   function debug() {
-    console.log(user);
+    // console.log(user);
+    // sendWebhookMessage({ message: "hello there" });
+    sendWebhookFile();
   }
 
   return (

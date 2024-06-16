@@ -5,22 +5,15 @@ import {
   TextInput,
   View,
   Text,
-  Image,
-  TouchableOpacity,
   Alert,
   Platform,
 } from "react-native";
-import { FIREBASE_APP, FIREBASE_AUTH } from "../../firebaseConfig";
+import { FIREBASE_AUTH } from "../../firebaseConfig";
 import {
-  GoogleAuthProvider,
   createUserWithEmailAndPassword,
-  getRedirectResult,
   onAuthStateChanged,
   signInWithEmailAndPassword,
-  signInWithPopup,
-  signInWithRedirect,
 } from "firebase/auth";
-import { Ionicons } from "@expo/vector-icons";
 import COLORS from "../themes/colors";
 import CustomButton from "../components/CustomButton";
 import { createUser } from "../api/user";
@@ -102,32 +95,6 @@ export default function LoginScreen() {
     }
   }
 
-  async function handleGoogleLogin() {
-    const provider = new GoogleAuthProvider(FIREBASE_APP);
-    try {
-      const result = await signInWithPopup(auth, provider);
-      console.log(result);
-    } catch (err) {
-      console.log(err);
-      const errMsg = "an error occurred";
-      if (Platform.OS == "web") {
-        alert(errMsg);
-      } else {
-        Alert.alert("Auth Error", errMsg);
-      }
-    } finally {
-      console.log("stop loading");
-    }
-  }
-
-  function handleGuestLogin() {
-    setUser({
-      guest: true,
-      profileName: "Guest" + Date.now(),
-      email: "",
-    });
-    navigation.navigate({ name: "(drawer)" });
-  }
   return (
     <View id="LOGIN_CONTAINER" style={styles.container} behavior="padding">
       <View style={{ marginTop: 5, marginBottom: 15 }}>
@@ -155,7 +122,7 @@ export default function LoginScreen() {
         />
       </View>
       <View style={styles.buttonContainer}>
-        <CustomButton text={"Login"} handleFn={handleLogin} outlined={false} />
+        <CustomButton text={"Login"} handleFn={handleLogin} />
         <View
           id={"horizontalLine"}
           style={{
@@ -166,43 +133,36 @@ export default function LoginScreen() {
             marginVertical: 15,
           }}
         />
-        {false && (
-          <View
+
+        {/* <View
+          style={{
+            width: "100%",
+            padding: 10,
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <TouchableOpacity
+            onPress={handleGoogleLogin}
             style={{
-              width: "100%",
-              padding: 10,
+              width: 40,
+              height: 40,
+              borderRadius: 50,
+              backgroundColor: "rgba(222, 82, 69,.8)",
               display: "flex",
               alignItems: "center",
+              justifyContent: "center",
             }}
           >
-            <TouchableOpacity
-              onPress={handleGoogleLogin}
-              style={{
-                width: 40,
-                height: 40,
-                borderRadius: 50,
-                backgroundColor: "rgba(222, 82, 69,.8)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Ionicons name={"logo-google"} size={25} />
-            </TouchableOpacity>
-          </View>
-        )}
+            <Ionicons name={"logo-google"} size={25} />
+          </TouchableOpacity>
+        </View> */}
+
         <CustomButton
           text={"Register"}
           handleFn={handleRegister}
           outlined={true}
         />
-        {false && (
-          <CustomButton
-            text={"Guest Login"}
-            handleFn={handleGuestLogin}
-            outlined={true}
-          />
-        )}
       </View>
     </View>
   );

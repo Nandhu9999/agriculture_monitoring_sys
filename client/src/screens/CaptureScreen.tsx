@@ -5,12 +5,16 @@ import axios from "axios";
 import CustomButton from "../components/CustomButton";
 import COLORS from "../themes/colors";
 import { uploadImageToServer } from "../api/device";
+import { triggerFileSelect } from "../scripts/discordUpload";
 
 const FormData = global.FormData;
 export default function CaptureScreen() {
-  const [image, setImage] = useState<any>();
+  const [imageFile, setImage] = useState<any>();
 
   async function uploadImage(mode: string) {
+    // async function afterFileSelected(file: any) {
+    //   await saveImage(file);
+    // }
     try {
       let result: any = {};
       if (mode === "gallary") {
@@ -30,19 +34,18 @@ export default function CaptureScreen() {
           quality: 1,
         });
       }
-
       if (!result.canceled) {
-        await saveImage(result.assets[0].uri);
+        await saveImage(result.assets[0]);
       }
     } catch (err: any) {
       alert("Error uploading image: " + err.message);
     }
   }
 
-  async function saveImage(image: any) {
+  async function saveImage(file: any) {
     try {
-      setImage(image);
-      // sendToBackend2();
+      console.log("image uri saved");
+      setImage(file);
     } catch (err) {
       throw err;
     }
@@ -50,41 +53,21 @@ export default function CaptureScreen() {
 
   const sendToBackend = async () => {
     try {
-      const formdata: any = new FormData();
-
-      formdata.append("files", {
-        uri: image,
-        type: "image/png",
-        name: "userImage",
-      });
-
-      const config = {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        transformRequest: () => {
-          return formdata;
-        },
-      };
-
-      await axios.post("", formdata, config);
-    } catch (err) {}
+      const response = await uploadImageToServer(imageFile);
+    } catch (err) {
+      console.error("An error occurred on upload..", err);
+    }
   };
 
-  const sendToBackend2 = async () => {
-    try {
-      const response = await uploadImageToServer(image);
-    } catch (err) {}
-  };
   const [modelResponse, setModelRes] = useState("...");
   function scanImage() {
     console.log("scan image");
-    sendToBackend2();
+    sendToBackend();
   }
   return (
     <View style={styles.container}>
       <Image
-        source={{ uri: image }}
+        source={{ uri: imageFile?.uri }}
         style={{
           width: 260,
           maxWidth: "98%",
