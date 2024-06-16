@@ -21,6 +21,10 @@ export default function LoginPage() {
       setIsSigningIn(true);
       await doSignInWithEmailAndPassword(email, password).catch(
         (error: FirebaseError) => {
+          console.log(error);
+          if (error.message == "Firebase: Error (auth/internal-error).") {
+            console.log("No Internet Connection");
+          }
           setErrorMessage(error.message);
         }
       );
@@ -31,56 +35,123 @@ export default function LoginPage() {
     e.preventDefault();
     if (!isSigningIn) {
       setIsSigningIn(true);
-      doSignInWithGoogle().catch(() => {
+      doSignInWithGoogle().catch((error: FirebaseError) => {
+        console.log(error);
+        if (error.message == "Firebase: Error (auth/internal-error).") {
+          console.log("No Internet Connection");
+        }
         setIsSigningIn(false);
       });
     }
   };
+  if (userLoggedIn) {
+    return <Navigate to={"/dashboard"} replace={true} />;
+  }
   return (
-    <div>
-      {userLoggedIn && <Navigate to={"/dashboard"} replace={true} />}
-      <h1>Login</h1>
-      <form onSubmit={onSubmit} className="flex flex-col gap-2">
-        <input
-          type="email"
-          placeholder="email"
-          autoComplete="email"
-          required
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-          className="w-full"
-        />
-        <input
-          type="password"
-          autoComplete="current-password"
-          placeholder="password"
-          required
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-          className="w-full"
-        />
-        <button
-          type="submit"
-          disabled={isSigningIn}
-          className={`w-full bg-secondary`}
-        >
-          {isSigningIn ? "Signing In..." : "Sign In"}
-        </button>
-      </form>
-      <div>{errorMessage}</div>
-      <button
-        disabled={isSigningIn}
-        onClick={(e: FormEvent) => {
-          onGoogleSignIn(e);
-        }}
-        className={`w-full bg-primary`}
-      >
-        {isSigningIn ? "Signing In..." : "Continue with Google"}
-      </button>
-    </div>
+    <>
+      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+        <div className="md:w-96 sm:mx-auto sm:w-full">
+          {/* <img
+            className="mx-auto h-10 w-auto"
+            src="https://tailwindui.com/img/logos/mark.svg?color=green&shade=500"
+            alt="Your Company"
+          /> */}
+          <img className="mx-auto h-20 w-auto" src="/icon.png" alt="AMS" />
+          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+            Login to your account
+          </h2>
+        </div>
+
+        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+          <form onSubmit={onSubmit} className="space-y-2">
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Email address
+              </label>
+              <div className="mt-2">
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+
+            <div>
+              <div className="flex items-center justify-between">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Password
+                </label>
+              </div>
+              <div className="mt-2">
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  autoComplete="current-password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+
+            <div className="pt-3">
+              <button
+                type="submit"
+                disabled={isSigningIn}
+                className="flex w-full justify-center rounded-md bg-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              >
+                {isSigningIn ? "Signing in..." : "Sign in"}
+              </button>
+            </div>
+          </form>
+
+          <div className="mt-6">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-300" />
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="bg-white px-2 text-gray-500">
+                  Or continue with
+                </span>
+              </div>
+            </div>
+
+            <div className="mt-6 flex justify-center">
+              <button
+                onClick={onGoogleSignIn}
+                disabled={isSigningIn}
+                className="inline-flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
+              >
+                <img
+                  className="h-6 w-6 mr-2"
+                  src="https://static-00.iconduck.com/assets.00/google-icon-2048x2048-pks9lbdv.png"
+                  alt="Google"
+                />
+                <span>{isSigningIn ? "Signing in..." : "Google"}</span>
+              </button>
+            </div>
+          </div>
+
+          {errorMessage && (
+            <div className="mt-4 text-sm text-red-600">{errorMessage}</div>
+          )}
+        </div>
+      </div>
+    </>
   );
 }
