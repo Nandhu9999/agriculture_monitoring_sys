@@ -1,26 +1,28 @@
 // import reactLogo from "./assets/react.svg";
 // import viteLogo from "/vite.svg";
+import React, { Suspense, lazy } from 'react';
 import {
   createBrowserRouter,
   Link,
   Outlet,
   RouterProvider,
-} from "react-router-dom";
-import HomePage from "./pages/HomePage";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
-import DashboardPage from "./pages/DashboardPage";
-import Dashboard from "./components/dashboard/Dashboard";
-import Services from "./components/dashboard/Services";
-import Simulation from "./components/dashboard/Simulation";
-import Reports from "./components/dashboard/Reports";
-import Settings from "./components/dashboard/Settings";
-import NotFoundPage from "./pages/NotFoundPage";
-import { AuthProvider } from "./contexts/authContext";
+} from 'react-router-dom';
+import { AuthProvider } from './contexts/authContext';
+
+const HomePage = lazy(() => import('./pages/HomePage'));
+const LoginPage = lazy(() => import('./pages/LoginPage'));
+const RegisterPage = lazy(() => import('./pages/RegisterPage'));
+const DashboardPage = lazy(() => import('./pages/DashboardPage'));
+const Dashboard = lazy(() => import('./components/dashboard/Dashboard'));
+const Services = lazy(() => import('./components/dashboard/Services'));
+const Simulation = lazy(() => import('./components/dashboard/Simulation'));
+const Reports = lazy(() => import('./components/dashboard/Reports'));
+const Settings = lazy(() => import('./components/dashboard/Settings'));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: (
       <>
         {true && (
@@ -33,52 +35,94 @@ const router = createBrowserRouter([
           </div>
         )}
         <AuthProvider>
-          <Outlet />
+          <Suspense fallback={<div>Loading...</div>}>
+            <Outlet />
+          </Suspense>
         </AuthProvider>
       </>
     ),
     children: [
       {
-        path: "/",
-        element: <HomePage />,
+        path: '/',
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <HomePage />
+          </Suspense>
+        ),
       },
       {
-        path: "/login",
-        element: <LoginPage />,
+        path: '/login',
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <LoginPage />
+          </Suspense>
+        ),
       },
       {
-        path: "/register",
-        element: <RegisterPage />,
+        path: '/register',
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <RegisterPage />
+          </Suspense>
+        ),
       },
       {
-        path: "/dashboard",
-        element: <DashboardPage />,
+        path: '/dashboard',
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <DashboardPage />
+          </Suspense>
+        ),
         children: [
           {
-            path: "/dashboard/",
-            element: <Dashboard />,
+            path: '/dashboard/',
+            element: (
+              <Suspense fallback={<div>Loading...</div>}>
+                <Dashboard />
+              </Suspense>
+            ),
           },
           {
-            path: "/dashboard/services",
-            element: <Services />,
+            path: '/dashboard/services',
+            element: (
+              <Suspense fallback={<div>Loading...</div>}>
+                <Services />
+              </Suspense>
+            ),
           },
           {
-            path: "/dashboard/simulation",
-            element: <Simulation />,
+            path: '/dashboard/simulation',
+            element: (
+              <Suspense fallback={<div>Loading...</div>}>
+                <Simulation />
+              </Suspense>
+            ),
           },
           {
-            path: "/dashboard/reports",
-            element: <Reports />,
+            path: '/dashboard/reports',
+            element: (
+              <Suspense fallback={<div>Loading...</div>}>
+                <Reports />
+              </Suspense>
+            ),
           },
           {
-            path: "/dashboard/settings",
-            element: <Settings />,
+            path: '/dashboard/settings',
+            element: (
+              <Suspense fallback={<div>Loading...</div>}>
+                <Settings />
+              </Suspense>
+            ),
           },
         ],
       },
       {
-        path: "*",
-        element: <NotFoundPage />,
+        path: '*',
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <NotFoundPage />
+          </Suspense>
+        ),
       },
     ],
   },
