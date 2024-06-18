@@ -1,4 +1,11 @@
-import { Link, Navigate, Outlet, useNavigate } from "react-router-dom";
+import {
+  Link,
+  Navigate,
+  Outlet,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+import { capitalize } from "../utils/utils";
 import { useAuth } from "../contexts/authContext";
 import {
   Disclosure,
@@ -12,9 +19,9 @@ import {
 } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { doSignOut } from "../firebase/auth";
-
-const navigation = [
-  { name: "Dashboard", href: "/dashboard", current: true },
+import profileIcon from "../assets/profileIcon.jpg";
+const navigation0 = [
+  { name: "Dashboard", href: "/dashboard", current: false },
   { name: "Services", href: "/dashboard/services", current: false },
   { name: "Simulation", href: "/dashboard/simulation", current: false },
   { name: "Reports", href: "/dashboard/reports", current: false },
@@ -27,16 +34,29 @@ function classNames(...classes: string[]) {
 export default function DashboardPage() {
   const { currentUser, userLoggedIn } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const user = {
     name: currentUser?.displayName,
     email: currentUser?.email,
-    imageUrl: currentUser?.photoURL || "/assets/emptyProfile.jpg",
+    imageUrl: currentUser?.photoURL || profileIcon,
   };
-  console.log();
   if (!userLoggedIn) {
     return <Navigate to={"/login"} replace={true} />;
   }
 
+  const navigation = navigation0.map((item) => ({
+    ...item,
+    current:
+      item.href === location.pathname ||
+      (item.href == "/dashboard/services" &&
+        location.pathname.startsWith("/dashboard/service/")),
+  }));
+  let dashboardName = navigation0.filter(
+    (item) => item.href === location.pathname
+  )[0]?.name;
+  if (!dashboardName) {
+    dashboardName = capitalize(location.pathname.split("dashboard/")[1]);
+  }
   return (
     <>
       {/*
@@ -48,19 +68,20 @@ export default function DashboardPage() {
         ```
       */}
       <div className="min-h-full w-full">
-        <Disclosure as="nav" className="bg-gray-800">
+        <Disclosure as="nav" className="bg-gray-800 sticky top-0 z-50">
           {({ open }) => (
             <>
               <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="flex h-16 items-center justify-between">
                   <div className="flex items-center">
-                    <div className="flex-shrink-0">
+                    <div className="flex-shrink-0 flex-row">
                       <img
                         className="h-8 w-8"
                         src="/icon_transparent.png"
                         alt="AMS"
                       />
                     </div>
+                    <div className="text-white font-bold ml-3">A.M.S.</div>
                     <div className="hidden md:block">
                       <div className="ml-10 flex items-baseline space-x-4">
                         {navigation.map((item) => (
@@ -175,8 +196,6 @@ export default function DashboardPage() {
                   {navigation.map((item) => (
                     <DisclosureButton
                       key={item.name}
-                      as="a"
-                      href={item.href}
                       className={classNames(
                         item.current
                           ? "bg-gray-900 text-white"
@@ -185,7 +204,7 @@ export default function DashboardPage() {
                       )}
                       aria-current={item.current ? "page" : undefined}
                     >
-                      {item.name}
+                      <Link to={item.href}>{item.name}</Link>
                     </DisclosureButton>
                   ))}
                 </div>
@@ -239,16 +258,19 @@ export default function DashboardPage() {
         <header className="bg-white shadow">
           <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
             <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-              Dashboard
+              {dashboardName}
             </h1>
           </div>
         </header>
         <main>
-          <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 px-2">
+          <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 px-4 pb-24">
             {/* Your content */}
             <Outlet />
           </div>
         </main>
+        <footer className="text-center text-gray-500 py-4 absolute -bottom-22 w-full">
+          © 2024 Company Name
+        </footer>
       </div>
     </>
   );

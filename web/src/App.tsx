@@ -1,28 +1,32 @@
 // import reactLogo from "./assets/react.svg";
 // import viteLogo from "/vite.svg";
-import React, { Suspense, lazy } from 'react';
+import { Suspense, lazy } from "react";
 import {
   createBrowserRouter,
   Link,
   Outlet,
   RouterProvider,
-} from 'react-router-dom';
-import { AuthProvider } from './contexts/authContext';
+} from "react-router-dom";
+import { AuthProvider } from "./contexts/authContext";
 
-const HomePage = lazy(() => import('./pages/HomePage'));
-const LoginPage = lazy(() => import('./pages/LoginPage'));
-const RegisterPage = lazy(() => import('./pages/RegisterPage'));
-const DashboardPage = lazy(() => import('./pages/DashboardPage'));
-const Dashboard = lazy(() => import('./components/dashboard/Dashboard'));
-const Services = lazy(() => import('./components/dashboard/Services'));
-const Simulation = lazy(() => import('./components/dashboard/Simulation'));
-const Reports = lazy(() => import('./components/dashboard/Reports'));
-const Settings = lazy(() => import('./components/dashboard/Settings'));
-const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
+const HomePage = lazy(() => import("./pages/HomePage"));
+const AboutPage = lazy(() => import("./pages/AboutPage"));
+const LoginPage = lazy(() => import("./pages/LoginPage"));
+const RegisterPage = lazy(() => import("./pages/RegisterPage"));
+const DashboardPage = lazy(() => import("./pages/DashboardPage"));
+const Dashboard = lazy(() => import("./components/dashboard/Dashboard"));
+const Services = lazy(() => import("./components/dashboard/Services"));
+const ServiceItem = lazy(
+  () => import("./components/dashboard/service/ServiceItem")
+);
+const Simulation = lazy(() => import("./components/dashboard/Simulation"));
+const Reports = lazy(() => import("./components/dashboard/Reports"));
+const Settings = lazy(() => import("./components/dashboard/Settings"));
+const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: (
       <>
         {true && (
@@ -43,7 +47,7 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        path: '/',
+        path: "/",
         element: (
           <Suspense fallback={<div>Loading...</div>}>
             <HomePage />
@@ -51,7 +55,15 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: '/login',
+        path: "/about",
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <AboutPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/login",
         element: (
           <Suspense fallback={<div>Loading...</div>}>
             <LoginPage />
@@ -59,7 +71,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: '/register',
+        path: "/register",
         element: (
           <Suspense fallback={<div>Loading...</div>}>
             <RegisterPage />
@@ -67,7 +79,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: '/dashboard',
+        path: "/dashboard",
         element: (
           <Suspense fallback={<div>Loading...</div>}>
             <DashboardPage />
@@ -75,7 +87,7 @@ const router = createBrowserRouter([
         ),
         children: [
           {
-            path: '/dashboard/',
+            path: "/dashboard/",
             element: (
               <Suspense fallback={<div>Loading...</div>}>
                 <Dashboard />
@@ -83,7 +95,7 @@ const router = createBrowserRouter([
             ),
           },
           {
-            path: '/dashboard/services',
+            path: "/dashboard/services",
             element: (
               <Suspense fallback={<div>Loading...</div>}>
                 <Services />
@@ -91,7 +103,15 @@ const router = createBrowserRouter([
             ),
           },
           {
-            path: '/dashboard/simulation',
+            path: "/dashboard/service/:serviceId",
+            element: (
+              <Suspense fallback={<div>Loading...</div>}>
+                <ServiceItem />
+              </Suspense>
+            ),
+          },
+          {
+            path: "/dashboard/simulation",
             element: (
               <Suspense fallback={<div>Loading...</div>}>
                 <Simulation />
@@ -99,7 +119,7 @@ const router = createBrowserRouter([
             ),
           },
           {
-            path: '/dashboard/reports',
+            path: "/dashboard/reports",
             element: (
               <Suspense fallback={<div>Loading...</div>}>
                 <Reports />
@@ -107,7 +127,7 @@ const router = createBrowserRouter([
             ),
           },
           {
-            path: '/dashboard/settings',
+            path: "/dashboard/settings",
             element: (
               <Suspense fallback={<div>Loading...</div>}>
                 <Settings />
@@ -117,7 +137,7 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: '*',
+        path: "*",
         element: (
           <Suspense fallback={<div>Loading...</div>}>
             <NotFoundPage />
