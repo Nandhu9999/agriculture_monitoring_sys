@@ -30,7 +30,7 @@ function OpenServiceButton({ id }: { id: number }) {
     title: "Service Information",
     buttons: (
       <>
-        <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-col md:flex-row sm:px-6">
+        <div className="bg-gray-50 px-4 py-3 sm:flex md:flex-row-reverse sm:px-6">
           <button
             type="button"
             className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto"
