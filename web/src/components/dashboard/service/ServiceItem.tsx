@@ -1,67 +1,6 @@
 import { useParams } from "react-router-dom";
-
-const primaryService = {
-  linegraph: {
-    id: "s1",
-    type: "linegraph",
-    title: "Humidity and Temperature",
-    details: {
-      headers: ["humidity", "temperature"],
-      data: [
-        {
-          humidity: 100,
-          temperature: 23,
-        },
-        {
-          humidity: 89,
-          temperature: 26,
-        },
-      ],
-    },
-  },
-  gauge: {
-    id: "s2",
-    type: "gauge",
-    title: "Battery",
-    details: {
-      headers: ["rpi", "camera", "sensors"],
-      data: {
-        rpi: 49,
-        camera: 99,
-        sensors: 78,
-      },
-    },
-  },
-  mapview: {
-    id: "s3",
-    type: "view",
-    title: "Location",
-    details: {
-      headers: ["map"],
-      data: [
-        {
-          lat: 36,
-          lng: 27,
-          label: "point 1",
-        },
-        {
-          lat: 26,
-          lng: 36,
-          label: "point 2",
-        },
-      ],
-    },
-  },
-  livefeed: {
-    id: "s4",
-    type: "view",
-    title: "Live Feed",
-    details: {
-      headers: ["live"],
-      data: {},
-    },
-  },
-};
+import { primaryService } from "../../../appConfig";
+import MapComponent from "./MapComponent";
 
 export default function ServiceItem() {
   const { serviceId } = useParams();
@@ -82,17 +21,17 @@ export default function ServiceItem() {
           </div>
         </SquareCard>
         <SquareCard
-          key={primaryService.mapview.id}
-          card={primaryService.mapview}
-        >
-          <div className="bg-gray-100 w-full aspect-video rounded-md"></div>
-        </SquareCard>
-        <SquareCard
           key={primaryService.livefeed.id}
           card={primaryService.livefeed}
-          isWide
         >
           <div className="bg-gray-100 w-full aspect-video rounded-md" />
+        </SquareCard>
+        <SquareCard
+          key={primaryService.mapview.id}
+          card={primaryService.mapview}
+          isWide
+        >
+          <MapComponent customMarkers={primaryService.mapview.details.data} />
         </SquareCard>
       </div>
     </div>
