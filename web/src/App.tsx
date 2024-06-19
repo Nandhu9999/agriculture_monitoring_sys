@@ -16,9 +16,9 @@ const RegisterPage = lazy(() => import("./pages/RegisterPage"));
 const DashboardPage = lazy(() => import("./pages/DashboardPage"));
 const Dashboard = lazy(() => import("./components/dashboard/Dashboard"));
 const Services = lazy(() => import("./components/dashboard/Services"));
-const ServiceItem = lazy(
-  () => import("./components/dashboard/service/ServiceItem")
-);
+const ServicesItem = lazy(() => import("./components/dashboard/ServicesItem"));
+const Modules = lazy(() => import("./components/dashboard/Modules"));
+const ModulesItem = lazy(() => import("./components/dashboard/ModulesItem"));
 const Simulation = lazy(() => import("./components/dashboard/Simulation"));
 const Reports = lazy(() => import("./components/dashboard/Reports"));
 const Settings = lazy(() => import("./components/dashboard/Settings"));
@@ -106,7 +106,23 @@ const router = createBrowserRouter([
             path: "/dashboard/service/:serviceId",
             element: (
               <Suspense fallback={<div>Loading...</div>}>
-                <ServiceItem />
+                <ServicesItem />
+              </Suspense>
+            ),
+          },
+          {
+            path: "/dashboard/modules",
+            element: (
+              <Suspense fallback={<div>Loading...</div>}>
+                <Modules />
+              </Suspense>
+            ),
+          },
+          {
+            path: "/dashboard/module/:moduleId",
+            element: (
+              <Suspense fallback={<div>Loading...</div>}>
+                <ModulesItem />
               </Suspense>
             ),
           },

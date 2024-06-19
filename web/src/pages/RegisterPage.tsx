@@ -5,7 +5,7 @@ import {
   doSignInWithGoogle,
 } from "../firebase/auth";
 import { FirebaseError } from "firebase/app";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 export default function RegisterPage() {
   const { userLoggedIn } = useAuth();
@@ -54,12 +54,22 @@ export default function RegisterPage() {
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+        <header className="absolute inset-x-0 top-0 z-50">
+          <nav
+            className="flex items-center justify-between p-6 lg:px-8"
+            aria-label="Global"
+          >
+            <div className="flex flex-1 justify-start">
+              <Link
+                to={"/"}
+                className="text-sm font-semibold leading-6 text-gray-900"
+              >
+                <span aria-hidden="true">&larr;</span> {" Home"}
+              </Link>
+            </div>
+          </nav>
+        </header>
         <div className="md:w-96 sm:mx-auto sm:w-full">
-          {/* <img
-            className="mx-auto h-10 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=green&shade=500"
-            alt="Your Company"
-          /> */}
           <img className="mx-auto h-20 w-auto" src="/icon.png" alt="AMS" />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Create your new account
@@ -172,6 +182,16 @@ export default function RegisterPage() {
                 <span>{isRegistering ? "Signing in..." : "Google"}</span>
               </button>
             </div>
+          </div>
+
+          <div className="mt-6 flex justify-center text-sm">
+            <span className="text-gray-500">Already have an account?</span>
+            <Link
+              to="/login"
+              className="ml-1 font-medium text-primary hover:underline"
+            >
+              Log in
+            </Link>
           </div>
 
           {errorMessage && (

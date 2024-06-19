@@ -1,11 +1,11 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import "../../../assets/leaflet/leaflet.css";
+import "../../assets/leaflet/leaflet.css";
 import L from "leaflet";
 
 // Fix default icon issue in Leaflet when using Webpack
-import markerIcon2x from "../../../assets/leaflet/images/marker-icon-2x.png";
-import markerIcon from "../../../assets/leaflet/images/marker-icon.png";
-import markerShadow from "../../../assets/leaflet/images/marker-shadow.png";
+import markerIcon2x from "../../assets/leaflet/images/marker-icon-2x.png";
+import markerIcon from "../../assets/leaflet/images/marker-icon.png";
+import markerShadow from "../../assets/leaflet/images/marker-shadow.png";
 
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: markerIcon2x,

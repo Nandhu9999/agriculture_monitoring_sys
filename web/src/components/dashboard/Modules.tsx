@@ -6,11 +6,10 @@ import { InformationCircleIcon } from "@heroicons/react/24/outline";
 type TableRow = {
   Id: number;
   Name: string;
-  Location: string;
   Action: JSX.Element;
 };
 
-function OpenServiceButton({ id }: { id: number }) {
+function OpenModuleButton({ id }: { id: number }) {
   const [open, setOpen] = useState(false);
 
   function trigger() {
@@ -62,11 +61,11 @@ function OpenServiceButton({ id }: { id: number }) {
         Info
       </button>
       <Modal modalProperties={modalProperties} open={open} setOpen={setOpen}>
-        Information about the Service... INFO INF OFIN OFNAI DFOA SDJFLA KSDJFLK
-        SDJFLAKDS JFLKASD JFAL;SD KFJADS F
+        Information about the Module... lorem lorem lorem lorem lorem lorem
+        lorem
       </Modal>
       <Link
-        to={`/dashboard/service/${id}`}
+        to={`/dashboard/module/${id}`}
         className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-600"
       >
         Open
@@ -75,44 +74,38 @@ function OpenServiceButton({ id }: { id: number }) {
   );
 }
 
-export default function Services() {
-  const headers: (keyof TableRow)[] = ["Id", "Name", "Location", "Action"];
+export default function Modules() {
+  const headers: (keyof TableRow)[] = ["Id", "Name", "Action"];
   const data: TableRow[] = [
     {
       Id: 1,
-      Name: "Service#1",
-      Location: "Salem",
-      Action: <OpenServiceButton id={1} />,
+      Name: "Module#1",
+      Action: <OpenModuleButton id={1} />,
     },
     {
       Id: 2,
-      Name: "Service#2",
-      Location: "Coimbatore",
-      Action: <OpenServiceButton id={2} />,
+      Name: "Module#2",
+      Action: <OpenModuleButton id={2} />,
     },
     {
       Id: 3,
-      Name: "Service#3",
-      Location: "Chennai",
-      Action: <OpenServiceButton id={3} />,
+      Name: "Module#3",
+      Action: <OpenModuleButton id={3} />,
     },
     {
       Id: 4,
-      Name: "Service#4",
-      Location: "Chennai",
-      Action: <OpenServiceButton id={4} />,
+      Name: "Module#4",
+      Action: <OpenModuleButton id={4} />,
     },
     {
       Id: 5,
-      Name: "Service#5",
-      Location: "Chennai",
-      Action: <OpenServiceButton id={5} />,
+      Name: "Module#5",
+      Action: <OpenModuleButton id={5} />,
     },
     {
       Id: 6,
-      Name: "Service#6",
-      Location: "Salem",
-      Action: <OpenServiceButton id={6} />,
+      Name: "Module#6",
+      Action: <OpenModuleButton id={6} />,
     },
   ];
 

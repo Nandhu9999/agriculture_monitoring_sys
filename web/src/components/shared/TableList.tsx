@@ -13,7 +13,7 @@ const TableList: React.FC<TableProps> = ({ headers, data: filteredData }) => {
               <th
                 key={header}
                 className={`py-3 text-xs font-medium text-gray-500 uppercase tracking-wider ${
-                  index === 0 ? "text-left px-3" : "text-center"
+                  index === 0 ? "text-left md:text-center px-3" : "text-center"
                 } ${
                   index === headers.length - 1
                     ? "text-center px-2 pr-4"
@@ -32,7 +32,9 @@ const TableList: React.FC<TableProps> = ({ headers, data: filteredData }) => {
                 <td
                   key={`${rowIndex}-${header}`}
                   className={`py-4 whitespace-nowrap text-sm text-gray-900 ${
-                    index === 0 ? "text-left px-3" : "text-center"
+                    index === 0
+                      ? "text-left md:text-center px-3"
+                      : "text-center"
                   } ${
                     index === headers.length - 1
                       ? "text-center px-2 grid grid-cols-1 md:block"

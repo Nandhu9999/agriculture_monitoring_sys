@@ -20,9 +20,11 @@ import {
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { doSignOut } from "../firebase/auth";
 import profileIcon from "../assets/profileIcon.jpg";
+
 const navigation0 = [
   { name: "Dashboard", href: "/dashboard", current: false },
   { name: "Services", href: "/dashboard/services", current: false },
+  { name: "Modules", href: "/dashboard/modules", current: false },
   { name: "Simulation", href: "/dashboard/simulation", current: false },
   { name: "Reports", href: "/dashboard/reports", current: false },
 ];
@@ -40,17 +42,28 @@ export default function DashboardPage() {
     email: currentUser?.email,
     imageUrl: currentUser?.photoURL || profileIcon,
   };
+
   if (!userLoggedIn) {
     return <Navigate to={"/login"} replace={true} />;
   }
 
-  const navigation = navigation0.map((item) => ({
-    ...item,
-    current:
-      item.href === location.pathname ||
-      (item.href == "/dashboard/services" &&
-        location.pathname.startsWith("/dashboard/service/")),
-  }));
+  const navigation = navigation0.map((item) => {
+    if (item.href === location.pathname) {
+      return { ...item, current: true };
+    } else if (
+      item.href === "/dashboard/services" &&
+      location.pathname.startsWith("/dashboard/service/")
+    ) {
+      return { ...item, current: true };
+    } else if (
+      item.href === "/dashboard/modules" &&
+      location.pathname.startsWith("/dashboard/module/")
+    ) {
+      return { ...item, current: true };
+    } else {
+      return item;
+    }
+  });
   let dashboardName = navigation0.filter(
     (item) => item.href === location.pathname
   )[0]?.name;
@@ -204,11 +217,16 @@ export default function DashboardPage() {
                         item.current
                           ? "bg-gray-900 text-white"
                           : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                        "block rounded-md px-3 py-2 text-base font-medium"
+                        "block rounded-md text-base text-left w-full font-medium"
                       )}
                       aria-current={item.current ? "page" : undefined}
                     >
-                      <Link to={item.href}>{item.name}</Link>
+                      <Link
+                        to={item.href}
+                        className="block w-full h-full px-3 py-2"
+                      >
+                        {item.name}
+                      </Link>
                     </DisclosureButton>
                   ))}
                 </div>
@@ -239,18 +257,23 @@ export default function DashboardPage() {
                     </button>
                   </div>
                   <div className="mt-3 space-y-1 px-2">
-                    <DisclosureButton className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">
-                      <Link to={"/dashboard/settings"}>{"Settings"}</Link>
+                    <DisclosureButton
+                      className="block w-full text-left rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+                      onClick={() => {
+                        navigate("/dashboard/settings");
+                      }}
+                    >
+                      Settings
                     </DisclosureButton>
                     <DisclosureButton
+                      className="block w-full text-left rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                       onClick={() => {
                         doSignOut().then(() => {
                           navigate("/login");
                         });
                       }}
-                      className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                     >
-                      {"Sign out"}
+                      Sign out
                     </DisclosureButton>
                   </div>
                 </div>
@@ -260,21 +283,17 @@ export default function DashboardPage() {
         </Disclosure>
 
         <header className="bg-white shadow">
-          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl py-6 px-4 sm:px-6 lg:px-8">
             <h1 className="text-3xl font-bold tracking-tight text-gray-900">
               {dashboardName}
             </h1>
           </div>
         </header>
         <main>
-          <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 px-4 pb-24">
-            {/* Your content */}
+          <div className="mx-auto max-w-7xl py-6 px-4 sm:px-6 lg:px-8">
             <Outlet />
           </div>
         </main>
-        <footer className="text-center text-gray-500 py-4 absolute -bottom-22 w-full">
-          © 2024 Company Name
-        </footer>
       </div>
     </>
   );

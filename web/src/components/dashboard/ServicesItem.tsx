@@ -1,8 +1,9 @@
 import { useParams } from "react-router-dom";
-import { primaryService } from "../../../appConfig";
-import MapComponent from "./MapComponent";
+import { primaryService } from "../../appConfig";
+import MapComponent from "../shared/MapComponent";
+import { Suspense } from "react";
 
-export default function ServiceItem() {
+export default function ServicesItem() {
   const { serviceId } = useParams();
   console.log(serviceId);
   return (
@@ -13,25 +14,31 @@ export default function ServiceItem() {
           key={primaryService.linegraph.id}
           card={primaryService.linegraph}
         >
-          <div className="bg-gray-100 w-full aspect-video rounded-md"></div>
+          <div className="bg-gray-200 w-full aspect-video rounded-md"></div>
         </SquareCard>
         <SquareCard key={primaryService.gauge.id} card={primaryService.gauge}>
           <div className="flex justify-center">
-            <div className="bg-gray-100 w-3/5 aspect-square rounded-md"></div>
+            <div className="bg-gray-200 w-full aspect-video rounded-md animate-pulse"></div>
           </div>
         </SquareCard>
         <SquareCard
           key={primaryService.livefeed.id}
           card={primaryService.livefeed}
         >
-          <div className="bg-gray-100 w-full aspect-video rounded-md" />
+          <div className="bg-gray-200 w-full aspect-video rounded-md animate-pulse" />
         </SquareCard>
         <SquareCard
           key={primaryService.mapview.id}
           card={primaryService.mapview}
           isWide
         >
-          <MapComponent customMarkers={primaryService.mapview.details.data} />
+          <Suspense
+            fallback={
+              <div className="bg-gray-200 w-full aspect-video rounded-md animate-pulse" />
+            }
+          >
+            <MapComponent customMarkers={primaryService.mapview.details.data} />
+          </Suspense>
         </SquareCard>
       </div>
     </div>

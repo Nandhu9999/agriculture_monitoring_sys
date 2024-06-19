@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.leaflet-control-zoom,
+.leaflet-control-attribution {
+  visibility: hidden;
+}
