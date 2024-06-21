@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import TableList from "../shared/TableList";
-import { Link } from "react-router-dom";
 import InfoModal from "../shared/InfoModal";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
+import ColoredButton from "../common/ColoredButton";
 type TableRow = {
   Id: number;
   Name: string;
@@ -11,10 +11,15 @@ type TableRow = {
 
 function OpenServiceButton({ id }: { id: number }) {
   const [open, setOpen] = useState(false);
+  const [edit, setEdit] = useState(false);
 
-  function trigger() {
+  function openInfo() {
     console.log(id);
     setOpen(true);
+  }
+  function editItem() {
+    console.log(id, edit);
+    setEdit(true);
   }
 
   const modalProperties = {
@@ -53,13 +58,9 @@ function OpenServiceButton({ id }: { id: number }) {
 
   return (
     <>
-      <button
-        onClick={trigger}
-        type="button"
-        className="text-white bg-blue-400 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-blue-600"
-      >
+      <ColoredButton onClick={openInfo} blue small>
         Info
-      </button>
+      </ColoredButton>
       <InfoModal
         modalProperties={modalProperties}
         open={open}
@@ -68,12 +69,12 @@ function OpenServiceButton({ id }: { id: number }) {
         Information about the Service... lorem lorem lorem lorem lorem lorem
         lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem
       </InfoModal>
-      <Link
-        to={`/dashboard/service/${id}`}
-        className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-600"
-      >
+      <ColoredButton onClick={editItem} pink small>
+        Edit
+      </ColoredButton>
+      <ColoredButton to={`/dashboard/service/${id}`} anchor small>
         Open
-      </Link>
+      </ColoredButton>
     </>
   );
 }

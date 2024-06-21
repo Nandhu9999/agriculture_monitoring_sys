@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import TableList from "../shared/TableList";
-import { Link } from "react-router-dom";
 import InfoModal from "../shared/InfoModal";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
+import ColoredButton from "../common/ColoredButton";
 type TableRow = {
   Id: number;
   Name: string;
@@ -11,10 +11,15 @@ type TableRow = {
 
 function OpenModuleButton({ id }: { id: number }) {
   const [open, setOpen] = useState(false);
+  const [edit, setEdit] = useState(false);
 
-  function trigger() {
+  function openInfo() {
     console.log(id);
     setOpen(true);
+  }
+  function editItem() {
+    console.log(id, edit);
+    setEdit(true);
   }
 
   const modalProperties = {
@@ -53,13 +58,9 @@ function OpenModuleButton({ id }: { id: number }) {
 
   return (
     <>
-      <button
-        onClick={trigger}
-        type="button"
-        className="text-white bg-blue-400 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-blue-600"
-      >
+      <ColoredButton onClick={openInfo} blue small>
         Info
-      </button>
+      </ColoredButton>
       <InfoModal
         modalProperties={modalProperties}
         open={open}
@@ -68,12 +69,12 @@ function OpenModuleButton({ id }: { id: number }) {
         Information about the Module... lorem lorem lorem lorem lorem lorem
         lorem
       </InfoModal>
-      <Link
-        to={`/dashboard/module/${id}`}
-        className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-600"
-      >
+      <ColoredButton onClick={editItem} pink small>
+        Edit
+      </ColoredButton>
+      <ColoredButton to={`/dashboard/module/${id}`} anchor small>
         Open
-      </Link>
+      </ColoredButton>
     </>
   );
 }
@@ -111,6 +112,26 @@ export default function Modules() {
       Name: "Module#6",
       Action: <OpenModuleButton id={6} />,
     },
+    {
+      Id: 7,
+      Name: "Module#7",
+      Action: <OpenModuleButton id={7} />,
+    },
+    {
+      Id: 8,
+      Name: "Module#8",
+      Action: <OpenModuleButton id={8} />,
+    },
+    {
+      Id: 9,
+      Name: "Module#9",
+      Action: <OpenModuleButton id={9} />,
+    },
+    {
+      Id: 10,
+      Name: "Module#10",
+      Action: <OpenModuleButton id={10} />,
+    },
   ];
 
   const [filter, setFilter] = useState("");
@@ -129,7 +150,7 @@ export default function Modules() {
   return (
     <div>
       <div className="flex flex-row justify-between py-2 items-center">
-        <p className="font-bold">Total Services: {data.length}</p>
+        <p className="font-bold">Total Modules: {data.length}</p>
         <input
           type="text"
           placeholder="Filter..."
