@@ -6,7 +6,6 @@ import { InformationCircleIcon } from "@heroicons/react/24/outline";
 type TableRow = {
   Id: number;
   Name: string;
-  Location: string;
   Action: JSX.Element;
 };
 
@@ -80,42 +79,36 @@ function OpenServiceButton({ id }: { id: number }) {
 }
 
 export default function Services() {
-  const headers: (keyof TableRow)[] = ["Id", "Name", "Location", "Action"];
+  const headers: (keyof TableRow)[] = ["Id", "Name", "Action"];
   const data: TableRow[] = [
     {
       Id: 1,
       Name: "Service#1",
-      Location: "Salem",
       Action: <OpenServiceButton id={1} />,
     },
     {
       Id: 2,
       Name: "Service#2",
-      Location: "Coimbatore",
       Action: <OpenServiceButton id={2} />,
     },
     {
       Id: 3,
       Name: "Service#3",
-      Location: "Chennai",
       Action: <OpenServiceButton id={3} />,
     },
     {
       Id: 4,
       Name: "Service#4",
-      Location: "Chennai",
       Action: <OpenServiceButton id={4} />,
     },
     {
       Id: 5,
       Name: "Service#5",
-      Location: "Chennai",
       Action: <OpenServiceButton id={5} />,
     },
     {
       Id: 6,
       Name: "Service#6",
-      Location: "Salem",
       Action: <OpenServiceButton id={6} />,
     },
   ];
