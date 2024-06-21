@@ -6,7 +6,7 @@ import {
   TransitionChild,
 } from "@headlessui/react";
 
-export default function Modal({
+export default function InfoModal({
   modalProperties,
   children,
   open,

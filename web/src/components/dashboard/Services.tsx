@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import TableList from "../shared/TableList";
 import { Link } from "react-router-dom";
-import Modal from "../shared/Modal";
+import InfoModal from "../shared/InfoModal";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 type TableRow = {
   Id: number;
@@ -61,10 +61,14 @@ function OpenServiceButton({ id }: { id: number }) {
       >
         Info
       </button>
-      <Modal modalProperties={modalProperties} open={open} setOpen={setOpen}>
-        Information about the Service... INFO INF OFIN OFNAI DFOA SDJFLA KSDJFLK
-        SDJFLAKDS JFLKASD JFAL;SD KFJADS F
-      </Modal>
+      <InfoModal
+        modalProperties={modalProperties}
+        open={open}
+        setOpen={setOpen}
+      >
+        Information about the Service... lorem lorem lorem lorem lorem lorem
+        lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem
+      </InfoModal>
       <Link
         to={`/dashboard/service/${id}`}
         className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-600"
