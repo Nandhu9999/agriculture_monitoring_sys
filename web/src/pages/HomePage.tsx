@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/authContext";
+import GitCommit from "../components/shared/GitCommit";
 
 export default function HomePage() {
   const { currentUser } = useAuth();
@@ -69,7 +70,7 @@ export default function HomePage() {
           </div>
         </div>
         <div
-          className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
+          className="fixed h-full inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
           aria-hidden="true"
         >
           <div
@@ -80,6 +81,9 @@ export default function HomePage() {
             }}
           />
         </div>
+      </div>
+      <div className="flex justify-center">
+        <GitCommit />
       </div>
     </div>
   );

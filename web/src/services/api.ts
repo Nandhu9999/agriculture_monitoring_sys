@@ -63,3 +63,33 @@ export async function scanUploadImage(file: File) {
     return { success: false };
   }
 }
+
+export async function getLatestCommit(user: string, repo: string) {
+  try {
+    const url = `https://api.github.com/users/${user}/events/public`;
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok " + response.statusText);
+    }
+
+    const events = await response.json();
+
+    // Find the latest push event for the specified repository
+    const pushEvent = events.find(
+      (event: any) => event.type === "PushEvent" && event.repo.name === repo
+    );
+
+    if (pushEvent) {
+      // Get the latest commit from the push event
+      const latestCommit = pushEvent.payload.commits[0];
+      console.log("Latest Commit: ", latestCommit);
+      return latestCommit;
+    } else {
+      console.log("No push events found for the specified repository.");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching events:", error);
+  }
+}
