@@ -3,6 +3,36 @@ import ColoredButton from "../common/ColoredButton";
 import { scanUploadImage } from "../../services/api";
 
 export default function Simulation() {
+  const [simType, setSimType] = useState<"imageScan" | "periodicImaging">(
+    "imageScan"
+  );
+  return (
+    <div>
+      <div className="flex gap-4 mb-2 select-none">
+        <span
+          onClick={() => setSimType("imageScan")}
+          className={`${
+            simType === "imageScan" ? "border-b-4 border-primary" : ""
+          } cursor-pointer`}
+        >
+          Image Scan
+        </span>
+        <span
+          onClick={() => setSimType("periodicImaging")}
+          className={`${
+            simType === "periodicImaging" ? "border-b-4 border-primary" : ""
+          } cursor-pointer`}
+        >
+          Periodic Image
+        </span>
+      </div>
+      {simType === "imageScan" && <SimulationImageScan />}
+      {simType === "periodicImaging" && <SimulationPeriodicImaging />}
+    </div>
+  );
+}
+
+function SimulationImageScan() {
   const [handleStage, setHandleStage] = useState<
     "initial" | "capture" | "execute"
   >("initial");
@@ -159,6 +189,25 @@ export default function Simulation() {
               </>
             )}
           </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SimulationPeriodicImaging() {
+  return (
+    <div className="mx-auto">
+      <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+        <div className="w-full sm:w-6/12 lg:w-4/12 aspect-square rounded-lg bg-gray-200 grid place-items-center animate-pulse">
+          periodic imaging..
+        </div>
+      </div>
+      <div className="w-full flex justify-center mt-2">
+        <div className="w-full sm:w-6/12 lg:w-4/12 flex flex-col">
+          <ColoredButton onClick={null} red>
+            Start Recording
+          </ColoredButton>
         </div>
       </div>
     </div>

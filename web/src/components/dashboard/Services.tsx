@@ -130,7 +130,7 @@ export default function Services() {
   return (
     <div>
       <div className="flex flex-row justify-between py-2 items-center">
-        <p className="font-bold">Total Services: {data.length}</p>
+        <p className="text-text-muted">Total: {data.length}</p>
         <input
           type="text"
           placeholder="Filter..."

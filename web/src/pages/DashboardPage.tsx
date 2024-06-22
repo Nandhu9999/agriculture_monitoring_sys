@@ -43,7 +43,8 @@ export default function DashboardPage() {
     imageUrl: currentUser?.photoURL || profileIcon,
   };
 
-  if (!userLoggedIn) {
+  // If Not authenticated
+  if (!userLoggedIn || currentUser == null) {
     return <Navigate to={"/login"} replace={true} />;
   }
 
@@ -64,12 +65,16 @@ export default function DashboardPage() {
       return item;
     }
   });
-  let dashboardName = navigation0.filter(
+  const filteredNavigations = navigation0.filter(
     (item) => item.href === location.pathname
-  )[0]?.name;
-  if (!dashboardName) {
+  );
+  let dashboardName = "";
+  if (filteredNavigations.length) {
+    dashboardName = filteredNavigations[0].name;
+  } else {
     dashboardName = capitalize(location.pathname.split("dashboard/")[1]);
   }
+
   return (
     <>
       {/*

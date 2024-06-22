@@ -7,6 +7,7 @@ const db = require("../src/sqlite.js");
 
 async function imageUploadAccess(req, reply) {
   const { isSimulator, serviceId } = req.body;
+  console.log(isSimulator, serviceId);
 
   if (!serviceId && !isSimulator) {
     return reply.send({ status: "error", reason: "serviceId not provided" });

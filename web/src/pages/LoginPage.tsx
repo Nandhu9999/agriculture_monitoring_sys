@@ -26,6 +26,7 @@ export default function LoginPage() {
             console.log("No Internet Connection");
           }
           setErrorMessage(error.message);
+          setIsSigningIn(false);
         }
       );
     }
@@ -66,11 +67,6 @@ export default function LoginPage() {
           </nav>
         </header>
         <div className="md:w-96 sm:mx-auto sm:w-full">
-          {/* <img
-            className="mx-auto h-10 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=green&shade=500"
-            alt="Your Company"
-          /> */}
           <img className="mx-auto h-20 w-auto" src="/icon.png" alt="AMS" />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Login to your account
