@@ -4,6 +4,7 @@ import { Suspense, lazy } from "react";
 import {
   createBrowserRouter,
   Link,
+  Navigate,
   Outlet,
   RouterProvider,
 } from "react-router-dom";
@@ -15,8 +16,8 @@ const LoginPage = lazy(() => import("./pages/LoginPage"));
 const RegisterPage = lazy(() => import("./pages/RegisterPage"));
 const DashboardPage = lazy(() => import("./pages/DashboardPage"));
 const Dashboard = lazy(() => import("./components/dashboard/Dashboard"));
-const Services = lazy(() => import("./components/dashboard/Services"));
-const ServicesItem = lazy(() => import("./components/dashboard/ServicesItem"));
+const Groups = lazy(() => import("./components/dashboard/Groups"));
+const GroupsItem = lazy(() => import("./components/dashboard/GroupsItem"));
 const Modules = lazy(() => import("./components/dashboard/Modules"));
 const ModulesItem = lazy(() => import("./components/dashboard/ModulesItem"));
 const Simulation = lazy(() => import("./components/dashboard/Simulation"));
@@ -33,8 +34,8 @@ const router = createBrowserRouter([
           <div className="fixed top-0 bg-blue-200 hidden justify-center flex-wrap gap-2 px-2">
             |<Link to="/">Home</Link>|<Link to="/login">Login</Link>|
             <Link to="/register">Register</Link>|
-            <Link to="/dashboard">Dashboard</Link>|
-            <Link to="/dashboard/settings">Settings</Link>|
+            <Link to="/app/dashboard">Dashboard</Link>|
+            <Link to="/app/settings">Settings</Link>|
             <Link to="/errorpage">Error</Link>|
           </div>
         )}
@@ -79,7 +80,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/dashboard",
+        path: "/app",
         element: (
           <Suspense fallback={<div>Loading...</div>}>
             <DashboardPage />
@@ -87,7 +88,11 @@ const router = createBrowserRouter([
         ),
         children: [
           {
-            path: "/dashboard/",
+            path: "/app/",
+            element: <Navigate to={"/app/dashboard"} replace={true} />,
+          },
+          {
+            path: "/app/dashboard",
             element: (
               <Suspense fallback={<div>Loading...</div>}>
                 <Dashboard />
@@ -95,23 +100,23 @@ const router = createBrowserRouter([
             ),
           },
           {
-            path: "/dashboard/services",
+            path: "/app/groups",
             element: (
               <Suspense fallback={<div>Loading...</div>}>
-                <Services />
+                <Groups />
               </Suspense>
             ),
           },
           {
-            path: "/dashboard/service/:serviceId",
+            path: "/app/group/:groupId",
             element: (
               <Suspense fallback={<div>Loading...</div>}>
-                <ServicesItem />
+                <GroupsItem />
               </Suspense>
             ),
           },
           {
-            path: "/dashboard/modules",
+            path: "/app/modules",
             element: (
               <Suspense fallback={<div>Loading...</div>}>
                 <Modules />
@@ -119,7 +124,7 @@ const router = createBrowserRouter([
             ),
           },
           {
-            path: "/dashboard/module/:moduleId",
+            path: "/app/module/:moduleId",
             element: (
               <Suspense fallback={<div>Loading...</div>}>
                 <ModulesItem />
@@ -127,7 +132,7 @@ const router = createBrowserRouter([
             ),
           },
           {
-            path: "/dashboard/simulation",
+            path: "/app/simulation",
             element: (
               <Suspense fallback={<div>Loading...</div>}>
                 <Simulation />
@@ -135,7 +140,7 @@ const router = createBrowserRouter([
             ),
           },
           {
-            path: "/dashboard/reports",
+            path: "/app/reports",
             element: (
               <Suspense fallback={<div>Loading...</div>}>
                 <Reports />
@@ -143,7 +148,7 @@ const router = createBrowserRouter([
             ),
           },
           {
-            path: "/dashboard/settings",
+            path: "/app/settings",
             element: (
               <Suspense fallback={<div>Loading...</div>}>
                 <Settings />

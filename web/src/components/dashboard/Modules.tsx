@@ -72,7 +72,7 @@ function OpenModuleButton({ id }: { id: number }) {
       <ColoredButton onClick={editItem} pink small>
         Edit
       </ColoredButton>
-      <ColoredButton to={`/dashboard/module/${id}`} anchor small>
+      <ColoredButton to={`/app/module/${id}`} anchor small>
         Open
       </ColoredButton>
     </>

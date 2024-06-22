@@ -19,10 +19,10 @@ export async function ping() {
   }
 }
 
-export async function getUser() {
+export async function getUserId() {
   try {
     const token = await auth.currentUser?.getIdToken();
-    const response = await fetch(`${apiUrl}/getUser`, {
+    const response = await fetch(`${apiUrl}/getUserId`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

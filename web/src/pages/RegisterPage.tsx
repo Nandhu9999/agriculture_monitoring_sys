@@ -48,7 +48,7 @@ export default function RegisterPage() {
   };
 
   if (userLoggedIn) {
-    return <Navigate to={"/dashboard"} replace={true} />;
+    return <Navigate to={"/app/dashboard"} replace={true} />;
   }
 
   return (

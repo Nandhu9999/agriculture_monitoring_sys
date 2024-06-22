@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../../contexts/authContext";
 import { useEffect, useState } from "react";
-import { apiUrl, getUser, ping } from "../../services/api";
+import { apiUrl, getUserId, ping } from "../../services/api";
 import Snackbar from "../common/Snackbar";
 
 export default function Settings() {
@@ -30,12 +30,12 @@ export default function Settings() {
     showSnackbar("PING RESPONSE: " + JSON.stringify(response));
   }
   async function callGetUser() {
-    const response = await getUser();
+    const response = await getUserId();
     showSnackbar("USER: " + JSON.stringify(response));
   }
 
   return (
-    <div className="break-all flex flex-col gap-1">
+    <div className="break-all w-full flex flex-col gap-1">
       <div>
         <span className="font-bold">Name:</span> {currentUser?.displayName}
       </div>

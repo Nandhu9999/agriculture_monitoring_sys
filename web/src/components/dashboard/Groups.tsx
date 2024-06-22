@@ -9,7 +9,7 @@ type TableRow = {
   Action: JSX.Element;
 };
 
-function OpenServiceButton({ id }: { id: number }) {
+function OpenGroupButton({ id }: { id: number }) {
   const [open, setOpen] = useState(false);
   const [edit, setEdit] = useState(false);
 
@@ -31,7 +31,7 @@ function OpenServiceButton({ id }: { id: number }) {
         />
       </div>
     ),
-    title: "Service Information",
+    title: "Group Information",
     buttons: (
       <>
         <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
@@ -66,51 +66,31 @@ function OpenServiceButton({ id }: { id: number }) {
         open={open}
         setOpen={setOpen}
       >
-        Information about the Service... lorem lorem lorem lorem lorem lorem
-        lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem
+        Information about the Group... lorem lorem lorem lorem lorem lorem lorem
+        lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem
       </InfoModal>
       <ColoredButton onClick={editItem} pink small>
         Edit
       </ColoredButton>
-      <ColoredButton to={`/dashboard/service/${id}`} anchor small>
+      <ColoredButton to={`/app/group/${id}`} anchor small>
         Open
       </ColoredButton>
     </>
   );
 }
 
-export default function Services() {
+export default function Groups() {
   const headers: (keyof TableRow)[] = ["Id", "Name", "Action"];
   const data: TableRow[] = [
     {
       Id: 1,
-      Name: "Service#1",
-      Action: <OpenServiceButton id={1} />,
+      Name: "Group#1",
+      Action: <OpenGroupButton id={1} />,
     },
     {
       Id: 2,
-      Name: "Service#2",
-      Action: <OpenServiceButton id={2} />,
-    },
-    {
-      Id: 3,
-      Name: "Service#3",
-      Action: <OpenServiceButton id={3} />,
-    },
-    {
-      Id: 4,
-      Name: "Service#4",
-      Action: <OpenServiceButton id={4} />,
-    },
-    {
-      Id: 5,
-      Name: "Service#5",
-      Action: <OpenServiceButton id={5} />,
-    },
-    {
-      Id: 6,
-      Name: "Service#6",
-      Action: <OpenServiceButton id={6} />,
+      Name: "Group#2",
+      Action: <OpenGroupButton id={2} />,
     },
   ];
 

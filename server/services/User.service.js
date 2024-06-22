@@ -26,4 +26,10 @@ module.exports = {
       return null;
     }
   },
+
+  async getUserId(req) {
+    const token = this.getToken(req);
+    const { uid } = await this.getDecodedTokenAsync(token);
+    return uid;
+  },
 };

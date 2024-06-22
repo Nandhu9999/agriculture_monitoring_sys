@@ -3,12 +3,12 @@ import { primaryService } from "../../appConfig";
 import MapComponent from "../shared/MapComponent";
 import { Suspense } from "react";
 
-export default function ServicesItem() {
-  const { serviceId } = useParams();
-  console.log(serviceId);
+export default function GroupsItem() {
+  const { groupId } = useParams();
+  console.log(groupId);
   return (
     <div>
-      <p className="font-semibold text-gray-500">Service Id: {serviceId}</p>
+      <p className="font-semibold text-gray-500">Group Id: {groupId}</p>
       <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-6 gap-y-6 lg:mx-0 lg:max-w-none md:max-w-none md:mx-0 md:grid-cols-2 lg:grid-cols-3 pt-2">
         <SquareCard
           key={primaryService.linegraph.id}

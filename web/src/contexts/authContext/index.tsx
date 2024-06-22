@@ -11,6 +11,7 @@ import { auth } from "../../firebase/firebase";
 interface AuthContextType {
   currentUser: User | null;
   userLoggedIn: boolean;
+  loggedInTime: number;
   loading: boolean;
 }
 
@@ -30,6 +31,7 @@ interface AuthProviderProps {
 export function AuthProvider({ children }: AuthProviderProps) {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [userLoggedIn, setUserLoggedIn] = useState<boolean>(false);
+  const [loggedInTime, setLoggedInTime] = useState<number>(Date.now());
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -41,6 +43,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     if (user) {
       setCurrentUser(user);
       setUserLoggedIn(true);
+      setLoggedInTime(Date.now());
     } else {
       setCurrentUser(null);
       setUserLoggedIn(false);
@@ -48,7 +51,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setLoading(false);
   }
 
-  const value = { currentUser, userLoggedIn, loading };
+  const value = { currentUser, userLoggedIn, loggedInTime, loading };
   return (
     <AuthContext.Provider value={value}>
       {!loading && children}

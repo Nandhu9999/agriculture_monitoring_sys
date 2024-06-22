@@ -22,11 +22,11 @@ import { doSignOut } from "../firebase/auth";
 import profileIcon from "../assets/profileIcon.jpg";
 
 const navigation0 = [
-  { name: "Dashboard", href: "/dashboard", current: false },
-  { name: "Services", href: "/dashboard/services", current: false },
-  { name: "Modules", href: "/dashboard/modules", current: false },
-  { name: "Simulation", href: "/dashboard/simulation", current: false },
-  { name: "Reports", href: "/dashboard/reports", current: false },
+  { name: "Dashboard", href: "/app/dashboard", current: false },
+  { name: "Modules", href: "/app/modules", current: false },
+  { name: "Groups", href: "/app/groups", current: false },
+  { name: "Simulation", href: "/app/simulation", current: false },
+  { name: "Reports", href: "/app/reports", current: false },
 ];
 
 function classNames(...classes: string[]) {
@@ -52,13 +52,13 @@ export default function DashboardPage() {
     if (item.href === location.pathname) {
       return { ...item, current: true };
     } else if (
-      item.href === "/dashboard/services" &&
-      location.pathname.startsWith("/dashboard/service/")
+      item.href === "/app/services" &&
+      location.pathname.startsWith("/app/service/")
     ) {
       return { ...item, current: true };
     } else if (
-      item.href === "/dashboard/modules" &&
-      location.pathname.startsWith("/dashboard/module/")
+      item.href === "/app/modules" &&
+      location.pathname.startsWith("/app/module/")
     ) {
       return { ...item, current: true };
     } else {
@@ -72,7 +72,7 @@ export default function DashboardPage() {
   if (filteredNavigations.length) {
     dashboardName = filteredNavigations[0].name;
   } else {
-    dashboardName = capitalize(location.pathname.split("dashboard/")[1]);
+    dashboardName = capitalize(location.pathname.split("app/")[1]);
   }
 
   return (
@@ -160,7 +160,7 @@ export default function DashboardPage() {
                             <MenuItem>
                               {({ focus }) => (
                                 <Link
-                                  to={"/dashboard/settings"}
+                                  to={"/app/settings"}
                                   className={classNames(
                                     focus ? "bg-gray-100" : "",
                                     "block px-4 py-2 text-sm text-gray-700 cursor-pointer"
@@ -265,7 +265,7 @@ export default function DashboardPage() {
                     <DisclosureButton
                       className="block w-full text-left rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                       onClick={() => {
-                        navigate("/dashboard/settings");
+                        navigate("/app/settings");
                       }}
                     >
                       Settings

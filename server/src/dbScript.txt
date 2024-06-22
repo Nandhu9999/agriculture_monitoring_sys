@@ -1,0 +1,25 @@
+# MODULES tbl created on 22/6/2024
+
+CREATE TABLE module (
+    moduleId INTEGER PRIMARY KEY AUTOINCREMENT,
+    moduleName TEXT NOT NULL,
+    createdAt DATETIME DEFAULT (datetime('now')),
+);
+
+CREATE TABLE userModule (
+    userId TEXT NOT NULL,
+    moduleId INTEGER NOT NULL
+)
+
+
+CREATE TABLE service (
+    serviceId INTEGER PRIMARY KEY AUTOINCREMENT,
+    serviceName TEXT NOT NULL,
+    moduleArray TEXT NOT NULL DEFAULT '',
+    createdAt DATETIME DEFAULT (datetime('now')),
+);
+
+CREATE TABLE serviceModule (
+    serviceId TEXT NOT NULL,
+    moduleId INTEGER NOT NULL
+)

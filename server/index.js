@@ -62,11 +62,10 @@ fastify.post("/api/ping", async (req, reply) => {
   return reply.send({ success: true, ms: ping });
 });
 
-fastify.post("/api/getUser", async (req, reply) => {
+fastify.post("/api/getUserId", async (req, reply) => {
   try {
-    const token = UserService.getToken(req);
-    const user = await UserService.getUserDetails(token);
-    return reply.send({ success: true, user: user });
+    const uid = await UserService.getUserId(req);
+    return reply.send({ success: true, uid });
   } catch (err) {
     return reply.send({ success: false, error: err });
   }

@@ -19,7 +19,7 @@ export default function HomePage() {
           </div>
           <div className="flex flex-1 justify-end">
             <Link
-              to={currentUser ? "/dashboard" : "/login"}
+              to={currentUser ? "/app/dashboard" : "/login"}
               className="text-sm font-semibold leading-6 text-gray-900"
             >
               {currentUser ? "Dashboard" : "Login"}{" "}
@@ -54,7 +54,7 @@ export default function HomePage() {
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <Link
-                to={currentUser ? "/dashboard" : "/register"}
+                to={currentUser ? "/app/dashboard" : "/register"}
                 className="rounded-md bg-primary px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary"
               >
                 Get started
