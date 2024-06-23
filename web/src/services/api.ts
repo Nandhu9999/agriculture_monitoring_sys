@@ -1,5 +1,6 @@
+import appConfig from "../appConfig";
 import { auth } from "../firebase/firebase";
-export const apiUrl = "http://localhost:9980";
+export const apiUrl = appConfig.SERVER_API;
 
 export async function ping() {
   try {
