@@ -26,11 +26,13 @@ export default function Dashboard() {
             <div>zzz</div>
           </DashboardCard>
         </div>
-        <DashboardCard title={"Schedule"} isWide>
-          <div className="w-full h-4/5 pt-4">
-            <DashboardChart />
-          </div>
-        </DashboardCard>
+        <div className="h-96 md:h-auto w-full col-span-2">
+          <DashboardCard title={"Schedule"} isWide>
+            <div className="w-full h-4/5 pt-4">
+              <DashboardChart />
+            </div>
+          </DashboardCard>
+        </div>
       </div>
     </div>
   );
