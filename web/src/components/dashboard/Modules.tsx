@@ -111,6 +111,7 @@ export default function Modules() {
     },
   ]);
   const [error, setError] = useState("");
+  const [loadedData, setLoadedData] = useState(false);
 
   async function run() {
     const response = await getUserModules();
@@ -133,6 +134,7 @@ export default function Modules() {
       };
     });
     setData(m_2);
+    setLoadedData(true);
   }
 
   const [filter, setFilter] = useState("");
@@ -157,7 +159,7 @@ export default function Modules() {
   return (
     <div>
       <div className="flex flex-row justify-between py-2 items-center">
-        <p className="text-text-muted">Total: {data.length}</p>
+        <p className="text-text-muted">Total: {loadedData ? data.length : 0}</p>
         <input
           type="text"
           placeholder="Filter..."

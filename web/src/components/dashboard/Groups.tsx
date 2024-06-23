@@ -95,6 +95,7 @@ function OpenGroupButton({ id, data }: { id: number; data: ModuleGroupType }) {
 export default function Groups() {
   const headers: (keyof TableRow)[] = ["Id", "Label", "Action"];
   const [error, setError] = useState("");
+  const [loadedData, setLoadedData] = useState(false);
   const [data, setData] = useState<TableRow[]>([
     {
       Id: <div className="animate-pulse bg-gray-200 flex h-8 rounded-full" />,
@@ -127,6 +128,7 @@ export default function Groups() {
       };
     });
     setData(g_2);
+    setLoadedData(true);
   }
 
   const [filter, setFilter] = useState("");
@@ -151,7 +153,7 @@ export default function Groups() {
   return (
     <div>
       <div className="flex flex-row justify-between py-2 items-center">
-        <p className="text-text-muted">Total: {data.length}</p>
+        <p className="text-text-muted">Total: {loadedData ? data.length : 0}</p>
         <input
           type="text"
           placeholder="Filter..."
