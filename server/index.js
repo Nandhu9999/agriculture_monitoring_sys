@@ -1,4 +1,3 @@
-const path = require("path");
 const fastify = require("fastify")({ logger: false });
 const db = require("./src/mysqldb.js");
 const config = require("./appConfig.js");

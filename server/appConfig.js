@@ -24,6 +24,8 @@ module.exports = {
     database: "amsdb",
   },
 
+  FB_SERVICE_ACCOUNT: process.env.FB_SERVICE_ACCOUNT,
+
   getUniqueId: (n = 8) => {
     return crypto.randomBytes(n).toString("hex");
   },
