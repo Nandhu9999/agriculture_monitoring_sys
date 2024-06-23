@@ -1,8 +1,9 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../../contexts/authContext";
 import { useEffect, useState } from "react";
-import { apiUrl, getUserId, ping } from "../../services/api";
+import { apiUrl, getUserId, getUserModules, ping } from "../../services/api";
 import Snackbar from "../common/Snackbar";
+import GitCommit from "../shared/GitCommit";
 
 export default function Settings() {
   const { currentUser } = useAuth();
@@ -34,6 +35,11 @@ export default function Settings() {
     showSnackbar("USER: " + JSON.stringify(response));
   }
 
+  async function callGetUserModules() {
+    const response = await getUserModules();
+    showSnackbar("MODULES: " + JSON.stringify(response));
+  }
+
   return (
     <div className="break-all w-full flex flex-col gap-1">
       <div>
@@ -41,6 +47,9 @@ export default function Settings() {
       </div>
       <div>
         <span className="font-bold">Email:</span> {currentUser?.email}
+      </div>
+      <div>
+        <span className="font-bold">Firebase ID:</span> {currentUser?.uid}
       </div>
       <div>
         <span className="font-bold">API URL:</span> {apiUrl}
@@ -64,7 +73,19 @@ export default function Settings() {
         </button>
       </div>
       <div>
+        <span className="font-bold">Modules:</span>{" "}
+        <button
+          onClick={callGetUserModules}
+          className="border-2 px-1 rounded-lg active:scale-95"
+        >
+          Get Modules
+        </button>
+      </div>
+      <div>
         <span className="font-bold">Token:</span> {token}
+      </div>
+      <div className="flex justify-center">
+        <GitCommit />
       </div>
       {snackbarMessage && <Snackbar message={snackbarMessage} />}
     </div>

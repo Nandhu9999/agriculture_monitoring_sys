@@ -16,8 +16,8 @@ const TableList: React.FC<TableProps> = ({ headers, data: filteredData }) => {
                   index === 0 ? "text-left md:text-center px-3" : "text-center"
                 } ${
                   index === headers.length - 1
-                    ? "text-center px-2 pr-4"
-                    : "px-4"
+                    ? "text-center px-2 pr-2"
+                    : "pr-2"
                 }`}
               >
                 {header}
@@ -37,8 +37,8 @@ const TableList: React.FC<TableProps> = ({ headers, data: filteredData }) => {
                       : "text-center"
                   } ${
                     index === headers.length - 1
-                      ? "text-center px-2 grid grid-cols-1 md:block"
-                      : "px-4"
+                      ? "text-center grid grid-cols-1 md:block"
+                      : "pr-2"
                   }`}
                 >
                   {row[header]}

@@ -1,4 +1,5 @@
-import { FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
+import GoogleIcon from "../assets/google_icon.png";
 import { useAuth } from "../contexts/authContext";
 import {
   doCreateUserWithEmailAndPassword,
@@ -6,6 +7,7 @@ import {
 } from "../firebase/auth";
 import { FirebaseError } from "firebase/app";
 import { Link, Navigate } from "react-router-dom";
+import InputTag from "../components/shared/InputTag";
 
 export default function RegisterPage() {
   const { userLoggedIn } = useAuth();
@@ -48,7 +50,13 @@ export default function RegisterPage() {
   };
 
   if (userLoggedIn) {
-    return <Navigate to={"/app/dashboard"} replace={true} />;
+    return (
+      <Navigate
+        to={"/app/dashboard"}
+        state={{ fromHome: true }}
+        replace={true}
+      />
+    );
   }
 
   return (
@@ -86,15 +94,16 @@ export default function RegisterPage() {
                 Email address
               </label>
               <div className="mt-2">
-                <input
+                <InputTag
                   id="email"
                   name="email"
                   type="email"
                   autoComplete="email"
                   required
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setEmail(e.target.value)
+                  }
                 />
               </div>
             </div>
@@ -109,15 +118,16 @@ export default function RegisterPage() {
                 </label>
               </div>
               <div className="mt-2">
-                <input
+                <InputTag
                   id="password"
                   name="password"
                   type="password"
                   autoComplete="current-password"
                   required
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setPassword(e.target.value)
+                  }
                 />
               </div>
             </div>
@@ -132,15 +142,16 @@ export default function RegisterPage() {
                 </label>
               </div>
               <div className="mt-2">
-                <input
+                <InputTag
                   id="confirm-password"
                   name="confirm-password"
                   type="password"
                   autoComplete="confirm-password"
                   required
                   value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setConfirmPassword(e.target.value)
+                  }
                 />
               </div>
             </div>
@@ -174,11 +185,7 @@ export default function RegisterPage() {
                 disabled={isRegistering}
                 className="inline-flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
               >
-                <img
-                  className="h-6 w-6 mr-2"
-                  src="https://static-00.iconduck.com/assets.00/google-icon-2048x2048-pks9lbdv.png"
-                  alt="Google"
-                />
+                <img className="h-6 w-6 mr-2" src={GoogleIcon} alt="Google" />
                 <span>{isRegistering ? "Signing in..." : "Google"}</span>
               </button>
             </div>

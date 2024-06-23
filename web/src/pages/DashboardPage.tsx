@@ -17,16 +17,26 @@ import {
   MenuItems,
   Transition,
 } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  Bars3Icon,
+  BellIcon,
+  XMarkIcon,
+  HomeIcon,
+  ChevronRightIcon,
+} from "@heroicons/react/24/outline";
 import { doSignOut } from "../firebase/auth";
 import profileIcon from "../assets/profileIcon.jpg";
+import { useEffect, useState } from "react";
+import { userJoined } from "../services/api";
+import Snackbar from "../components/common/Snackbar";
 
 const navigation0 = [
   { name: "Dashboard", href: "/app/dashboard", current: false },
   { name: "Modules", href: "/app/modules", current: false },
   { name: "Groups", href: "/app/groups", current: false },
-  { name: "Simulation", href: "/app/simulation", current: false },
+  { name: "Simulate", href: "/app/simulate", current: false },
   { name: "Reports", href: "/app/reports", current: false },
+  { name: "Settings", href: "/app/settings", current: false },
 ];
 
 function classNames(...classes: string[]) {
@@ -52,8 +62,8 @@ export default function DashboardPage() {
     if (item.href === location.pathname) {
       return { ...item, current: true };
     } else if (
-      item.href === "/app/services" &&
-      location.pathname.startsWith("/app/service/")
+      item.href === "/app/groups" &&
+      location.pathname.startsWith("/app/group/")
     ) {
       return { ...item, current: true };
     } else if (
@@ -65,15 +75,59 @@ export default function DashboardPage() {
       return item;
     }
   });
+
   const filteredNavigations = navigation0.filter(
     (item) => item.href === location.pathname
   );
   let dashboardName = "";
+  const breadcrumbs: any[] = [
+    <Link to={"/"} replace={true}>
+      <HomeIcon className="w-4 h-4" />
+    </Link>,
+  ];
+  let bcPrefix = "";
   if (filteredNavigations.length) {
     dashboardName = filteredNavigations[0].name;
+    breadcrumbs.push(dashboardName);
   } else {
     dashboardName = capitalize(location.pathname.split("app/")[1]);
+    if (dashboardName.toUpperCase().startsWith("GROUP")) {
+      breadcrumbs.push(
+        <Link to={"/app/groups"} replace={true}>
+          Groups
+        </Link>
+      );
+      bcPrefix = "group/";
+    } else if (dashboardName.toUpperCase().startsWith("MODULE")) {
+      breadcrumbs.push(
+        <Link to={"/app/modules"} replace={true}>
+          Modules
+        </Link>
+      );
+      bcPrefix = "module/";
+    }
+
+    breadcrumbs.push(
+      <Link to={`/app/${""}${dashboardName.toLowerCase()}`}>
+        {dashboardName}
+      </Link>
+    );
   }
+  const [snackbarMessage, setSnackbarMessage] = useState<string | null>(null);
+  useEffect(() => {
+    async function run() {
+      const response = await userJoined();
+      if (response.success) {
+        setSnackbarMessage("Successfully authenticated user");
+        setTimeout(() => {
+          setSnackbarMessage(null);
+        }, 3000);
+      }
+    }
+    if (location.state?.fromHome) {
+      run();
+    }
+  }, []);
 
   return (
     <>
@@ -288,10 +342,22 @@ export default function DashboardPage() {
         </Disclosure>
 
         <header className="bg-white shadow">
-          <div className="mx-auto max-w-7xl py-6 px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl py-6 pb-3 px-4 sm:px-6 lg:px-8">
             <h1 className="text-3xl font-bold tracking-tight text-gray-900">
               {dashboardName}
             </h1>
+            <h2 className="h-6 flex gap-2 text-sm text-text-muted">
+              {breadcrumbs.map((bc, idx) => (
+                <div key={idx} className="flex flex-row gap-2 items-center">
+                  {idx ? (
+                    <div>
+                      <ChevronRightIcon className="w-4 h-4" />
+                    </div>
+                  ) : null}
+                  <div>{bc}</div>
+                </div>
+              ))}
+            </h2>
           </div>
         </header>
         <main>
@@ -299,6 +365,7 @@ export default function DashboardPage() {
             <Outlet />
           </div>
         </main>
+        {snackbarMessage && <Snackbar message={snackbarMessage} />}
       </div>
     </>
   );

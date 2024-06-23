@@ -7,7 +7,7 @@ export default function Dashboard() {
     <div>
       <div>
         Hello{" "}
-        <span className="font-bold capitalize">{currentUser?.displayName}</span>
+        <span className="font-bold uppercase">{currentUser?.displayName}</span>
       </div>
       <div>
         Logged in at: <span className="font-bold">{timeInText}</span>

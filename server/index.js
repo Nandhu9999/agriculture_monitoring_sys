@@ -1,6 +1,6 @@
 const path = require("path");
 const fastify = require("fastify")({ logger: false });
-// const db = require("./src/sqlite.js");
+const db = require("./src/mysqldb.js");
 const config = require("./appConfig.js");
 
 fastify.register(require("@fastify/formbody"));
@@ -62,11 +62,70 @@ fastify.post("/api/ping", async (req, reply) => {
   return reply.send({ success: true, ms: ping });
 });
 
+fastify.post("/api/userJoined", async (req, reply) => {
+  const { firebaseId, email, name } = req.body;
+  console.log(firebaseId, email, name);
+  try {
+    const { uid: firebaseIdServer } = await UserService.getUserId(req);
+    if (firebaseId != firebaseIdServer) {
+      throw new Error("Firebase ID did not match!");
+    }
+    const userExists = await db.doesUserExist(firebaseId);
+    let userId;
+    if (!userExists) {
+      userId = await db.createUser(firebaseId, email, name);
+    } else {
+      userId = (await db.getUser(firebaseId)).userId;
+    }
+
+    return reply.send({ success: true, userId });
+  } catch (err) {
+    console.log(err);
+    return reply.send({ success: false, error: err.message });
+  }
+});
+
 fastify.post("/api/getUserId", async (req, reply) => {
   try {
-    const uid = await UserService.getUserId(req);
-    return reply.send({ success: true, uid });
+    const firebaseId = await UserService.getUserId(req);
+    return reply.send({ success: true, firebaseId });
   } catch (err) {
+    return reply.send({ success: false, error: err });
+  }
+});
+
+fastify.get("/api/userModules", async (req, reply) => {
+  try {
+    const { uid: firebaseId } = await UserService.getUserId(req);
+    const { userId } = await db.getUser(firebaseId);
+    const modules = await db.getUserModules(userId);
+    return reply.send({ success: true, modules });
+  } catch (err) {
+    console.log(err);
+    return reply.send({ success: false, error: err });
+  }
+});
+
+fastify.put("/api/userModule/:moduleId", async (req, reply) => {
+  try {
+    const { uid: firebaseId } = await UserService.getUserId(req);
+    const { userId } = await db.getUser(firebaseId);
+    const modules = await db.getUserModules(userId);
+    return reply.send({ success: true, modules });
+  } catch (err) {
+    console.log(err);
+    return reply.send({ success: false, error: err });
+  }
+});
+
+fastify.get("/api/moduleGroups", async (req, reply) => {
+  try {
+    const { uid: firebaseId } = await UserService.getUserId(req);
+    const { userId } = await db.getUser(firebaseId);
+    const groups = await db.getUserModulesGroups(userId);
+    return reply.send({ success: true, groups });
+  } catch (err) {
+    console.log(err);
     return reply.send({ success: false, error: err });
   }
 });

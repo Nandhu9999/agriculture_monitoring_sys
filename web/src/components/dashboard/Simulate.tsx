@@ -2,10 +2,10 @@ import { useState } from "react";
 import ColoredButton from "../common/ColoredButton";
 import { scanUploadImage } from "../../services/api";
 
-export default function Simulation() {
-  const [simType, setSimType] = useState<"imageScan" | "periodicImaging">(
-    "imageScan"
-  );
+export default function Simulate() {
+  const [simType, setSimType] = useState<
+    "imageScan" | "periodicImaging" | "weatherData"
+  >("imageScan");
   return (
     <div>
       <div className="flex gap-4 mb-2 select-none">
@@ -25,9 +25,18 @@ export default function Simulation() {
         >
           Periodic Image
         </span>
+        <span
+          onClick={() => setSimType("weatherData")}
+          className={`${
+            simType === "weatherData" ? "border-b-4 border-primary" : ""
+          } cursor-pointer`}
+        >
+          Weather Data
+        </span>
       </div>
       {simType === "imageScan" && <SimulationImageScan />}
       {simType === "periodicImaging" && <SimulationPeriodicImaging />}
+      {simType === "weatherData" && <SimulationWeatherData />}
     </div>
   );
 }
@@ -210,6 +219,14 @@ function SimulationPeriodicImaging() {
           </ColoredButton>
         </div>
       </div>
+    </div>
+  );
+}
+
+function SimulationWeatherData() {
+  return (
+    <div className="mx-auto">
+      <div>some weather data</div>
     </div>
   );
 }

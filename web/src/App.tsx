@@ -20,7 +20,7 @@ const Groups = lazy(() => import("./components/dashboard/Groups"));
 const GroupsItem = lazy(() => import("./components/dashboard/GroupsItem"));
 const Modules = lazy(() => import("./components/dashboard/Modules"));
 const ModulesItem = lazy(() => import("./components/dashboard/ModulesItem"));
-const Simulation = lazy(() => import("./components/dashboard/Simulation"));
+const Simulate = lazy(() => import("./components/dashboard/Simulate"));
 const Reports = lazy(() => import("./components/dashboard/Reports"));
 const Settings = lazy(() => import("./components/dashboard/Settings"));
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
@@ -132,10 +132,10 @@ const router = createBrowserRouter([
             ),
           },
           {
-            path: "/app/simulation",
+            path: "/app/simulate",
             element: (
               <Suspense fallback={<div>Loading...</div>}>
-                <Simulation />
+                <Simulate />
               </Suspense>
             ),
           },

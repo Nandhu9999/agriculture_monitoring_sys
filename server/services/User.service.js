@@ -1,6 +1,5 @@
 const fs = require("fs");
 const path = require("path");
-const appConfig = require("../appConfig");
 const firebaseAdmin = require("../firebase/firebase-config.js");
 
 module.exports = {
@@ -29,7 +28,7 @@ module.exports = {
 
   async getUserId(req) {
     const token = this.getToken(req);
-    const { uid } = await this.getDecodedTokenAsync(token);
-    return uid;
+    const firebaseId = await this.getDecodedTokenAsync(token);
+    return firebaseId;
   },
 };

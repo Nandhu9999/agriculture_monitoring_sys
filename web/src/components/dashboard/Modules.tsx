@@ -3,13 +3,15 @@ import TableList from "../shared/TableList";
 import InfoModal from "../shared/InfoModal";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import ColoredButton from "../common/ColoredButton";
+import { getUserModules } from "../../services/api";
+import { ModuleType } from "../../types";
 type TableRow = {
-  Id: number;
-  Name: string;
+  Id: JSX.Element;
+  Label: JSX.Element;
   Action: JSX.Element;
 };
 
-function OpenModuleButton({ id }: { id: number }) {
+function OpenModuleButton({ id, data }: { id: number; data: ModuleType }) {
   const [open, setOpen] = useState(false);
   const [edit, setEdit] = useState(false);
 
@@ -31,7 +33,7 @@ function OpenModuleButton({ id }: { id: number }) {
         />
       </div>
     ),
-    title: "Service Information",
+    title: "Module Information",
     buttons: (
       <>
         <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
@@ -43,21 +45,21 @@ function OpenModuleButton({ id }: { id: number }) {
             Okay
           </button>
 
-          <button
+          {/* <button
             type="button"
             className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
             onClick={() => setOpen(false)}
             data-autofocus
           >
             Cancel
-          </button>
+          </button> */}
         </div>
       </>
     ),
   };
 
   return (
-    <>
+    <div className="flex flex-col md:flex-row gap-2 justify-center">
       <ColoredButton onClick={openInfo} blue small>
         Info
       </ColoredButton>
@@ -66,8 +68,24 @@ function OpenModuleButton({ id }: { id: number }) {
         open={open}
         setOpen={setOpen}
       >
-        Information about the Module... lorem lorem lorem lorem lorem lorem
-        lorem
+        <div className="flex flex-col w-full">
+          <span className="font-bold w-full block">{data.moduleName}</span>
+          <span className="border-2 p-1 border-gray-200 rounded-lg bg-gray-100">
+            {"#" + data.deviceId}
+          </span>
+          <span className="pt-4 mb-2">{data.description}</span>
+          <code className="whitespace-break-spaces text-left border-2 p-2 rounded-md">
+            {JSON.stringify(data.values, null, 2)}
+          </code>
+          <div className="flex flex-col items-start">
+            <span>
+              <span className="font-bold">Creation Date:</span> {data.createdAt}
+            </span>
+            <span>
+              <span className="font-bold">Updated On:</span> {data.updatedAt}
+            </span>
+          </div>
+        </div>
       </InfoModal>
       <ColoredButton onClick={editItem} pink small>
         Edit
@@ -75,68 +93,54 @@ function OpenModuleButton({ id }: { id: number }) {
       <ColoredButton to={`/app/module/${id}`} anchor small>
         Open
       </ColoredButton>
-    </>
+    </div>
   );
 }
 
 export default function Modules() {
-  const headers: (keyof TableRow)[] = ["Id", "Name", "Action"];
-  const data: TableRow[] = [
+  const headers: (keyof TableRow)[] = ["Id", "Label", "Action"];
+  const [data, setData] = useState<TableRow[]>([
     {
-      Id: 1,
-      Name: "Module#1",
-      Action: <OpenModuleButton id={1} />,
+      Id: <div className="animate-pulse bg-gray-200 flex h-8 rounded-full" />,
+      Label: (
+        <div className="animate-pulse bg-gray-200 flex h-8 rounded-full" />
+      ),
+      Action: (
+        <div className="animate-pulse bg-gray-200 flex h-8 rounded-full" />
+      ),
     },
-    {
-      Id: 2,
-      Name: "Module#2",
-      Action: <OpenModuleButton id={2} />,
-    },
-    {
-      Id: 3,
-      Name: "Module#3",
-      Action: <OpenModuleButton id={3} />,
-    },
-    {
-      Id: 4,
-      Name: "Module#4",
-      Action: <OpenModuleButton id={4} />,
-    },
-    {
-      Id: 5,
-      Name: "Module#5",
-      Action: <OpenModuleButton id={5} />,
-    },
-    {
-      Id: 6,
-      Name: "Module#6",
-      Action: <OpenModuleButton id={6} />,
-    },
-    {
-      Id: 7,
-      Name: "Module#7",
-      Action: <OpenModuleButton id={7} />,
-    },
-    {
-      Id: 8,
-      Name: "Module#8",
-      Action: <OpenModuleButton id={8} />,
-    },
-    {
-      Id: 9,
-      Name: "Module#9",
-      Action: <OpenModuleButton id={9} />,
-    },
-    {
-      Id: 10,
-      Name: "Module#10",
-      Action: <OpenModuleButton id={10} />,
-    },
-  ];
+  ]);
+  const [error, setError] = useState("");
+
+  async function run() {
+    const response = await getUserModules();
+
+    if (!response.success) {
+      setError("An error occurred");
+      return;
+    }
+    const { modules: m_1 } = response;
+    const m_2 = m_1.map((m: ModuleType, idx: number): TableRow => {
+      return {
+        Id: <span>{idx + 1}</span>,
+        Label: (
+          <div className="flex flex-col">
+            <span className="font-bold">{m.moduleName}</span>
+            <span className="whitespace-break-spaces">{m.description}</span>
+          </div>
+        ),
+        Action: <OpenModuleButton id={idx + 1} data={m} />,
+      };
+    });
+    setData(m_2);
+  }
 
   const [filter, setFilter] = useState("");
   const [filteredData, setFilteredData] = useState<TableRow[]>(data);
 
+  useEffect(() => {
+    run();
+  }, []);
   useEffect(() => {
     setFilteredData(
       data.filter((row) =>
@@ -145,8 +149,11 @@ export default function Modules() {
         )
       )
     );
-  }, [filter]);
+  }, [data, filter]);
 
+  if (error) {
+    return <div>{error}</div>;
+  }
   return (
     <div>
       <div className="flex flex-row justify-between py-2 items-center">

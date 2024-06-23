@@ -63,7 +63,7 @@ function SquareCard({ children, card, isWide }: any) {
         </div>
         <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
           <span className="w-full">
-            <span className="absolute inset-0 w-full" />
+            <span className="w-full" />
             {title}
           </span>
         </h3>

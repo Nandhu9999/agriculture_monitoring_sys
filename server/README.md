@@ -13,7 +13,9 @@
 
 ## SQL Table Mapping
 
-![sql tables](imgs/sqltables.png)
+![sql tables](imgs/sqltablesv4.png)
+
+generated from https://sqldbm.com
 
 data in the modules table will store values such as battery and latest dht values and so on...
 
@@ -21,6 +23,8 @@ data in the modules table will store values such as battery and latest dht value
 module.data = {
     deviceType: "rpi" | "esp",
     battery: 42,
+    lat: 11.2343,
+    lng: 24.1876,
     values: {
         temperature: 28.0,
         humidity: 40,
@@ -28,3 +32,5 @@ module.data = {
     },
 }
 ```
+
+using modulesArray is a bad idea but im doing it for the sake of simplicity because reality wise there will not be that many devices inside one group..

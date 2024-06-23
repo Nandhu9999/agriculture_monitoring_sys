@@ -18,6 +18,14 @@ module.exports = {
     pass: process.env.AMRITATREES_APP_PASS,
   },
 
+  DB: {
+    host: process.env.AIVEN_DB_HOST,
+    port: process.env.AIVEN_DB_PORT,
+    user: process.env.AIVEN_DB_USER,
+    password: process.env.AIVEN_DB_PASS,
+    database: "amsdb",
+  },
+
   getUniqueId: (n = 8) => {
     return crypto.randomBytes(n).toString("hex");
   },
