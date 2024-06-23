@@ -107,6 +107,7 @@ export default function DashboardPage() {
       bcPrefix = "module/";
     }
 
+    console.log(bcPrefix);
     breadcrumbs.push(
       <Link to={`/app/${""}${dashboardName.toLowerCase()}`}>
         {dashboardName}
