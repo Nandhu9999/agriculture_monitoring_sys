@@ -362,7 +362,7 @@ export default function DashboardPage() {
           </div>
         </header>
         <main>
-          <div className="mx-auto max-w-7xl py-6 px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl py-6 px-2 sm:px-6 lg:px-8">
             <Outlet />
           </div>
         </main>

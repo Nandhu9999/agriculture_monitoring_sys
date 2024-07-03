@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../../contexts/authContext";
 import { useEffect, useState } from "react";
-import { apiUrl, getUserId, getUserModules, ping } from "../../services/api";
+import { apiUrl, getUserId, ping } from "../../services/api";
 import Snackbar from "../common/Snackbar";
 import GitCommit from "../shared/GitCommit";
 
@@ -35,11 +35,6 @@ export default function Settings() {
     showSnackbar("USER: " + JSON.stringify(response));
   }
 
-  async function callGetUserModules() {
-    const response = await getUserModules();
-    showSnackbar("MODULES: " + JSON.stringify(response));
-  }
-
   return (
     <div className="break-all w-full flex flex-col gap-1">
       <div>
@@ -70,15 +65,6 @@ export default function Settings() {
           className="border-2 px-1 rounded-lg active:scale-95"
         >
           Get User
-        </button>
-      </div>
-      <div>
-        <span className="font-bold">Modules:</span>{" "}
-        <button
-          onClick={callGetUserModules}
-          className="border-2 px-1 rounded-lg active:scale-95"
-        >
-          Get Modules
         </button>
       </div>
       <div>

@@ -59,6 +59,7 @@ export default function LoginPage() {
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+        {/* FIXED HEADER NAV */}
         <header className="absolute inset-x-0 top-0 z-50">
           <nav
             className="flex items-center justify-between p-6 lg:px-8"
@@ -74,6 +75,8 @@ export default function LoginPage() {
             </div>
           </nav>
         </header>
+
+        {/* TITLE */}
         <div className="md:w-96 sm:mx-auto sm:w-full">
           <img className="mx-auto h-20 w-auto" src="/icon.png" alt="AMS" />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
@@ -83,6 +86,7 @@ export default function LoginPage() {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form onSubmit={onSubmit} className="space-y-2">
+            {/* EMAIL INPUT TAG */}
             <div>
               <label
                 htmlFor="email"
@@ -105,6 +109,7 @@ export default function LoginPage() {
               </div>
             </div>
 
+            {/* PASSWORD INPUT TAG */}
             <div>
               <div className="flex items-center justify-between">
                 <label
@@ -113,6 +118,12 @@ export default function LoginPage() {
                 >
                   Password
                 </label>
+                <Link
+                  to="/forgot"
+                  className="text-sm text-primary hover:text-secondary"
+                >
+                  Forgot password?
+                </Link>
               </div>
               <div className="mt-2">
                 <InputTag
@@ -129,6 +140,7 @@ export default function LoginPage() {
               </div>
             </div>
 
+            {/* SUBMIT BUTTON */}
             <div className="pt-3">
               <button
                 type="submit"
@@ -140,6 +152,7 @@ export default function LoginPage() {
             </div>
           </form>
 
+          {/* GOOGLE AUTH SERVICE */}
           <div className="mt-6">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
@@ -164,16 +177,18 @@ export default function LoginPage() {
             </div>
           </div>
 
+          {/* LINKS */}
           <div className="mt-6 flex justify-center text-sm">
             <span className="text-gray-500">Don't have an account?</span>
             <Link
               to="/register"
               className="ml-1 font-medium text-primary hover:underline"
             >
-              Sign up
+              Register
             </Link>
           </div>
 
+          {/* ERROR INDICATION */}
           {errorMessage && (
             <div className="mt-4 text-sm text-red-600">{errorMessage}</div>
           )}

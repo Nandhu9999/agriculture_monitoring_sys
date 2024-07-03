@@ -1,3 +1,51 @@
+const modulesArray = [
+  {
+    moduleId: 1,
+    deviceId: "11223344",
+    moduleName: "ESP32 Module",
+    description: "tracking the humidity & temp near potato farm",
+    lat: 10.8994,
+    lng: 76.903,
+    values: {
+      deviceType: "esp",
+      battery: 100,
+      latest: { temperature: 2800, humidity: 4000 },
+    },
+    code: "> import code.c",
+    createdAt: "2024-06-23T10:58:49.000Z",
+    updatedAt: "2024-06-23T10:58:49.000Z",
+  },
+  {
+    moduleId: 2,
+    deviceId: "aabbccdd",
+    moduleName: "RPI Module",
+    description: "tracking and scanning for diseases & intruders",
+    lat: 10.8994,
+    lng: 76.903,
+    values: {
+      deviceType: "rpi",
+      battery: 42,
+      latest: { path: "" },
+    },
+    code: "> import code.py",
+    createdAt: "2024-06-23T10:58:49.000Z",
+    updatedAt: "2024-06-23T10:58:49.000Z",
+  },
+];
+export const DEV_MODE = {
+  isActive: true,
+  userModules: modulesArray,
+  moduleGroups: [
+    {
+      moduleGroupId: 1,
+      userId: 1,
+      groupName: "central_g1",
+      modulesArray: modulesArray,
+      description: "all modules group desc",
+    },
+  ],
+};
+
 const appConfig = {
   FB_APIKEY: import.meta.env.VITE_FB_APIKEY,
   FB_AUTHDOMAIN: import.meta.env.VITE_FB_AUTHDOMAIN,
@@ -5,23 +53,39 @@ const appConfig = {
   FB_STORAGEBUCKET: import.meta.env.VITE_FB_STORAGEBUCKET,
   FB_MSGSENDERID: import.meta.env.VITE_FB_MSGSENDERID,
   FB_APPID: import.meta.env.VITE_FB_APPID,
-  SERVER_API: import.meta.env.VITE_AMS_SERVER_API || "http://localhost:9980",
+  SERVER_API: DEV_MODE.isActive
+    ? "http://localhost:9980"
+    : import.meta.env.VITE_AMS_SERVER_API,
 };
 
 export const primaryService = {
-  linegraph: {
-    id: "s1",
+  humidity: {
+    id: "s0",
     type: "linegraph",
-    title: "Humidity and Temperature",
+    title: "Humidity",
     details: {
-      headers: ["humidity", "temperature"],
+      headers: ["humidity"],
       data: [
         {
           humidity: 100,
-          temperature: 23,
         },
         {
           humidity: 89,
+        },
+      ],
+    },
+  },
+  temperature: {
+    id: "s1",
+    type: "linegraph",
+    title: "Temperature",
+    details: {
+      headers: ["temperature"],
+      data: [
+        {
+          temperature: 23,
+        },
+        {
           temperature: 26,
         },
       ],
@@ -40,8 +104,28 @@ export const primaryService = {
       },
     },
   },
-  mapview: {
+  soilmoisture: {
     id: "s3",
+    type: "linegraph",
+    title: "Soil Moisture",
+    details: {
+      headers: ["Volumetric Water Content"],
+      data: {},
+    },
+  },
+  phsensor: {
+    id: "s4",
+    type: "linegraph",
+    title: "pH Sensor",
+    details: {
+      headers: ["acidity"],
+      data: {
+        acidity: 5.2,
+      },
+    },
+  },
+  mapview: {
+    id: "s5",
     type: "view",
     title: "Location",
     details: {
@@ -59,7 +143,7 @@ export const primaryService = {
     },
   },
   livefeed: {
-    id: "s4",
+    id: "s6",
     type: "view",
     title: "Live Feed",
     details: {

@@ -56,7 +56,7 @@ function OpenGroupButton({ id, data }: { id: number; data: ModuleGroupType }) {
   };
 
   return (
-    <div className="flex flex-col md:flex-row gap-2 justify-center">
+    <div className="flex flex-col px-2 md:flex-row gap-2 justify-center">
       <ColoredButton onClick={openInfo} blue small>
         Info
       </ColoredButton>
@@ -97,6 +97,15 @@ export default function Groups() {
   const [error, setError] = useState("");
   const [loadedData, setLoadedData] = useState(false);
   const [data, setData] = useState<TableRow[]>([
+    {
+      Id: <div className="animate-pulse bg-gray-200 flex h-8 rounded-full" />,
+      Label: (
+        <div className="animate-pulse bg-gray-200 flex h-8 rounded-full" />
+      ),
+      Action: (
+        <div className="animate-pulse bg-gray-200 flex h-8 rounded-full" />
+      ),
+    },
     {
       Id: <div className="animate-pulse bg-gray-200 flex h-8 rounded-full" />,
       Label: (
@@ -163,6 +172,11 @@ export default function Groups() {
         />
       </div>
       <TableList headers={headers} data={filteredData} />
+      {loadedData && !data.length && (
+        <div className="text-center pt-16 text-sm text-text-muted">
+          No Results
+        </div>
+      )}
     </div>
   );
 }

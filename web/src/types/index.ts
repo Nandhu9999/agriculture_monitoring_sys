@@ -3,7 +3,9 @@ export type ModuleType = {
   deviceId: string;
   moduleName: string;
   description: string;
-  values: JSON;
+  lat: number;
+  lng: number;
+  values: any;
   code: string;
   createdAt: string;
   updatedAt: string;
@@ -11,7 +13,7 @@ export type ModuleType = {
 
 export type ModuleGroupType = {
   moduleGroupId: number;
-  userId?: number;
+  userId: number;
   groupName: string;
   modulesArray: ModuleType[];
   description: string;

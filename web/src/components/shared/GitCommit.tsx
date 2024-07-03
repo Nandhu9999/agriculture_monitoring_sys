@@ -14,7 +14,7 @@ export default function GitCommit() {
   }, []);
   if (Object.keys(gitCommitMsg).length === 0) return null;
   return (
-    <footer className="h-20 absolute bottom-0 flex items-center">
+    <footer className="h-20 fixed bottom-0 flex items-center">
       <span className="p-1 bg-gray-200 flex items-center gap-2 rounded-lg border-2 border-gray-300 text-xs">
         <img
           src="https://cdn-icons-png.flaticon.com/512/25/25231.png"

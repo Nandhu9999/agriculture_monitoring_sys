@@ -2,7 +2,9 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   GoogleAuthProvider,
-  signInWithPopup
+  signInWithPopup,
+  sendPasswordResetEmail,
+  updatePassword,
 } from "firebase/auth";
 import { auth } from "./firebase";
 
@@ -30,17 +32,17 @@ export const doSignOut = () => {
   return auth.signOut();
 };
 
-// export const doPasswordReset = (email: string) => {
-//   return sendPasswordResetEmail(auth, email);
-// };
+export const doPasswordReset = (email: string) => {
+  return sendPasswordResetEmail(auth, email);
+};
 
-// export const doPasswordChange = (email: string) => {
-//   if (!auth.currentUser) {
-//     console.log("Password Change on NULL user");
-//     return null;
-//   }
-//   return updatePassword(auth.currentUser, email);
-// };
+export const doPasswordChange = (email: string) => {
+  if (!auth.currentUser) {
+    console.log("Password Change on NULL user");
+    return null;
+  }
+  return updatePassword(auth.currentUser, email);
+};
 
 // export const doSendEmailVerification = () => {
 //   if (!auth.currentUser) {

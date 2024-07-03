@@ -2,6 +2,9 @@ import { useParams } from "react-router-dom";
 import { primaryService } from "../../appConfig";
 import MapComponent from "../shared/MapComponent";
 import { Suspense } from "react";
+import CommonLineChart from "../shared/CommonLineChart";
+// import MultiLevelPieChart from "../shared/MultiLevelPieChart";
+import SimpleRadialBarChart from "../shared/SimpleRadialBarChart";
 
 export default function GroupsItem() {
   const { groupId } = useParams();
@@ -11,26 +14,82 @@ export default function GroupsItem() {
       <p className="font-semibold text-gray-500">Group Id: {groupId}</p>
       <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-6 gap-y-6 lg:mx-0 lg:max-w-none md:max-w-none md:mx-0 md:grid-cols-2 lg:grid-cols-3 pt-2">
         <SquareCard
-          key={primaryService.linegraph.id}
-          card={primaryService.linegraph}
+          key={primaryService.humidity.id}
+          card={primaryService.humidity}
         >
-          <div className="bg-gray-200 w-full aspect-video rounded-md"></div>
+          {false ? (
+            <div className="bg-gray-200 w-full aspect-video rounded-md"></div>
+          ) : (
+            <CommonLineChart
+              label={"Humidity"}
+              unit={"g.m3"}
+              color={"red"}
+              rawData={[0, 1, 4, 3, 4, 2]}
+            />
+          )}
         </SquareCard>
+
+        <SquareCard
+          key={primaryService.temperature.id}
+          card={primaryService.temperature}
+        >
+          {false ? (
+            <div className="bg-gray-200 w-full aspect-video rounded-md"></div>
+          ) : (
+            <CommonLineChart
+              label={"Temperature"}
+              unit={"°C"}
+              color={"orange"}
+              rawData={[0, 1, 3, 3, 4, 2]}
+            />
+          )}
+        </SquareCard>
+
         <SquareCard key={primaryService.gauge.id} card={primaryService.gauge}>
+          <div className="flex justify-center">
+            {false ? (
+              <div className="bg-gray-200 w-full aspect-video rounded-md animate-pulse"></div>
+            ) : (
+              // <MultiLevelPieChart
+              //   labels={["a", "b", "c"]}
+              //   unit={"%"}
+              //   colors={["purple", "pink", "magenta"]}
+              // />
+              <SimpleRadialBarChart />
+            )}
+          </div>
+        </SquareCard>
+        <SquareCard
+          key={primaryService.soilmoisture.id}
+          card={primaryService.soilmoisture}
+        >
           <div className="flex justify-center">
             <div className="bg-gray-200 w-full aspect-video rounded-md animate-pulse"></div>
           </div>
         </SquareCard>
+        {/* <SquareCard
+          key={primaryService.phsensor.id}
+          card={primaryService.phsensor}
+        >
+          <div className="flex justify-center">
+            <div className="bg-gray-200 w-full aspect-video rounded-md animate-pulse"></div>
+          </div>
+        </SquareCard> */}
         <SquareCard
           key={primaryService.livefeed.id}
           card={primaryService.livefeed}
         >
-          <div className="bg-gray-200 w-full aspect-video rounded-md animate-pulse" />
+          <div
+            className="bg-gray-200 w-full aspect-video rounded-md"
+            style={{
+              backgroundImage:
+                "url('https://st4.depositphotos.com/1026531/30839/i/450/depositphotos_308395272-stock-photo-tv-screen-no-signal-static.jpg')",
+            }}
+          />
         </SquareCard>
         <SquareCard
           key={primaryService.mapview.id}
           card={primaryService.mapview}
-          isWide
         >
           <Suspense
             fallback={

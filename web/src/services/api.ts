@@ -1,5 +1,7 @@
-import appConfig from "../appConfig";
+import appConfig, { DEV_MODE } from "../appConfig";
 import { auth } from "../firebase/firebase";
+import { ModuleGroupType, ModuleType } from "../types";
+import { delay } from "../utils/utils";
 export const apiUrl = appConfig.SERVER_API;
 
 export async function ping() {
@@ -120,7 +122,15 @@ export async function userJoined() {
   }
 }
 
-export async function getUserModules() {
+type UserModuleResultType =
+  | { success: true; modules: ModuleType[] }
+  | { success: false; error: any };
+export async function getUserModules(): Promise<UserModuleResultType> {
+  if (DEV_MODE.isActive) {
+    await delay(500);
+    return { success: true, modules: DEV_MODE.userModules };
+  }
+
   try {
     if (!auth.currentUser) {
       throw new Error("No authenticated user found");
@@ -134,8 +144,7 @@ export async function getUserModules() {
       },
     });
     return await response.json();
-  } catch (err) {
-    console.log(err);
+  } catch (err: any) {
     return { success: false, error: err };
   }
 }
@@ -159,8 +168,14 @@ export async function updateUserModules(moduleId: number) {
     return { success: false };
   }
 }
-
-export async function getModuleGroups() {
+type ModuleGroupResultType =
+  | { success: true; groups: ModuleGroupType[] }
+  | { success: false; error: any };
+export async function getModuleGroups(): Promise<ModuleGroupResultType> {
+  if (DEV_MODE.isActive) {
+    await delay(500);
+    return { success: true, groups: DEV_MODE.moduleGroups };
+  }
   try {
     if (!auth.currentUser) {
       throw new Error("No authenticated user found");
@@ -174,8 +189,7 @@ export async function getModuleGroups() {
       },
     });
     return await response.json();
-  } catch (err) {
-    console.log(err);
-    return { success: false };
+  } catch (err: any) {
+    return { success: false, error: err };
   }
 }

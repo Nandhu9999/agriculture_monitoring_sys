@@ -74,8 +74,8 @@ CREATE TABLE imageTracking (
 
 INSERT INTO `user` (firebaseId, email, `name`, `keys`, isAdmin) VALUES ('eplLl6oPPSVDzmttktFJkr99GX53','nandhakumar2058@gmail.com', 'nandhakumar vl', '{}', 1);
 
-INSERT INTO module (deviceId, moduleName, description, `values`, code) VALUES
-('11223344', 'ESP32 Module', 'This module is used for tracking the humidity and temperature near my potato farm area', '{"deviceType":"esp","battery":100, "lat":0.0, "lng": 0.0, "values":{"temperature": 2800, "humidity": 4000}}', 'import code.c'),
-('aabbccdd', 'RPI Module', 'is being used to track and scan for diseases aswell was intruders', '{"deviceType":"rpi","battery":42, "lat":0.0, "lng": 0.0, "values":{"path": ""}}', 'import code.py');
+INSERT INTO module (deviceId, moduleName, `description`, `values`, code) VALUES
+('11223344', 'ESP32 Module', 'This module is used for tracking the humidity and temperature near my potato farm area', '{"deviceType":"esp","battery":100, "latest":{"temperature": 2800, "humidity": 4000}}', 'import code.c'),
+('aabbccdd', 'RPI Module', 'is being used to track and scan for diseases aswell was intruders', '{"deviceType":"rpi","battery":42, "latest":{"path": ""}}', 'import code.py');
 
-INSERT INTO moduleGroup (userId, groupName, modulesArray, description) VALUES (1, 'central_g1', '', 'all modules group desc');
+INSERT INTO moduleGroup (userId, groupName, modulesArray, `description`) VALUES (1, 'central_g1', '', 'all modules group desc');

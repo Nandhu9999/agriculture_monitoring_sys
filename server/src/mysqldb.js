@@ -63,13 +63,13 @@ module.exports = {
 
     const [rows] = await dbpool.query(
       `
-      SELECT * 
+      SELECT moduleId, deviceId, moduleName, description, lat, lng, values, code, createdAt 
       FROM module 
       WHERE moduleId 
       IN (
           SELECT moduleId 
           FROM userModule 
-          WHERE userId = 1
+          WHERE userId = ?
         )
       `,
       [id]
@@ -78,7 +78,6 @@ module.exports = {
       ...m,
       values: JSON.parse(m.values),
     }));
-    console.log(result);
     return result;
   },
 
@@ -86,7 +85,7 @@ module.exports = {
     if (typeof a === "number") {
       const [rows] = await dbpool.query(
         `
-        SELECT * 
+        SELECT moduleId, deviceId, moduleName, description, lat, lng, values, code, createdAt 
         FROM module 
         WHERE moduleId = ?
         `,
@@ -97,7 +96,7 @@ module.exports = {
     } else if (Array.isArray(a)) {
       const [rows] = await dbpool.query(
         `
-        SELECT * 
+        SELECT moduleId, deviceId, moduleName, description, lat, lng, values, code, createdAt 
         FROM module 
         WHERE moduleId IN (${a.map(() => "?").join(",")})`,
         a

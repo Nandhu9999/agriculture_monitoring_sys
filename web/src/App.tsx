@@ -14,6 +14,7 @@ const HomePage = lazy(() => import("./pages/HomePage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 const RegisterPage = lazy(() => import("./pages/RegisterPage"));
+const ForgotPage = lazy(() => import("./pages/ForgotPage"));
 const DashboardPage = lazy(() => import("./pages/DashboardPage"));
 const Dashboard = lazy(() => import("./components/dashboard/Dashboard"));
 const Groups = lazy(() => import("./components/dashboard/Groups"));
@@ -24,6 +25,10 @@ const Simulate = lazy(() => import("./components/dashboard/Simulate"));
 const Reports = lazy(() => import("./components/dashboard/Reports"));
 const Settings = lazy(() => import("./components/dashboard/Settings"));
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
+
+function LoadingComponent() {
+  return <div>Loading...</div>;
+}
 
 const router = createBrowserRouter([
   {
@@ -40,7 +45,7 @@ const router = createBrowserRouter([
           </div>
         )}
         <AuthProvider>
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<LoadingComponent />}>
             <Outlet />
           </Suspense>
         </AuthProvider>
@@ -50,7 +55,7 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<LoadingComponent />}>
             <HomePage />
           </Suspense>
         ),
@@ -58,7 +63,7 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<LoadingComponent />}>
             <AboutPage />
           </Suspense>
         ),
@@ -66,7 +71,7 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<LoadingComponent />}>
             <LoginPage />
           </Suspense>
         ),
@@ -74,15 +79,23 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<LoadingComponent />}>
             <RegisterPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/forgot",
+        element: (
+          <Suspense fallback={<LoadingComponent />}>
+            <ForgotPage />
           </Suspense>
         ),
       },
       {
         path: "/app",
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<LoadingComponent />}>
             <DashboardPage />
           </Suspense>
         ),
@@ -94,7 +107,7 @@ const router = createBrowserRouter([
           {
             path: "/app/dashboard",
             element: (
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<LoadingComponent />}>
                 <Dashboard />
               </Suspense>
             ),
@@ -102,7 +115,7 @@ const router = createBrowserRouter([
           {
             path: "/app/groups",
             element: (
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<LoadingComponent />}>
                 <Groups />
               </Suspense>
             ),
@@ -110,7 +123,7 @@ const router = createBrowserRouter([
           {
             path: "/app/group/:groupId",
             element: (
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<LoadingComponent />}>
                 <GroupsItem />
               </Suspense>
             ),
@@ -118,7 +131,7 @@ const router = createBrowserRouter([
           {
             path: "/app/modules",
             element: (
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<LoadingComponent />}>
                 <Modules />
               </Suspense>
             ),
@@ -126,7 +139,7 @@ const router = createBrowserRouter([
           {
             path: "/app/module/:moduleId",
             element: (
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<LoadingComponent />}>
                 <ModulesItem />
               </Suspense>
             ),
@@ -134,7 +147,7 @@ const router = createBrowserRouter([
           {
             path: "/app/simulate",
             element: (
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<LoadingComponent />}>
                 <Simulate />
               </Suspense>
             ),
@@ -142,7 +155,7 @@ const router = createBrowserRouter([
           {
             path: "/app/reports",
             element: (
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<LoadingComponent />}>
                 <Reports />
               </Suspense>
             ),
@@ -150,7 +163,7 @@ const router = createBrowserRouter([
           {
             path: "/app/settings",
             element: (
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<LoadingComponent />}>
                 <Settings />
               </Suspense>
             ),
@@ -160,7 +173,7 @@ const router = createBrowserRouter([
       {
         path: "*",
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<LoadingComponent />}>
             <NotFoundPage />
           </Suspense>
         ),

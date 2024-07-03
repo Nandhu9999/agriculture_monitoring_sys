@@ -118,7 +118,7 @@ function SimulationImageScan() {
               <img
                 src={previewUrl}
                 alt="Selected Preview"
-                className="w-full h-full object-cover rounded-lg"
+                className="w-full h-full aspect-square object-cover rounded-lg"
               />
             </div>
           )}
