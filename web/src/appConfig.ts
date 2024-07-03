@@ -33,7 +33,7 @@ const modulesArray = [
   },
 ];
 export const DEV_MODE = {
-  isActive: true,
+  isActive: false,
   userModules: modulesArray,
   moduleGroups: [
     {
