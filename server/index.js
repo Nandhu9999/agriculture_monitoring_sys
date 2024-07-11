@@ -33,7 +33,8 @@ const UserService = require("./services/User.service");
 
 fastify.addHook("onRequest", (req, reply, next) => {
   const host = req.headers.host.split(":")[0];
-  if (host !== appConfig.HOST) {
+  const protocol = req.protocol;
+  if (host !== appConfig.HOST && protocol !== "http") {
     reply.redirect("https://" + req.hostname + req.url);
   }
 
