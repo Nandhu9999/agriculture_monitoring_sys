@@ -23,7 +23,13 @@ export async function ping() {
 export async function getLatestCommit(user: string, repo: string) {
   try {
     const url = `https://api.github.com/users/${user}/events/public`;
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Cache-Control": "no-cache",
+        Pragma: "no-cache",
+      },
+    });
 
     if (!response.ok) {
       throw new Error("Network response was not ok " + response.statusText);
