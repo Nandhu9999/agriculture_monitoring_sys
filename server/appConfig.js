@@ -1,6 +1,6 @@
 const crypto = require("crypto");
 module.exports = {
-  SERVE_FRONTEND: true,
+  SERVE_FRONTEND: false,
 
   PORT: process.env.PORT || 9980,
   HOST: "0.0.0.0" || "localhost" || "127.0.0.1",

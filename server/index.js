@@ -11,24 +11,6 @@ fastify.register(require("@fastify/cors"), {
   exposedHeaders: ["Content-Disposition"], // Add exposed headers if needed
 });
 
-if (appConfig.SERVE_FRONTEND) {
-  /* SERVE WEB UI */
-  fastify.register(require("@fastify/static"), {
-    root: path.join(__dirname, "../web/dist"),
-    prefix: "/",
-  });
-
-  // Serve index.html for any route
-  // not handled by static files
-  fastify.setNotFoundHandler((request, reply) => {
-    reply.sendFile("index.html");
-  });
-} else {
-  /* SERVE ONLY API */
-  fastify.get("/", async (req, reply) => {
-    return reply.send({ success: true, msg: "ams api running.." });
-  });
-}
 const UserService = require("./services/User.service");
 
 fastify.addHook("onRequest", (req, reply, next) => {
@@ -61,6 +43,26 @@ fastify.addHook("onRequest", (req, reply, next) => {
     }
   }
 });
+
+// Toggle Frontend Serving...
+if (appConfig.SERVE_FRONTEND) {
+  /* SERVE WEB UI */
+  fastify.register(require("@fastify/static"), {
+    root: path.join(__dirname, "../web/dist"),
+    prefix: "/",
+  });
+
+  // Serve index.html for any route
+  // not handled by static files
+  fastify.setNotFoundHandler((request, reply) => {
+    reply.sendFile("index.html");
+  });
+} else {
+  /* SERVE ONLY API */
+  fastify.get("/", async (req, reply) => {
+    return reply.send({ success: true, msg: "ams api running.." });
+  });
+}
 
 fastify.get("/api", async (req, reply) => {
   return reply.send({ success: true, msg: "ams api running.." });
