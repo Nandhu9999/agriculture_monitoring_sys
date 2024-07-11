@@ -1,7 +1,7 @@
 const path = require("path");
 const fastify = require("fastify")({ logger: false });
 const db = require("./src/mysqldb.js");
-const config = require("./appConfig.js");
+const appConfig = require("./appConfig.js");
 
 fastify.register(require("@fastify/formbody"));
 fastify.register(require("@fastify/cors"), {
@@ -12,6 +12,7 @@ fastify.register(require("@fastify/cors"), {
 });
 
 if (appConfig.SERVE_FRONTEND) {
+  /* SERVE WEB UI */
   fastify.register(require("@fastify/static"), {
     root: path.join(__dirname, "../web/dist"),
     prefix: "/",
@@ -23,12 +24,12 @@ if (appConfig.SERVE_FRONTEND) {
     reply.sendFile("index.html");
   });
 } else {
+  /* SERVE ONLY API */
   fastify.get("/", async (req, reply) => {
     return reply.send({ success: true, msg: "ams api running.." });
   });
 }
 const UserService = require("./services/User.service");
-const appConfig = require("./appConfig.js");
 
 fastify.addHook("onRequest", (req, reply, next) => {
   // const protocol = req.raw.headers["x-forwarded-proto"].split(",")[0];
@@ -137,13 +138,13 @@ fastify.get("/api/moduleGroups", async (req, reply) => {
 });
 
 fastify.listen(
-  { port: config.PORT, host: config.HOST },
+  { port: appConfig.PORT, host: appConfig.HOST },
   function (err, address) {
     if (err) {
       console.error(err);
       process.exit(1);
     }
     console.log("Server URL:", address);
-    console.log(`Localhost URL: http://${config.HOST}:${config.PORT}`);
+    console.log(`Localhost URL: http://${appConfig.HOST}:${appConfig.PORT}`);
   }
 );
