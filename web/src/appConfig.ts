@@ -33,7 +33,7 @@ const modulesArray = [
   },
 ];
 export const DEV_MODE = {
-  isActive: false,
+  isActive: import.meta.env.VITE_DEV_MODE === "true",
   userModules: modulesArray,
   moduleGroups: [
     {

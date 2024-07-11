@@ -6,7 +6,7 @@ export default function GitCommit() {
 
   async function callGetLatestCommit(user: string, repo: string) {
     const response = await getLatestCommit(user, repo);
-    setGitCommitMsg(response);
+    if (response) setGitCommitMsg(response);
   }
 
   useEffect(() => {

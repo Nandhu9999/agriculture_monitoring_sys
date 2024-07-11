@@ -16,9 +16,8 @@ export async function ping() {
       body: JSON.stringify({ timestamp: Date.now() }),
     });
     return await response.json();
-  } catch (err) {
-    console.log(err);
-    return { success: false };
+  } catch (err: any) {
+    return { success: false, error: err.message };
   }
 }
 export async function getLatestCommit(user: string, repo: string) {

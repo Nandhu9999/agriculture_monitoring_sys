@@ -5,7 +5,7 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
-import { capitalize } from "../utils/utils";
+import { capitalize, delay } from "../utils/utils";
 import { useAuth } from "../contexts/authContext";
 import {
   Disclosure,
@@ -120,10 +120,11 @@ export default function DashboardPage() {
       const response = await userJoined();
       if (response.success) {
         setSnackbarMessage("Successfully authenticated user");
-        setTimeout(() => {
-          setSnackbarMessage(null);
-        }, 3000);
+      } else {
+        setSnackbarMessage("Could not connect with server...");
       }
+      await delay(6000);
+      setSnackbarMessage(null);
     }
     if (location.state?.fromHome) {
       run();
