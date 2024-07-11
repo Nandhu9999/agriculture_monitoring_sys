@@ -32,8 +32,10 @@ if (appConfig.SERVE_FRONTEND) {
 const UserService = require("./services/User.service");
 
 fastify.addHook("onRequest", (req, reply, next) => {
-  // const protocol = req.raw.headers["x-forwarded-proto"].split(",")[0];
-  // if (protocol === "http") {reply.redirect("https://" + req.hostname + req.url);}
+  const host = req.headers.host.split(":")[0];
+  if (host !== appConfig.HOST) {
+    reply.redirect("https://" + req.hostname + req.url);
+  }
 
   /*
    * FIREBASE MIDDLEWARE FOR AUTHORIZATION
