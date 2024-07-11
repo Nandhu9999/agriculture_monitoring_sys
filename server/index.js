@@ -11,7 +11,7 @@ fastify.register(require("@fastify/cors"), {
   exposedHeaders: ["Content-Disposition"], // Add exposed headers if needed
 });
 
-if (true) {
+if (appConfig.SERVE_FRONTEND) {
   fastify.register(require("@fastify/static"), {
     root: path.join(__dirname, "../web/dist"),
     prefix: "/",
@@ -28,6 +28,7 @@ if (true) {
   });
 }
 const UserService = require("./services/User.service");
+const appConfig = require("./appConfig.js");
 
 fastify.addHook("onRequest", (req, reply, next) => {
   // const protocol = req.raw.headers["x-forwarded-proto"].split(",")[0];
