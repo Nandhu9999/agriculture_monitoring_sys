@@ -1,9 +1,17 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/authContext";
 import GitCommit from "../components/shared/GitCommit";
+import { useEffect } from "react";
+import { ping } from "../services/api";
 
 export default function HomePage() {
   const { currentUser } = useAuth();
+  useEffect(() => {
+    async function init() {
+      await ping();
+    }
+    init();
+  }, []);
 
   return (
     <div className="bg-white w-full h-full overflow-hidden">
