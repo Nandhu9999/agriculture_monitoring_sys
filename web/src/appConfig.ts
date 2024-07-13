@@ -46,6 +46,8 @@ export const DEV_MODE = {
   ],
 };
 
+console.log("DEV_MODE", { isActive: DEV_MODE.isActive });
+
 const appConfig = {
   FB_APIKEY: import.meta.env.VITE_FB_APIKEY,
   FB_AUTHDOMAIN: import.meta.env.VITE_FB_AUTHDOMAIN,
@@ -53,9 +55,10 @@ const appConfig = {
   FB_STORAGEBUCKET: import.meta.env.VITE_FB_STORAGEBUCKET,
   FB_MSGSENDERID: import.meta.env.VITE_FB_MSGSENDERID,
   FB_APPID: import.meta.env.VITE_FB_APPID,
-  SERVER_API: DEV_MODE.isActive
-    ? "http://localhost:9980"
-    : import.meta.env.VITE_AMS_SERVER_API,
+  API_LIST: ["http://localhost:9980", import.meta.env.VITE_AMS_SERVER_API],
+  get SERVER_API() {
+    return DEV_MODE.isActive ? this.API_LIST[0] : this.API_LIST[1];
+  },
 };
 
 export const primaryService = {
