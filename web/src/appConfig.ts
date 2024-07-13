@@ -33,7 +33,7 @@ const modulesArray = [
   },
 ];
 export const DEV_MODE = {
-  isActive: import.meta.env.VITE_DEV_MODE === "true",
+  isActive: import.meta.env.VITE_DEV_MODE == "true",
   userModules: modulesArray,
   moduleGroups: [
     {
@@ -60,6 +60,8 @@ const appConfig = {
     return DEV_MODE.isActive ? this.API_LIST[0] : this.API_LIST[1];
   },
 };
+
+console.log("appConfig", appConfig);
 
 export const primaryService = {
   humidity: {

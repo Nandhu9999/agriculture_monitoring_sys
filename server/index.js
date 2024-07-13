@@ -6,6 +6,16 @@ const appConfig = require("./appConfig.js");
 fastify.register(require("@fastify/formbody"));
 fastify.register(require("@fastify/cors"), {
   origin: "*", // You can set specific origins instead of '*'
+  /*
+    origin: (origin, callback) => {
+      const allowedOrigins = ["https://ams.nandhu.site", "https://agri-monitoring-sys.netlify.app"];
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+  */
   methods: ["GET", "POST", "PUT", "DELETE"], // Add allowed methods
   allowedHeaders: ["Content-Type", "Authorization"], // Add allowed headers
   exposedHeaders: ["Content-Disposition"], // Add exposed headers if needed
