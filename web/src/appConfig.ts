@@ -55,7 +55,7 @@ const appConfig = {
   FB_STORAGEBUCKET: import.meta.env.VITE_FB_STORAGEBUCKET,
   FB_MSGSENDERID: import.meta.env.VITE_FB_MSGSENDERID,
   FB_APPID: import.meta.env.VITE_FB_APPID,
-  API_LIST: ["http://localhost:9980", import.meta.env.VITE_AMS_SERVER_API],
+  API_LIST: [import.meta.env.VITE_AMS_SERVER_API, "http://localhost:9980"],
   get SERVER_API() {
     return DEV_MODE.isActive ? this.API_LIST[0] : this.API_LIST[1];
   },

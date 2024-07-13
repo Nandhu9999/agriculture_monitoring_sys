@@ -17,7 +17,7 @@ module.exports = {
       const [rows] = await dbpool.query(
         `
           SELECT 1 
-          FROM user 
+          FROM \`user\` 
           WHERE firebaseId = ?
           `,
         [firebaseId]
@@ -38,7 +38,7 @@ module.exports = {
       const [result] = await dbpool.query(
         `
           INSERT INTO 
-          user (firebaseId, email, name, \`keys\`, isAdmin)
+          \`user\` (firebaseId, email, \`name\`, \`keys\`, isAdmin)
           VALUES (?, ?, ?, ?, ?)
           `,
         [firebaseId, email, name, JSON.stringify(keys), isAdmin]
@@ -55,7 +55,7 @@ module.exports = {
       const [rows] = await dbpool.query(
         `
           SELECT * 
-          FROM user 
+          FROM \`user\` 
           WHERE firebaseId = ?
           `,
         [firebaseId]
@@ -71,8 +71,8 @@ module.exports = {
     try {
       const [rows] = await dbpool.query(
         `
-          SELECT moduleId, deviceId, moduleName, description, lat, lng, values, code, createdAt 
-          FROM module 
+          SELECT moduleId, deviceId, moduleName, \`description\`, lat, lng, \`values\`, code, createdAt 
+          FROM \`module\` 
           WHERE moduleId 
           IN (
               SELECT moduleId 
@@ -98,8 +98,8 @@ module.exports = {
       if (typeof a === "number") {
         const [rows] = await dbpool.query(
           `
-            SELECT moduleId, deviceId, moduleName, description, lat, lng, values, code, createdAt 
-            FROM module 
+            SELECT moduleId, deviceId, moduleName, description, lat, lng, \`values\`, code, createdAt 
+            FROM \`module\` 
             WHERE moduleId = ?
             `,
           [a]
@@ -109,8 +109,8 @@ module.exports = {
       } else if (Array.isArray(a)) {
         const [rows] = await dbpool.query(
           `
-            SELECT moduleId, deviceId, moduleName, description, lat, lng, values, code, createdAt 
-            FROM module 
+            SELECT moduleId, deviceId, moduleName, \`description\`, lat, lng, \`values\`, code, createdAt 
+            FROM \`module\` 
             WHERE moduleId IN (${a.map(() => "?").join(",")})`,
           a
         );
