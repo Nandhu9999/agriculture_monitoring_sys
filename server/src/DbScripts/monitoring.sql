@@ -1,3 +1,4 @@
+show databases;
 use amsdb;
 show tables;
 
