@@ -7,7 +7,7 @@ export const apiUrl = appConfig.SERVER_API;
 export async function ping() {
   try {
     const token = await auth.currentUser?.getIdToken();
-    const response = await fetch(`${apiUrl}/ping`, {
+    const response = await fetch(`${apiUrl}/api/ping`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

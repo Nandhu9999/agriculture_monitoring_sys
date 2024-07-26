@@ -1,7 +1,6 @@
 drop database amsdb;
 create database amsdb;
 use amsdb;
-
 -- 
 -- CREATE TABLE QUERIES
 -- 

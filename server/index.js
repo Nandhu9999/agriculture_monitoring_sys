@@ -1,6 +1,7 @@
 const path = require("path");
 const fastify = require("fastify")({ logger: false });
 const db = require("./src/mysqldb.js");
+const db2 = require("./src/db/index.js");
 const appConfig = require("./appConfig.js");
 
 fastify.register(require("@fastify/formbody"));
@@ -75,6 +76,7 @@ if (appConfig.SERVE_FRONTEND) {
 }
 
 fastify.get("/api", async (req, reply) => {
+  db2.doesUserExist();
   return reply.send({ success: true, msg: "ams api running.." });
 });
 

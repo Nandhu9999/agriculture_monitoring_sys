@@ -61,8 +61,6 @@ const appConfig = {
   },
 };
 
-console.log("appConfig", appConfig);
-
 export const primaryService = {
   humidity: {
     id: "s0",
